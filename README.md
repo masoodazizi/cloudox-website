@@ -169,19 +169,36 @@ The site is a static Astro build and deploys cleanly to Cloudflare Pages.
 
 > ⚠ **Cloudflare Pages does not reliably read `.nvmrc`, `.node-version`,
 > or `engines.node`.** The current Astro framework preset deploys via
-> `npx wrangler versions upload`, which **requires Node ≥ 22**.
+> `npx wrangler versions upload`, which requires Node ≥ 22, and Vite's
+> bundler (`rolldown`) requires Node ≥ 22.12.
 
 You **must** add an environment variable in the Pages project settings:
 
 1. Open **Workers & Pages → your project → Settings → Variables and Secrets**.
 2. Add a variable for **Production** (and **Preview**):
    - Name: `NODE_VERSION`
-   - Value: `22`
+   - Value: `22.20.0` (or any 22.12+ release)
 3. Save and re-trigger the deploy.
 
 The repo also ships `.nvmrc`, `.node-version`, `.tool-versions`, and
 `engines.node` as fallback signals, but `NODE_VERSION` in the dashboard
 is the only setting Cloudflare consistently honors.
+
+### Why `package-lock.json` is gitignored
+
+Vite (≥ 8) uses [`rolldown`](https://rolldown.rs/) for bundling, which
+ships per-platform native bindings. Due to a long-standing
+[npm bug](https://github.com/npm/cli/issues/4828), a `package-lock.json`
+generated on macOS does not include the Linux x64 bindings, which causes
+Cloudflare's Linux build environment to fail with
+`Cannot find module '@rolldown/binding-linux-x64-gnu'` during
+`npm clean-install`.
+
+To avoid this, `package-lock.json` is `.gitignore`d. Cloudflare runs
+`npm install` (fresh resolution on Linux), which correctly installs the
+required platform binding. The site is fully static and uses caret semver
+ranges, so the loss of strict cross-environment reproducibility is
+acceptable for this use case.
 
 ### Alternative: pure static deploy (no Wrangler)
 
