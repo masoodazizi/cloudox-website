@@ -1,0 +1,26 @@
+{
+  "name": "cloudox-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Public website for Cloudox — AI-powered cloud discovery and documentation.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/mdx": "^4.2.5",
+    "@astrojs/rss": "^4.0.11",
+    "@astrojs/sitemap": "^3.4.0",
+    "@tailwindcss/typography": "^0.5.16",
+    "@tailwindcss/vite": "^4.1.7",
+    "astro": "^5.7.13",
+    "tailwindcss": "^4.1.7",
+    "typescript": "^5.8.3"
+  }
+}

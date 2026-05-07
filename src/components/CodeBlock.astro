@@ -1,0 +1,23 @@
+---
+interface Props {
+  title?: string;
+  language?: string;
+  code: string;
+}
+
+const { title, language = "text", code } = Astro.props as Props;
+---
+
+<div class="surface overflow-hidden">
+  {title && (
+    <div
+      class="flex items-center justify-between px-4 py-2 text-xs"
+      style="border-bottom: 1px solid var(--border); background: var(--bg-muted); color: var(--fg-muted);"
+    >
+      <span class="font-mono">{title}</span>
+      <span class="uppercase tracking-wider">{language}</span>
+    </div>
+  )}
+  <pre class="m-0 overflow-x-auto p-4 text-xs leading-relaxed font-mono"
+       style="color: var(--fg);"><code>{code}</code></pre>
+</div>

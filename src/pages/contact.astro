@@ -1,0 +1,87 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import Section from "@components/Section.astro";
+import { SITE } from "@/config/site";
+
+const subject = encodeURIComponent("Cloudox — Early access request");
+const body = encodeURIComponent(
+  `Hi Cloudox team,\n\nI'd like to request early access.\n\n` +
+    `Name:\nCompany / role:\nAWS environment scale (accounts, regions):\n` +
+    `What you'd like to use Cloudox for:\n\nThanks!`,
+);
+const mailto = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
+---
+
+<BaseLayout
+  title="Early Access"
+  description="Request early access to Cloudox — AI-powered cloud discovery and documentation for consultants and cloud engineers."
+>
+  <Hero
+    eyebrow="EARLY ACCESS"
+    title="Get early access to Cloudox."
+    subtitle="We're working with a small group of cloud consultants, architects, and engineers to shape Cloudox against real environments. Tell us a bit about your work and we'll be in touch."
+  />
+
+  <Section>
+    <div class="grid md:grid-cols-2 gap-8">
+      <div class="surface p-7 md:p-8">
+        <h2 class="text-xl font-semibold mb-2">Reach out</h2>
+        <p class="text-sm muted leading-relaxed mb-6">
+          Email us directly. We respond personally — no auto-replies, no
+          marketing sequences.
+        </p>
+
+        <a href={mailto} class="btn btn-primary w-full">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+          Email {SITE.email}
+        </a>
+
+        <p class="text-xs muted mt-4">
+          Or copy: <code>{SITE.email}</code>
+        </p>
+
+        <hr class="my-7" />
+
+        <h3 class="text-sm font-semibold mb-2">What helps us help you</h3>
+        <ul class="text-sm muted space-y-1.5">
+          <li class="flex gap-2"><span style="color: var(--accent);">›</span> A short note on your role and what you'd use Cloudox for</li>
+          <li class="flex gap-2"><span style="color: var(--accent);">›</span> Approximate AWS environment scale (accounts, regions)</li>
+          <li class="flex gap-2"><span style="color: var(--accent);">›</span> Whether you want to use Cloudox internally or on customer engagements</li>
+        </ul>
+      </div>
+
+      <div class="space-y-5">
+        <div class="surface p-6">
+          <h3 class="text-base font-semibold mb-2">What early access includes</h3>
+          <ul class="text-sm muted space-y-1.5">
+            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Hands-on access to Cloudox</li>
+            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Direct support from the team</li>
+            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Influence over the roadmap</li>
+            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Help generating discovery reports for real environments</li>
+          </ul>
+        </div>
+
+        <div class="surface p-6">
+          <h3 class="text-base font-semibold mb-2">What we don't do</h3>
+          <ul class="text-sm muted space-y-1.5">
+            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Add you to a marketing newsletter</li>
+            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Share your information</li>
+            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Run anything in your AWS environment beyond read-only discovery</li>
+          </ul>
+        </div>
+
+        <div class="surface p-6">
+          <h3 class="text-base font-semibold mb-2">Prefer something else?</h3>
+          <p class="text-sm muted">
+            We can talk over a quick call instead — mention it in your email
+            and we'll set something up.
+          </p>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

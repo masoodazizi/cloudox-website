@@ -1,0 +1,69 @@
+---
+interface Milestone {
+  phase: string;
+  title: string;
+  status: "current" | "next" | "future";
+  items: string[];
+}
+
+interface Props {
+  milestones: Milestone[];
+}
+
+const statusLabel: Record<Milestone["status"], string> = {
+  current: "In progress",
+  next: "Up next",
+  future: "Future",
+};
+
+const statusStyle: Record<Milestone["status"], string> = {
+  current:
+    "background: color-mix(in oklab, var(--accent) 14%, transparent); color: var(--accent); border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);",
+  next:
+    "background: var(--bg-muted); color: var(--fg); border: 1px solid var(--border);",
+  future:
+    "background: transparent; color: var(--fg-muted); border: 1px dashed var(--border);",
+};
+
+const { milestones } = Astro.props as Props;
+---
+
+<ol class="relative space-y-10 md:space-y-14">
+  <span
+    class="absolute left-4 top-2 bottom-2 w-px hidden md:block"
+    style="background: var(--border);"
+    aria-hidden="true"
+  ></span>
+
+  {milestones.map((m, i) => (
+    <li class="relative md:pl-14">
+      <span
+        class="hidden md:flex absolute left-0 top-1.5 h-8 w-8 items-center justify-center rounded-full text-xs font-semibold"
+        style="background: var(--bg-elevated); border: 1px solid var(--border); color: var(--fg);"
+        aria-hidden="true"
+      >
+        {String(i + 1).padStart(2, "0")}
+      </span>
+      <div class="surface p-6">
+        <div class="flex flex-wrap items-center gap-3 mb-2">
+          <span
+            class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+            style={statusStyle[m.status]}
+          >
+            {statusLabel[m.status]}
+          </span>
+          <span class="text-xs uppercase tracking-[0.14em] muted">{m.phase}</span>
+        </div>
+        <h3 class="text-lg font-semibold mb-3">{m.title}</h3>
+        <ul class="space-y-1.5 text-sm muted">
+          {m.items.map((it) => (
+            <li class="flex gap-2">
+              <span aria-hidden="true" style="color: var(--accent);">›</span>
+              <span>{it}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </li>
+  ))}
+</ol>

@@ -1,0 +1,71 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const docs = await getCollection("docs", ({ data }) => !data.draft);
+  return docs.map((doc) => ({
+    params: { slug: doc.id },
+    props: { doc },
+  }));
+};
+
+const { doc } = Astro.props as { doc: Awaited<ReturnType<typeof getCollection<"docs">>>[number] };
+const { Content } = await render(doc);
+
+const allDocs = await getCollection("docs", ({ data }) => !data.draft);
+const grouped = allDocs.reduce((acc, d) => {
+  const section = d.data.section ?? "Guides";
+  (acc[section] ??= []).push(d);
+  return acc;
+}, {} as Record<string, typeof allDocs>);
+
+const sectionOrder = ["Getting Started", "Concepts", "Guides", "Reference"];
+const sections = Object.keys(grouped).sort((a, b) => {
+  const ai = sectionOrder.indexOf(a);
+  const bi = sectionOrder.indexOf(b);
+  if (ai === -1 && bi === -1) return a.localeCompare(b);
+  if (ai === -1) return 1;
+  if (bi === -1) return -1;
+  return ai - bi;
+});
+for (const key of Object.keys(grouped)) {
+  grouped[key].sort((a, b) => (a.data.order ?? 100) - (b.data.order ?? 100));
+}
+---
+
+<BaseLayout title={doc.data.title} description={doc.data.description}>
+  <div class="container-page py-12 md:py-16 grid md:grid-cols-12 gap-10">
+    <aside class="md:col-span-3 md:sticky md:top-20 md:self-start">
+      <nav aria-label="Docs navigation" class="space-y-6 text-sm">
+        {sections.map((section) => (
+          <div>
+            <p class="text-xs uppercase tracking-[0.14em] mb-2" style="color: var(--accent);">{section}</p>
+            <ul class="space-y-1">
+              {grouped[section].map((d) => (
+                <li>
+                  <a
+                    href={`/docs/${d.id}`}
+                    class="block py-1"
+                    style={`color: ${d.id === doc.id ? "var(--fg)" : "var(--fg-muted)"}; ${d.id === doc.id ? "font-weight: 600;" : ""}`}
+                  >
+                    {d.data.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
+    </aside>
+
+    <article class="md:col-span-9 prose-cloudox max-w-none">
+      <p class="eyebrow mb-3">{doc.data.section}</p>
+      <h1 class="text-3xl md:text-4xl font-semibold tracking-tight mb-3">{doc.data.title}</h1>
+      <p class="text-base muted mb-8">{doc.data.description}</p>
+      <hr />
+      <Content />
+    </article>
+  </div>
+</BaseLayout>

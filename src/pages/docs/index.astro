@@ -1,0 +1,59 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import Section from "@components/Section.astro";
+import { getCollection } from "astro:content";
+
+const allDocs = await getCollection("docs", ({ data }) => !data.draft);
+
+const grouped = allDocs.reduce((acc, doc) => {
+  const section = doc.data.section ?? "Guides";
+  (acc[section] ??= []).push(doc);
+  return acc;
+}, {} as Record<string, typeof allDocs>);
+
+const sectionOrder = ["Getting Started", "Concepts", "Guides", "Reference"];
+const sections = Object.keys(grouped).sort((a, b) => {
+  const ai = sectionOrder.indexOf(a);
+  const bi = sectionOrder.indexOf(b);
+  if (ai === -1 && bi === -1) return a.localeCompare(b);
+  if (ai === -1) return 1;
+  if (bi === -1) return -1;
+  return ai - bi;
+});
+
+for (const key of Object.keys(grouped)) {
+  grouped[key].sort((a, b) => (a.data.order ?? 100) - (b.data.order ?? 100));
+}
+---
+
+<BaseLayout
+  title="Docs"
+  description="Cloudox documentation — concepts, guides, and reference for the AI-powered cloud discovery platform."
+>
+  <Hero
+    eyebrow="DOCS"
+    title="Documentation."
+    subtitle="Conceptual overviews, guides, and reference. The docs reflect the public-facing product and roadmap — not the internal implementation."
+  />
+
+  <Section>
+    <div class="grid md:grid-cols-2 gap-5">
+      {sections.map((section) => (
+        <div class="surface p-6">
+          <h2 class="text-xs uppercase tracking-[0.14em] mb-4" style="color: var(--accent);">{section}</h2>
+          <ul class="space-y-3">
+            {grouped[section].map((doc) => (
+              <li>
+                <a href={`/docs/${doc.id}`} class="block">
+                  <p class="text-sm font-semibold">{doc.data.title}</p>
+                  <p class="text-sm muted">{doc.data.description}</p>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,20 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page not found" noindex>
+  <section class="container-page py-32 md:py-40 text-center">
+    <p class="eyebrow mb-4">ERROR 404</p>
+    <h1 class="text-4xl md:text-6xl font-semibold tracking-tight mb-4">
+      We couldn't find that page.
+    </h1>
+    <p class="muted max-w-xl mx-auto mb-8">
+      The link may be out of date, or the page may have moved. Try the home
+      page, or jump straight into the docs.
+    </p>
+    <div class="flex flex-wrap justify-center gap-3">
+      <a href="/" class="btn btn-primary">Back home</a>
+      <a href="/docs" class="btn btn-secondary">Read the docs</a>
+    </div>
+  </section>
+</BaseLayout>

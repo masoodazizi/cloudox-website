@@ -1,0 +1,165 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import Section from "@components/Section.astro";
+import FeatureGrid from "@components/FeatureGrid.astro";
+import ArchitectureShowcase from "@components/ArchitectureShowcase.astro";
+import CTA from "@components/CTA.astro";
+
+const features = [
+  {
+    title: "AWS Organizations awareness",
+    description:
+      "Discover the org tree, OUs, account membership, and shared services accounts — with environment classification per account.",
+  },
+  {
+    title: "Multi-region resource discovery",
+    description:
+      "Fan out across regions to capture compute, networking, data, IAM, and DNS resources where they actually live.",
+  },
+  {
+    title: "Typed knowledge graph",
+    description:
+      "Resources, environments, workloads, and systems are first-class entities with explicit relationships and confidence.",
+  },
+  {
+    title: "Deterministic relationship engine",
+    description:
+      "Network, IAM, compute, data, and DNS relationships are extracted by typed extractors — not by prompting an LLM.",
+  },
+  {
+    title: "Environment classification",
+    description:
+      "Production, staging, development, and sandbox classification driven by tags, naming, and account-level signals.",
+  },
+  {
+    title: "Workload & system inference",
+    description:
+      "Anchor resources (ALB, ECS, EKS, ASG, Lambda, RDS) are expanded into workloads and grouped into systems.",
+  },
+  {
+    title: "Internet exposure detection",
+    description:
+      "Identify which resources are reachable from the internet and the path that exposes them.",
+  },
+  {
+    title: "Findings & risks",
+    description:
+      "Operational gaps, missing observability, unclear ownership, and security exposure — labeled with severity and evidence.",
+  },
+  {
+    title: "Markdown discovery reports",
+    description:
+      "A predictable, stakeholder-ready report structure — easy to commit, easy to share, easy to review.",
+  },
+];
+
+const layers = [
+  {
+    name: "Data Collection Layer",
+    description:
+      "Read-only collectors talk to AWS-native sources and produce normalized results. No assumptions, no inference.",
+    details: [
+      "AWS Config, AWS Organizations, Resource Explorer",
+      "boto3 service APIs (EC2, VPC, RDS, IAM, ECS, EKS, S3, CloudFront, Route53, Lambda, CloudWatch, …)",
+      "Resource tags as a primary signal",
+    ],
+  },
+  {
+    name: "Knowledge Model Layer",
+    description:
+      "Raw data is normalized into typed entities and explicit relationships before anything else runs.",
+    details: [
+      "Accounts, regions, environments, systems, workloads, resources",
+      "Confidence levels (high / medium / low) on every inferred entity",
+      "Evidence list attached to every important relationship",
+    ],
+  },
+  {
+    name: "Graph & Interpretation Layer",
+    description:
+      "Pure functions over the graph extract relationships and run interpreters — environment classification, workload grouping, internet exposure.",
+    details: [
+      "Deterministic relationship extractors",
+      "Environment, workload, and exposure interpreters",
+      "AI used for summarization and pattern recognition only",
+    ],
+  },
+  {
+    name: "Output Generation Layer",
+    description:
+      "The graph is rendered into clean Markdown sections with consistent structure and tone.",
+    details: [
+      "Executive summary, architecture, networking, security, observability",
+      "Findings, risks, assumptions, unknowns",
+      "Evidence-bearing — never invented",
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Product"
+  description="Cloudox is a structured cloud discovery and documentation platform. Learn what it does, how it's built, and why it can be trusted."
+>
+  <Hero
+    eyebrow="PRODUCT"
+    title="A trustworthy discovery platform for cloud consultants and engineers."
+    subtitle="Cloudox is built around four explicit layers — collection, modeling, interpretation, and reporting — so the output is consistently grounded in AWS-native evidence."
+    primaryCta={{ label: "Request Early Access", href: "/contact" }}
+    secondaryCta={{ label: "How it works", href: "/how-it-works" }}
+  />
+
+  <Section eyebrow="CORE CAPABILITIES" title="What Cloudox does today.">
+    <FeatureGrid features={features} cols={3} />
+  </Section>
+
+  <Section
+    eyebrow="ARCHITECTURE"
+    title="Four layers. Clear separation."
+    subtitle="Each layer has one job. Collectors don't interpret. Interpreters don't call AWS. Reports never invent."
+    muted
+  >
+    <ArchitectureShowcase layers={layers} />
+  </Section>
+
+  <Section
+    eyebrow="WHAT CLOUDOX IS NOT"
+    title="A discovery platform — nothing more, nothing less."
+    bordered
+  >
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="surface p-6">
+        <h3 class="text-base font-semibold mb-2">Not a CMDB</h3>
+        <p class="text-sm muted">
+          Cloudox doesn't try to be a system of record for every IT asset.
+          It builds a working understanding of a cloud environment for a
+          specific moment in time.
+        </p>
+      </div>
+      <div class="surface p-6">
+        <h3 class="text-base font-semibold mb-2">Not a security scanner</h3>
+        <p class="text-sm muted">
+          Security findings are limited to architectural exposure and
+          obvious gaps. Cloudox is not a CSPM, CNAPP, or vulnerability tool
+          — and it doesn't pretend to be.
+        </p>
+      </div>
+      <div class="surface p-6">
+        <h3 class="text-base font-semibold mb-2">Not a diagram generator</h3>
+        <p class="text-sm muted">
+          Cloudox produces structured Markdown documentation. Diagrams may
+          accompany reports, but the goal is understanding — not pretty
+          pictures of every box and arrow.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <CTA
+    title="See Cloudox on a real environment."
+    subtitle="Request early access and we'll work with you to run Cloudox against an environment you actually care about."
+    primary={{ label: "Request Early Access", href: "/contact" }}
+    secondary={{ label: "Read the docs", href: "/docs" }}
+  />
+</BaseLayout>

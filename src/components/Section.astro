@@ -1,0 +1,42 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  subtitle?: string;
+  align?: "left" | "center";
+  bordered?: boolean;
+  muted?: boolean;
+  id?: string;
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  subtitle,
+  align = "left",
+  bordered = false,
+  muted = false,
+  id,
+  class: className = "",
+} = Astro.props as Props;
+
+const headerAlign = align === "center" ? "text-center mx-auto" : "";
+---
+
+<section
+  id={id}
+  class={`py-20 md:py-24 ${className}`}
+  style={`${bordered ? "border-top: 1px solid var(--border);" : ""} ${muted ? "background-color: var(--bg-muted);" : ""}`}
+>
+  <div class="container-page">
+    {(eyebrow || title || subtitle) && (
+      <header class={`max-w-2xl mb-12 ${headerAlign}`}>
+        {eyebrow && <p class="eyebrow mb-3">{eyebrow}</p>}
+        {title && <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">{title}</h2>}
+        {subtitle && <p class="mt-4 text-base md:text-lg muted leading-relaxed">{subtitle}</p>}
+      </header>
+    )}
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,45 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import { getCollection, render } from "astro:content";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+};
+
+const { post } = Astro.props as { post: Awaited<ReturnType<typeof getCollection<"blog">>>[number] };
+const { Content } = await render(post);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <article class="container-narrow py-16 md:py-20 prose-cloudox">
+    <p class="eyebrow mb-3">BLOG</p>
+    <h1 class="text-3xl md:text-5xl font-semibold tracking-tight mb-4">
+      {post.data.title}
+    </h1>
+    <p class="text-base muted mb-3">{post.data.description}</p>
+    <p class="text-sm muted mb-10">
+      {formatDate(post.data.pubDate)} · {post.data.author}
+      {post.data.tags.length > 0 && (
+        <>
+          {" "}· {post.data.tags.join(" · ")}
+        </>
+      )}
+    </p>
+    <hr />
+    <Content />
+
+    <hr class="mt-12" />
+    <div class="mt-8 flex justify-between text-sm">
+      <a href="/blog" class="muted">← All posts</a>
+      <a href="/contact" style="color: var(--accent);">Request early access →</a>
+    </div>
+  </article>
+</BaseLayout>

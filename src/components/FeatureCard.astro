@@ -1,0 +1,36 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  icon?: string;
+  href?: string;
+}
+
+const { title, description, icon, href } = Astro.props as Props;
+const Tag = href ? "a" : "div";
+---
+
+<Tag
+  {...(href ? { href } : {})}
+  class={`surface block p-6 transition ${href ? "hover:-translate-y-0.5 hover:shadow-sm" : ""}`}
+>
+  {icon && (
+    <div
+      class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg"
+      style="background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);"
+      aria-hidden="true"
+    >
+      <Fragment set:html={icon} />
+    </div>
+  )}
+  <h3 class="text-base font-semibold mb-2">{title}</h3>
+  <p class="text-sm muted leading-relaxed">{description}</p>
+  {href && (
+    <span class="mt-4 inline-flex items-center gap-1 text-sm font-medium" style="color: var(--accent);">
+      Learn more
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </span>
+  )}
+</Tag>

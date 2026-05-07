@@ -1,0 +1,124 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import Section from "@components/Section.astro";
+import Timeline from "@components/Timeline.astro";
+import CTA from "@components/CTA.astro";
+
+const milestones = [
+  {
+    phase: "Phase 1",
+    title: "AWS Discovery Platform",
+    status: "current" as const,
+    items: [
+      "Multi-account, multi-region AWS discovery",
+      "AWS Organizations integration",
+      "AWS Config and Resource Explorer support",
+      "Read-only collectors for core services (EC2, VPC, RDS, IAM, ECS, EKS, S3, CloudFront, Route53, Lambda, CloudWatch)",
+      "Stakeholder-ready Markdown discovery reports",
+    ],
+  },
+  {
+    phase: "Phase 2",
+    title: "Advanced AWS Knowledge Modeling",
+    status: "current" as const,
+    items: [
+      "Expanded relationship catalogue across topology, network, security, IAM, compute, data, and DNS",
+      "Workload and system inference with confidence and evidence",
+      "Internet exposure detection with traceable paths",
+      "Environment classification driven by tags, naming, and account-level signals",
+    ],
+  },
+  {
+    phase: "Phase 3",
+    title: "AI-Powered Architecture Understanding",
+    status: "next" as const,
+    items: [
+      "Higher-level architecture narratives",
+      "Pattern detection across environments",
+      "Findings prioritization and remediation suggestions",
+      "Improved executive summaries with traceable evidence",
+    ],
+  },
+  {
+    phase: "Phase 4",
+    title: "Azure Support",
+    status: "future" as const,
+    items: [
+      "Subscription and management group discovery",
+      "Resource group and resource discovery",
+      "Identity and networking model coverage",
+      "Azure-native interpretation aligned with the unified knowledge model",
+    ],
+  },
+  {
+    phase: "Phase 5",
+    title: "GCP Support",
+    status: "future" as const,
+    items: [
+      "Organization, folder, and project discovery",
+      "GCP-native networking, IAM, and compute coverage",
+      "Workload and environment classification across GCP",
+    ],
+  },
+  {
+    phase: "Phase 6",
+    title: "Unified Multi-Cloud Discovery",
+    status: "future" as const,
+    items: [
+      "Cross-cloud knowledge graph",
+      "Unified workload and environment classification across providers",
+      "Consistent reporting structure across AWS, Azure, and GCP",
+      "Cross-cloud relationships (federation, shared DNS, hybrid networking)",
+    ],
+  },
+  {
+    phase: "Phase 7",
+    title: "Enterprise Integrations",
+    status: "future" as const,
+    items: [
+      "Confluence export",
+      "GitHub repository export",
+      "Jira / Linear findings sync",
+      "API for integrating Cloudox into custom workflows",
+    ],
+  },
+  {
+    phase: "Phase 8",
+    title: "SaaS Platform Evolution",
+    status: "future" as const,
+    items: [
+      "Hosted Cloudox for teams and consultancies",
+      "Continuous environment intelligence and drift detection",
+      "Multi-tenant organization and project workspaces",
+      "Role-based access and audit logging",
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Roadmap"
+  description="Cloudox roadmap — AWS-first today, multi-cloud tomorrow. Built for cloud consultants, engineers, and architects."
+>
+  <Hero
+    eyebrow="ROADMAP"
+    title="AWS first. Multi-cloud by design."
+    subtitle="The MVP focuses on production-grade AWS discovery. The architecture is intentionally built so Azure, GCP, and other providers can plug in without rewriting the platform."
+    primaryCta={{ label: "Request Early Access", href: "/contact" }}
+  />
+
+  <Section
+    eyebrow="MILESTONES"
+    title="Where we are. Where we're going."
+    subtitle="This roadmap reflects current direction. Priorities may evolve based on early-access feedback — we'd rather ship the right thing than the loudest thing."
+  >
+    <Timeline milestones={milestones} />
+  </Section>
+
+  <CTA
+    title="Have an opinion on what should come next?"
+    subtitle="Early-access users have direct input into Cloudox's roadmap. Tell us what would unlock real value in your work."
+    primary={{ label: "Request Early Access", href: "/contact" }}
+  />
+</BaseLayout>

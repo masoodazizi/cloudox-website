@@ -1,0 +1,74 @@
+---
+import Logo from "./Logo.astro";
+import { PRIMARY_NAV } from "@/config/site";
+
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) => {
+  if (href === "/") return pathname === "/";
+  return pathname === href || pathname.startsWith(href + "/");
+};
+---
+
+<header
+  class="sticky top-0 z-40 backdrop-blur-md"
+  style="background-color: color-mix(in oklab, var(--bg) 85%, transparent); border-bottom: 1px solid var(--border);"
+>
+  <div class="container-page flex h-16 items-center justify-between gap-6">
+    <Logo />
+
+    <nav class="hidden md:flex items-center gap-1" aria-label="Primary">
+      {PRIMARY_NAV.map((item) => (
+        <a
+          href={item.href}
+          class="px-3 py-2 text-sm rounded-md transition"
+          style={`color: ${isActive(item.href) ? "var(--fg)" : "var(--fg-muted)"};`}
+          aria-current={isActive(item.href) ? "page" : undefined}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a href="/contact" class="btn btn-primary text-sm">
+        Request Early Access
+      </a>
+      <button
+        type="button"
+        class="md:hidden btn btn-secondary px-2.5 py-2"
+        aria-label="Toggle navigation"
+        data-mobile-nav-toggle
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="md:hidden hidden border-t" style="border-color: var(--border);" data-mobile-nav>
+    <nav class="container-page py-3 flex flex-col" aria-label="Mobile">
+      {PRIMARY_NAV.map((item) => (
+        <a
+          href={item.href}
+          class="py-2 text-sm"
+          style={`color: ${isActive(item.href) ? "var(--fg)" : "var(--fg-muted)"};`}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-mobile-nav-toggle]");
+  const panel = document.querySelector<HTMLElement>("[data-mobile-nav]");
+  if (toggle && panel) {
+    toggle.addEventListener("click", () => {
+      panel.classList.toggle("hidden");
+    });
+  }
+</script>
