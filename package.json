@@ -4,6 +4,9 @@
   "version": "0.1.0",
   "private": true,
   "description": "Public website for Cloudox — AI-powered cloud discovery and documentation.",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

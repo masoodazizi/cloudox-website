@@ -60,7 +60,7 @@ cloudox-website/
 
 ### Prerequisites
 
-- Node.js 20+ (see `.nvmrc`)
+- Node.js 22+ (see `.nvmrc`)
 - npm (or pnpm / yarn)
 
 ### Install & run
@@ -163,9 +163,11 @@ The site is a static Astro build and deploys cleanly to Cloudflare Pages.
 | Build command        | `npm run build` |
 | Build output directory | `dist`        |
 | Root directory       | (leave empty)   |
-| Node.js version      | `20`            |
+| Node.js version      | `22`            |
 
 > Cloudflare Pages reads `.nvmrc` automatically for the Node version.
+> **Node 22 is required** — Cloudflare's current Astro preset deploys via
+> `wrangler versions upload`, which needs Node ≥ 22.
 
 ### Custom domain
 
