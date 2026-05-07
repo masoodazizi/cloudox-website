@@ -157,17 +157,46 @@ The site is a static Astro build and deploys cleanly to Cloudflare Pages.
 2. Connect this GitHub repository.
 3. Use the following build settings:
 
-| Setting              | Value           |
-| -------------------- | --------------- |
-| Framework preset     | `Astro`         |
-| Build command        | `npm run build` |
-| Build output directory | `dist`        |
-| Root directory       | (leave empty)   |
-| Node.js version      | `22`            |
+| Setting                | Value           |
+| ---------------------- | --------------- |
+| Framework preset       | `Astro`         |
+| Build command          | `npm run build` |
+| Build output directory | `dist`          |
+| Root directory         | (leave empty)   |
+| Node.js version        | `22`            |
 
-> Cloudflare Pages reads `.nvmrc` automatically for the Node version.
-> **Node 22 is required** — Cloudflare's current Astro preset deploys via
-> `wrangler versions upload`, which needs Node ≥ 22.
+### Required: `NODE_VERSION` environment variable
+
+> ⚠ **Cloudflare Pages does not reliably read `.nvmrc`, `.node-version`,
+> or `engines.node`.** The current Astro framework preset deploys via
+> `npx wrangler versions upload`, which **requires Node ≥ 22**.
+
+You **must** add an environment variable in the Pages project settings:
+
+1. Open **Workers & Pages → your project → Settings → Variables and Secrets**.
+2. Add a variable for **Production** (and **Preview**):
+   - Name: `NODE_VERSION`
+   - Value: `22`
+3. Save and re-trigger the deploy.
+
+The repo also ships `.nvmrc`, `.node-version`, `.tool-versions`, and
+`engines.node` as fallback signals, but `NODE_VERSION` in the dashboard
+is the only setting Cloudflare consistently honors.
+
+### Alternative: pure static deploy (no Wrangler)
+
+If you'd rather bypass the Astro-on-Workers adapter entirely and deploy
+the static `dist/` directory directly (no Wrangler, no Node-version
+constraints from the deploy step):
+
+1. In the Pages project, go to **Settings → Builds & deployments**.
+2. Set **Framework preset** to `None`.
+3. Keep build command `npm run build` and output directory `dist`.
+4. Save and re-deploy.
+
+This deploys the prerendered HTML straight to Cloudflare's CDN with
+no Workers runtime in front of it. The site is 100% static — both
+deploy paths produce identical output.
 
 ### Custom domain
 
@@ -181,8 +210,9 @@ and served by Cloudflare Pages automatically.
 
 ### Environment variables
 
-The site is fully static — no environment variables are required for the
-default deployment.
+The site is fully static. The only environment variable required by the
+deploy is `NODE_VERSION=22` (see above). No application-level secrets
+are needed.
 
 ---
 
