@@ -1,41 +1,62 @@
 ---
 interface Props {
   class?: string;
+  withWordmark?: boolean;
+  size?: "sm" | "md" | "lg";
 }
-const { class: className = "" } = Astro.props as Props;
+
+const {
+  class: className = "",
+  withWordmark = true,
+  size = "md",
+} = Astro.props as Props;
+
+const sizeClasses = {
+  sm: { box: "h-6", text: "text-base" },
+  md: { box: "h-7", text: "text-lg" },
+  lg: { box: "h-9", text: "text-2xl" },
+}[size];
 ---
 
 <a
   href="/"
-  class={`inline-flex items-center gap-2 font-semibold tracking-tight ${className}`}
-  aria-label="Cloudox home"
+  class={`inline-flex items-center gap-2.5 font-semibold tracking-tight ${className}`}
+  aria-label="CloudoX home"
 >
   <svg
-    width="28"
-    height="28"
-    viewBox="0 0 32 32"
+    class={sizeClasses.box}
+    viewBox="0 0 64 48"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
   >
-    <defs>
-      <linearGradient id="cloudoxLogo" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-        <stop offset="0%" stop-color="var(--color-brand-500)" />
-        <stop offset="100%" stop-color="var(--color-brand-700)" />
-      </linearGradient>
-    </defs>
-    <rect x="2" y="2" width="28" height="28" rx="7" fill="url(#cloudoxLogo)" />
     <path
-      d="M9 19.5c0-2.3 1.85-4.16 4.13-4.2A5 5 0 0 1 22.5 13a3 3 0 0 1 .5 5.96"
-      stroke="white"
-      stroke-width="1.6"
+      d="M14 35h-1.5a8.5 8.5 0 0 1-1.4-16.88A11 11 0 0 1 32.4 14"
+      stroke="currentColor"
+      stroke-width="2.6"
       stroke-linecap="round"
       stroke-linejoin="round"
       fill="none"
     />
-    <circle cx="11" cy="22.5" r="1.1" fill="white" />
-    <circle cx="16" cy="22.5" r="1.1" fill="white" />
-    <circle cx="21" cy="22.5" r="1.1" fill="white" />
+    <rect
+      x="24"
+      y="14"
+      width="26"
+      height="28"
+      rx="2.5"
+      stroke="currentColor"
+      stroke-width="2.6"
+      stroke-linejoin="round"
+      fill="none"
+    />
+    <line x1="29" y1="22" x2="45" y2="22" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
+    <line x1="29" y1="28" x2="45" y2="28" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
+    <line x1="29" y1="34" x2="40" y2="34" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
   </svg>
-  <span class="text-base">Cloudox</span>
+
+  {withWordmark && (
+    <span class={`leading-none ${sizeClasses.text}`}>
+      Cloudo<span style="color: var(--accent);">X</span>
+    </span>
+  )}
 </a>

@@ -4,270 +4,75 @@ import Hero from "@components/Hero.astro";
 import Section from "@components/Section.astro";
 import FeatureGrid from "@components/FeatureGrid.astro";
 import CTA from "@components/CTA.astro";
-import CodeBlock from "@components/CodeBlock.astro";
-import Timeline from "@components/Timeline.astro";
 
 const capabilities = [
   {
-    title: "Multi-account discovery",
+    title: "Multi-account, multi-region",
     description:
-      "Scan AWS Organizations and discover resources across many accounts — without losing context.",
+      "Discover AWS Organizations across accounts and regions in a single, coherent view.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`,
   },
   {
-    title: "Multi-region awareness",
+    title: "Evidence-based",
     description:
-      "Build a regional view of your environment so workloads, networks, and dependencies stay coherent.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20"/><path d="M12 2a15 15 0 0 0 0 20"/></svg>`,
-  },
-  {
-    title: "Structured knowledge model",
-    description:
-      "Resources, environments, workloads, and 24+ relationship types — typed and explainable.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><line x1="8.5" y1="6" x2="15.5" y2="6"/><line x1="6" y1="8.5" x2="6" y2="15.5"/><line x1="18" y1="8.5" x2="18" y2="15.5"/><line x1="8.5" y1="18" x2="15.5" y2="18"/></svg>`,
-  },
-  {
-    title: "Evidence-based interpretation",
-    description:
-      "Environment, workload, and exposure detection runs deterministically with confidence and evidence.",
+      "Every important finding cites tags, Config data, or AWS-native signals — never invented.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/><path d="m9 12 2 2 4-4"/></svg>`,
   },
   {
-    title: "AI you can trust",
+    title: "Stakeholder-ready reports",
     description:
-      "AI is used for summarization and grouping — never to invent ownership, environments, or architecture.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg>`,
-  },
-  {
-    title: "Stakeholder-ready Markdown",
-    description:
-      "Executive summary, architecture, networking, security, observability, findings — written for humans.",
+      "Clean Markdown documentation: architecture, networking, security, observability, findings.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`,
   },
 ];
 
-const workflowSteps = [
+const steps = [
   {
     title: "Connect",
     description:
-      "Point Cloudox at an AWS Organization, account set, or single account using read-only access.",
+      "Read-only access to an AWS Organization, account set, or single account.",
   },
   {
-    title: "Collect",
+    title: "Discover",
     description:
-      "Cloudox collects metadata across accounts and regions from AWS-native sources — Config, Organizations, service APIs, and tags.",
-  },
-  {
-    title: "Model",
-    description:
-      "Raw data is normalized into a typed knowledge graph: accounts, regions, environments, workloads, systems, resources, and relationships.",
-  },
-  {
-    title: "Interpret",
-    description:
-      "Deterministic rules and AI interpretation classify environments, group workloads, and surface exposure and gaps.",
+      "Collect AWS-native data across accounts and regions and build a typed knowledge graph.",
   },
   {
     title: "Report",
     description:
-      "A clean Markdown discovery report is generated — ready to share with stakeholders before kickoff.",
-  },
-];
-
-const reportStructure = `aws-discovery-report/
-├── README.md
-├── 01-executive-summary.md
-├── 02-architecture-overview.md
-├── 03-environment-structure.md
-├── 04-networking.md
-├── 05-security-overview.md
-├── 06-observability.md
-├── 07-findings-and-risks.md
-└── 08-assumptions-and-unknowns.md`;
-
-const milestones = [
-  {
-    phase: "Phase 1",
-    title: "AWS Discovery Platform",
-    status: "current" as const,
-    items: [
-      "Multi-account, multi-region AWS discovery",
-      "Typed knowledge model and graph engine",
-      "Deterministic rules with confidence + evidence",
-      "Stakeholder-ready Markdown reports",
-    ],
-  },
-  {
-    phase: "Phase 2",
-    title: "Advanced AWS Knowledge Modeling",
-    status: "current" as const,
-    items: [
-      "Expanded relationship catalogue across networking, IAM, and data flows",
-      "Workload and system inference with evidence",
-      "Internet exposure detection",
-    ],
-  },
-  {
-    phase: "Phase 3",
-    title: "AI-Powered Architecture Understanding",
-    status: "next" as const,
-    items: [
-      "Pattern detection across environments",
-      "Higher-level architecture narratives",
-      "Findings and remediation prioritization",
-    ],
-  },
-  {
-    phase: "Phase 4",
-    title: "Azure & GCP Support",
-    status: "future" as const,
-    items: [
-      "Azure subscription and management group discovery",
-      "GCP project, folder, and organization discovery",
-      "Cross-cloud resource mapping",
-    ],
-  },
-  {
-    phase: "Phase 5",
-    title: "Unified Multi-Cloud Discovery",
-    status: "future" as const,
-    items: [
-      "Cross-cloud knowledge graph",
-      "Unified workload and environment classification",
-      "Consistent reporting across providers",
-    ],
-  },
-  {
-    phase: "Phase 6",
-    title: "Enterprise & SaaS Evolution",
-    status: "future" as const,
-    items: [
-      "Continuous discovery and drift detection",
-      "Confluence and GitHub integrations",
-      "SaaS deployment for teams and consultancies",
-    ],
+      "Generate a clean Markdown discovery report — ready to share with stakeholders.",
   },
 ];
 ---
 
 <BaseLayout
   title="Understand cloud environments in 30 minutes"
-  description="Cloudox helps consultants and cloud engineers rapidly understand cloud environments and generate stakeholder-ready discovery reports — AWS-first today, multi-cloud tomorrow."
+  description="CloudoX helps consultants and cloud engineers understand cloud environments in 30 minutes and generate stakeholder-ready discovery reports — AWS-first today, multi-cloud tomorrow."
 >
   <Hero
-    eyebrow="AI-POWERED CLOUD DISCOVERY"
+    eyebrow="CLOUD DISCOVERY, INTELLIGENT DOCUMENTATION"
     title="Understand any cloud environment in under 30 minutes."
-    subtitle="Cloudox scans AWS Organizations across accounts and regions, builds a structured knowledge model, and generates stakeholder-ready discovery reports — evidence-based, never invented."
+    subtitle="CloudoX scans AWS Organizations across accounts and regions, builds a structured knowledge model, and generates stakeholder-ready discovery reports."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
-    secondaryCta={{ label: "See how it works", href: "/how-it-works" }}
-  >
-    <div class="mt-12 grid gap-3 sm:grid-cols-3 max-w-3xl">
-      <div class="surface p-4">
-        <p class="eyebrow mb-1">AWS-FIRST</p>
-        <p class="text-sm">Multi-account Organizations and multi-region discovery for the MVP.</p>
-      </div>
-      <div class="surface p-4">
-        <p class="eyebrow mb-1">EVIDENCE-BASED</p>
-        <p class="text-sm">Every important finding cites tags, Config data, or AWS-native signals.</p>
-      </div>
-      <div class="surface p-4">
-        <p class="eyebrow mb-1">MULTI-CLOUD VISION</p>
-        <p class="text-sm">Architecture designed to expand to Azure, GCP, and beyond.</p>
-      </div>
-    </div>
-  </Hero>
+    secondaryCta={{ label: "How it works", href: "/how-it-works" }}
+  />
 
-  <!-- Problem -->
   <Section
-    eyebrow="THE PROBLEM"
-    title="Understanding a new cloud environment shouldn't take days."
-    subtitle="Consultants and engineers waste hours clicking through consoles, reverse-engineering architectures, and pasting screenshots into documents that go stale before they're shared."
-    bordered
-  >
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Tribal knowledge</h3>
-        <p class="text-sm muted">
-          Real architecture lives in people's heads — not in documentation, runbooks, or diagrams.
-        </p>
-      </div>
-      <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Inconsistent discovery</h3>
-        <p class="text-sm muted">
-          Each engagement starts from scratch with different tools, ad-hoc scripts, and inconsistent depth.
-        </p>
-      </div>
-      <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Untrusted AI output</h3>
-        <p class="text-sm muted">
-          Generic AI tools invent architecture, fabricate ownership, and produce reports nobody is willing to sign.
-        </p>
-      </div>
-    </div>
-  </Section>
-
-  <!-- Solution -->
-  <Section
-    eyebrow="THE SOLUTION"
-    title="A structured discovery platform — not a console crawler."
-    subtitle="Cloudox treats AWS as the source of truth: it collects native metadata, normalizes it into a typed knowledge graph, runs deterministic interpretation, and writes documentation a human would actually trust."
-    muted
+    eyebrow="WHY CLOUDOX"
+    title="A trustworthy discovery platform — not a console crawler."
+    subtitle="AWS-first today. Built to evolve to Azure, GCP, and broader multi-cloud."
   >
     <FeatureGrid features={capabilities} cols={3} />
   </Section>
 
-  <!-- Multi-account / multi-region -->
-  <Section
-    eyebrow="ENTERPRISE-READY DISCOVERY"
-    title="Built for organization-wide, multi-region environments."
-    subtitle="Cloudox is designed for real consultant-scale work: AWS Organizations with many accounts, workloads spread across regions, and teams that need a single coherent view."
-    bordered
-  >
-    <div class="grid md:grid-cols-2 gap-5">
-      <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Cross-account by default</h3>
-        <p class="text-sm muted leading-relaxed">
-          Discover AWS Organizations structure, account-to-environment mapping,
-          and shared services accounts — without losing context as you cross
-          account boundaries.
-        </p>
-      </div>
-      <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Multi-region by design</h3>
-        <p class="text-sm muted leading-relaxed">
-          Workloads, networking, and dependencies are tracked per region so you
-          can see where production really runs — not just the region you happened
-          to log into.
-        </p>
-      </div>
-      <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Evidence with confidence</h3>
-        <p class="text-sm muted leading-relaxed">
-          Every inferred finding includes a confidence level (high / medium / low)
-          and a list of evidence — tags, naming, network relationships, AWS
-          Organizations data — so reviewers can trust what they read.
-        </p>
-      </div>
-      <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Structured before AI</h3>
-        <p class="text-sm muted leading-relaxed">
-          Raw AWS data is normalized into typed entities and explicit
-          relationships before any AI runs. AI works on structured data — not
-          raw boto3 blobs.
-        </p>
-      </div>
-    </div>
-  </Section>
-
-  <!-- How it works -->
   <Section
     eyebrow="HOW IT WORKS"
-    title="From AWS APIs to a discovery report in five steps."
-    align="left"
+    title="From AWS APIs to a discovery report."
+    muted
   >
-    <ol class="grid gap-5 md:grid-cols-5 counter-reset">
-      {workflowSteps.map((step, i) => (
-        <li class="surface p-6 relative">
+    <ol class="grid gap-5 md:grid-cols-3">
+      {steps.map((step, i) => (
+        <li class="surface p-6">
           <span
             class="inline-flex h-8 w-8 items-center justify-center rounded-md font-mono text-sm mb-4"
             style="background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);"
@@ -279,64 +84,14 @@ const milestones = [
         </li>
       ))}
     </ol>
-
-    <div class="mt-12 flex justify-center">
+    <div class="mt-10 flex justify-center">
       <a href="/how-it-works" class="btn btn-secondary">Read the full workflow</a>
     </div>
   </Section>
 
-  <!-- Example report -->
-  <Section
-    eyebrow="EXAMPLE OUTPUT"
-    title="A discovery report you can hand to a stakeholder."
-    subtitle="Cloudox generates a clean Markdown report with a predictable structure — easy to read, easy to commit to a repo, easy to drop into Confluence."
-    muted
-  >
-    <div class="grid md:grid-cols-5 gap-5">
-      <div class="md:col-span-2">
-        <CodeBlock title="aws-discovery-report/" language="markdown" code={reportStructure} />
-      </div>
-      <ul class="md:col-span-3 grid gap-3">
-        <li class="surface p-5">
-          <p class="font-mono text-xs eyebrow mb-2">01 — EXECUTIVE SUMMARY</p>
-          <p class="text-sm muted">High-level overview of the environment, key workloads, environments, and notable risks.</p>
-        </li>
-        <li class="surface p-5">
-          <p class="font-mono text-xs eyebrow mb-2">02 — ARCHITECTURE OVERVIEW</p>
-          <p class="text-sm muted">Inferred workloads, systems, and how they connect — written in plain language with evidence.</p>
-        </li>
-        <li class="surface p-5">
-          <p class="font-mono text-xs eyebrow mb-2">04 — NETWORKING</p>
-          <p class="text-sm muted">VPC topology, peering, internet exposure, and routing — derived from AWS-native signals.</p>
-        </li>
-        <li class="surface p-5">
-          <p class="font-mono text-xs eyebrow mb-2">07 — FINDINGS &amp; RISKS</p>
-          <p class="text-sm muted">Operational gaps, security exposure, missing observability, and unclear ownership.</p>
-        </li>
-        <li class="surface p-5">
-          <p class="font-mono text-xs eyebrow mb-2">08 — ASSUMPTIONS &amp; UNKNOWNS</p>
-          <p class="text-sm muted">Everything Cloudox could not confirm — separated from confirmed findings, never silently guessed.</p>
-        </li>
-      </ul>
-    </div>
-  </Section>
-
-  <!-- Roadmap -->
-  <Section
-    eyebrow="ROADMAP"
-    title="AWS first. Multi-cloud by design."
-    subtitle="The MVP is focused on production-grade AWS discovery. The architecture is built so Azure, GCP, and broader multi-cloud intelligence can plug in cleanly as the platform matures."
-    bordered
-  >
-    <Timeline milestones={milestones} />
-    <div class="mt-10 flex justify-center">
-      <a href="/roadmap" class="btn btn-secondary">See the detailed roadmap</a>
-    </div>
-  </Section>
-
   <CTA
-    title="Be among the first consultants to use Cloudox."
-    subtitle="We're rolling out early access to a small group of cloud consultants, architects, and engineers. No marketing fluff — just real environments and real reports."
+    title="Be among the first consultants to use CloudoX."
+    subtitle="Early access for cloud consultants, architects, and engineers. No marketing fluff — just real environments and real reports."
     primary={{ label: "Request Early Access", href: "/contact" }}
     secondary={{ label: "Read the docs", href: "/docs" }}
   />

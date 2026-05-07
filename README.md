@@ -1,8 +1,8 @@
-# Cloudox Website
+# CloudoX Website
 
-Public marketing and documentation site for **Cloudox** — an AI-powered cloud discovery and documentation platform.
+Public marketing and documentation site for **CloudoX** — Cloud Discovery, Intelligent Documentation.
 
-This repository is **public**. It does not contain any internal Cloudox implementation, prompts, scanning logic, or proprietary heuristics. It only contains the public-facing website content.
+This repository is **public**. It does not contain any internal CloudoX implementation, prompts, scanning logic, or proprietary heuristics. It only contains the public-facing website content.
 
 ---
 
@@ -24,19 +24,21 @@ This repository is **public**. It does not contain any internal Cloudox implemen
 cloudox-website/
 ├── astro.config.mjs           # Astro config (Tailwind + sitemap + MDX)
 ├── tsconfig.json              # TypeScript with @ path aliases
+├── .env.example               # Document required env vars
 ├── package.json
 ├── public/
 │   ├── _headers               # Cloudflare Pages headers
 │   ├── favicon.svg
 │   ├── robots.txt
+│   ├── brand/cloudox-logo.png # Source brand asset
 │   └── og/cloudox-og.svg      # Default OG/social image
 └── src/
+    ├── env.d.ts               # ImportMetaEnv types for env vars
     ├── styles/global.css      # Tailwind v4 entry + theme tokens
     ├── config/site.ts         # Site name, nav, metadata
     ├── layouts/BaseLayout.astro
     ├── components/            # Header, Footer, Hero, CTA, Section,
-    │                          # FeatureCard, FeatureGrid, Timeline,
-    │                          # CodeBlock, ArchitectureShowcase, Logo
+    │                          # FeatureCard, FeatureGrid, CodeBlock, Logo
     ├── content.config.ts      # docs + blog content collections
     ├── content/
     │   ├── docs/              # Markdown docs (Concepts, Reference, …)
@@ -46,8 +48,7 @@ cloudox-website/
         ├── product.astro
         ├── use-cases.astro
         ├── how-it-works.astro
-        ├── roadmap.astro
-        ├── contact.astro      # Early access
+        ├── contact.astro      # Early-access form (Web3Forms)
         ├── 404.astro
         ├── docs/              # /docs index + dynamic [...slug]
         ├── blog/              # /blog index + dynamic [...slug]
@@ -227,9 +228,38 @@ and served by Cloudflare Pages automatically.
 
 ### Environment variables
 
-The site is fully static. The only environment variable required by the
-deploy is `NODE_VERSION=22` (see above). No application-level secrets
-are needed.
+| Variable               | Required | Purpose                                                                                  |
+| ---------------------- | -------- | ---------------------------------------------------------------------------------------- |
+| `NODE_VERSION`         | yes      | Pin the build's Node version (≥ `22.12`). Set to `22.20.0` (or compatible) in dashboard. |
+| `PUBLIC_WEB3FORMS_KEY` | yes      | Access key for the contact form on `/contact`. See **Contact form setup** below.         |
+
+See `.env.example` for the local-dev format.
+
+---
+
+## Contact form setup
+
+The early-access form on `/contact` is backed by [Web3Forms](https://web3forms.com)
+so the destination email is **never present in the source code or shipped
+to the browser**. Only an opaque access key (essentially a form ID) is
+exposed client-side. Web3Forms enforces rate limiting and spam protection
+at their edge.
+
+### One-time setup
+
+1. Sign up for a free Web3Forms account at <https://web3forms.com>.
+2. Create a new form and set the destination email address (e.g. the
+   internal alias you want submissions to land in). This stays in
+   Web3Forms' dashboard — never in this repo.
+3. Copy the access key.
+4. Add it as a Cloudflare Pages environment variable:
+   - **Name**: `PUBLIC_WEB3FORMS_KEY`
+   - **Value**: the access key from Web3Forms
+   - Set for both **Production** and **Preview**.
+5. For local dev, copy `.env.example` to `.env` and paste the key there.
+
+If the variable is missing at build time, the form is replaced with a
+placeholder message so the site still deploys cleanly.
 
 ---
 
@@ -237,12 +267,15 @@ are needed.
 
 When adding or editing site content, please follow these rules:
 
+- The brand is rendered as **CloudoX** (capital `X`) in all prose and
+  marketing copy. Lowercase `cloudox` is reserved for URLs, file slugs,
+  and identifiers.
 - **Do not** copy internal/private implementation details, prompts,
   scanning logic, or customer data into the website.
-- **Do not** claim single-account or single-region limitations. Cloudox
+- **Do not** claim single-account or single-region limitations. CloudoX
   supports multi-account AWS Organizations and multi-region discovery.
 - **Do not** add fake customer logos or testimonials.
-- **Do not** call Cloudox a CMDB or a security scanner.
+- **Do not** call CloudoX a CMDB or a security scanner.
 - **Prefer** evidence-based, concise messaging over generic marketing
   copy. The site should reflect the same standards as the product.
 
@@ -250,5 +283,5 @@ When adding or editing site content, please follow these rules:
 
 ## License
 
-The website source is provided as-is for the Cloudox project. Brand,
-content, and trademarks belong to the Cloudox project.
+The website source is provided as-is for the CloudoX project. Brand,
+content, and trademarks belong to the CloudoX project.

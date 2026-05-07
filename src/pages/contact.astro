@@ -4,63 +4,154 @@ import Hero from "@components/Hero.astro";
 import Section from "@components/Section.astro";
 import { SITE } from "@/config/site";
 
-const subject = encodeURIComponent("Cloudox — Early access request");
-const body = encodeURIComponent(
-  `Hi Cloudox team,\n\nI'd like to request early access.\n\n` +
-    `Name:\nCompany / role:\nAWS environment scale (accounts, regions):\n` +
-    `What you'd like to use Cloudox for:\n\nThanks!`,
-);
-const mailto = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
+// Web3Forms access key. Configured server-side in Web3Forms' dashboard so the
+// destination email is never exposed in the page source. The access key
+// itself is intentionally a public identifier (like a form ID) and is safe
+// to ship to the client.
+const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
+const formConfigured = WEB3FORMS_KEY.length > 0;
 ---
 
 <BaseLayout
   title="Early Access"
-  description="Request early access to Cloudox — AI-powered cloud discovery and documentation for consultants and cloud engineers."
+  description="Request early access to CloudoX — AI-powered cloud discovery and documentation for consultants and cloud engineers."
 >
   <Hero
     eyebrow="EARLY ACCESS"
-    title="Get early access to Cloudox."
-    subtitle="We're working with a small group of cloud consultants, architects, and engineers to shape Cloudox against real environments. Tell us a bit about your work and we'll be in touch."
+    title="Get early access to CloudoX."
+    subtitle="We work with a small group of cloud consultants, architects, and engineers to shape CloudoX against real environments. Tell us a bit about your work."
   />
 
   <Section>
-    <div class="grid md:grid-cols-2 gap-8">
-      <div class="surface p-7 md:p-8">
-        <h2 class="text-xl font-semibold mb-2">Reach out</h2>
-        <p class="text-sm muted leading-relaxed mb-6">
-          Email us directly. We respond personally — no auto-replies, no
-          marketing sequences.
-        </p>
+    <div class="grid md:grid-cols-5 gap-8">
+      <div class="md:col-span-3">
+        {formConfigured ? (
+          <form
+            id="contact-form"
+            class="surface p-6 md:p-8 space-y-5"
+            data-access-key={WEB3FORMS_KEY}
+            novalidate
+          >
+            <input type="hidden" name="subject" value={`${SITE.name} — Early access request`} />
+            <input type="hidden" name="from_name" value={`${SITE.name} website`} />
+            {/* Honeypot — bots fill it, humans don't. */}
+            <input
+              type="checkbox"
+              name="botcheck"
+              class="hidden"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            />
 
-        <a href={mailto} class="btn btn-primary w-full">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
-          </svg>
-          Email {SITE.email}
-        </a>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label for="name" class="block text-sm font-medium mb-1.5">Name <span style="color: var(--accent);">*</span></label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  autocomplete="name"
+                  class="w-full rounded-md px-3 py-2.5 text-sm"
+                  style="background: var(--bg); border: 1px solid var(--border); color: var(--fg);"
+                />
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium mb-1.5">Email <span style="color: var(--accent);">*</span></label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                  autocomplete="email"
+                  class="w-full rounded-md px-3 py-2.5 text-sm"
+                  style="background: var(--bg); border: 1px solid var(--border); color: var(--fg);"
+                />
+              </div>
+            </div>
 
-        <p class="text-xs muted mt-4">
-          Or copy: <code>{SITE.email}</code>
-        </p>
+            <div>
+              <label for="company" class="block text-sm font-medium mb-1.5">Company / role</label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                autocomplete="organization"
+                placeholder="e.g. AWS consultant at Acme Cloud"
+                class="w-full rounded-md px-3 py-2.5 text-sm"
+                style="background: var(--bg); border: 1px solid var(--border); color: var(--fg);"
+              />
+            </div>
 
-        <hr class="my-7" />
+            <div>
+              <label for="scale" class="block text-sm font-medium mb-1.5">AWS environment scale</label>
+              <input
+                type="text"
+                id="scale"
+                name="scale"
+                placeholder="e.g. ~20 accounts, 3 regions"
+                class="w-full rounded-md px-3 py-2.5 text-sm"
+                style="background: var(--bg); border: 1px solid var(--border); color: var(--fg);"
+              />
+            </div>
 
-        <h3 class="text-sm font-semibold mb-2">What helps us help you</h3>
-        <ul class="text-sm muted space-y-1.5">
-          <li class="flex gap-2"><span style="color: var(--accent);">›</span> A short note on your role and what you'd use Cloudox for</li>
-          <li class="flex gap-2"><span style="color: var(--accent);">›</span> Approximate AWS environment scale (accounts, regions)</li>
-          <li class="flex gap-2"><span style="color: var(--accent);">›</span> Whether you want to use Cloudox internally or on customer engagements</li>
-        </ul>
+            <div>
+              <label for="message" class="block text-sm font-medium mb-1.5">
+                What would you use CloudoX for? <span style="color: var(--accent);">*</span>
+              </label>
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows="5"
+                class="w-full rounded-md px-3 py-2.5 text-sm font-sans resize-y"
+                style="background: var(--bg); border: 1px solid var(--border); color: var(--fg);"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full sm:w-auto" data-submit>
+              <span data-submit-label>Send request</span>
+              <svg
+                data-submit-spinner
+                class="hidden animate-spin"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+              </svg>
+            </button>
+
+            <p
+              role="status"
+              aria-live="polite"
+              data-form-status
+              class="text-sm hidden"
+            ></p>
+          </form>
+        ) : (
+          <div class="surface p-6 md:p-8">
+            <h2 class="text-base font-semibold mb-2">Form not configured yet</h2>
+            <p class="text-sm muted leading-relaxed">
+              The contact form is being set up. Please check back shortly.
+            </p>
+          </div>
+        )}
       </div>
 
-      <div class="space-y-5">
+      <aside class="md:col-span-2 space-y-5">
         <div class="surface p-6">
           <h3 class="text-base font-semibold mb-2">What early access includes</h3>
           <ul class="text-sm muted space-y-1.5">
-            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Hands-on access to Cloudox</li>
+            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Hands-on access to CloudoX</li>
             <li class="flex gap-2"><span style="color: var(--accent);">›</span> Direct support from the team</li>
-            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Influence over the roadmap</li>
             <li class="flex gap-2"><span style="color: var(--accent);">›</span> Help generating discovery reports for real environments</li>
           </ul>
         </div>
@@ -73,15 +164,83 @@ const mailto = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
             <li class="flex gap-2"><span style="color: var(--accent);">›</span> Run anything in your AWS environment beyond read-only discovery</li>
           </ul>
         </div>
-
-        <div class="surface p-6">
-          <h3 class="text-base font-semibold mb-2">Prefer something else?</h3>
-          <p class="text-sm muted">
-            We can talk over a quick call instead — mention it in your email
-            and we'll set something up.
-          </p>
-        </div>
-      </div>
+      </aside>
     </div>
   </Section>
 </BaseLayout>
+
+<script>
+  const form = document.getElementById("contact-form") as HTMLFormElement | null;
+  if (form) {
+    const accessKey = form.dataset.accessKey ?? "";
+    const status = form.querySelector<HTMLParagraphElement>("[data-form-status]");
+    const submit = form.querySelector<HTMLButtonElement>("[data-submit]");
+    const label = form.querySelector<HTMLSpanElement>("[data-submit-label]");
+    const spinner = form.querySelector<SVGElement>("[data-submit-spinner]");
+
+    const setStatus = (kind: "success" | "error" | "info" | null, msg = "") => {
+      if (!status) return;
+      status.classList.remove("hidden");
+      status.style.color = "var(--fg-muted)";
+      if (kind === "success") status.style.color = "var(--accent)";
+      if (kind === "error") status.style.color = "#d14343";
+      if (kind === null) {
+        status.classList.add("hidden");
+        status.textContent = "";
+        return;
+      }
+      status.textContent = msg;
+    };
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!accessKey) {
+        setStatus("error", "The contact form is not configured.");
+        return;
+      }
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      submit?.setAttribute("disabled", "true");
+      label?.classList.add("opacity-70");
+      spinner?.classList.remove("hidden");
+      setStatus("info", "Sending…");
+
+      const formData = new FormData(form);
+      formData.append("access_key", accessKey);
+      const payload = Object.fromEntries(formData.entries());
+
+      try {
+        const res = await fetch("https://api.web3forms.com/submit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(payload),
+        });
+        const json = (await res.json()) as { success?: boolean; message?: string };
+        if (json.success) {
+          form.reset();
+          setStatus(
+            "success",
+            "Thanks — we received your request. We'll be in touch shortly.",
+          );
+        } else {
+          setStatus(
+            "error",
+            json.message ?? "Something went wrong. Please try again later.",
+          );
+        }
+      } catch {
+        setStatus("error", "Network error. Please try again later.");
+      } finally {
+        submit?.removeAttribute("disabled");
+        label?.classList.remove("opacity-70");
+        spinner?.classList.add("hidden");
+      }
+    });
+  }
+</script>

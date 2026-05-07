@@ -8,7 +8,7 @@ export async function GET(context: APIContext) {
   return rss({
     title: `${SITE.name} — Blog`,
     description:
-      "Notes from the team building Cloudox — cloud discovery, AWS architecture understanding, and AI you can trust.",
+      "Notes from the team building CloudoX — cloud discovery, AWS architecture understanding, and AI you can trust.",
     site: context.site ?? SITE.url,
     items: posts
       .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())

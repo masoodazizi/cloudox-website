@@ -1,11 +1,11 @@
 ---
 title: The knowledge model
-description: How Cloudox represents accounts, environments, workloads, systems, and relationships.
+description: How CloudoX represents accounts, environments, workloads, systems, and relationships.
 section: Concepts
 order: 2
 ---
 
-The knowledge model is what makes Cloudox trustworthy. It separates raw cloud data from interpreted understanding.
+The knowledge model is what makes CloudoX trustworthy. It separates raw cloud data from interpreted understanding.
 
 ## Core entities
 

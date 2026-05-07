@@ -1,11 +1,11 @@
 ---
 title: Trust and the role of AI
-description: How Cloudox uses AI — and where it deliberately doesn't.
+description: How CloudoX uses AI — and where it deliberately doesn't.
 section: Concepts
 order: 4
 ---
 
-Cloudox treats AI as one tool among several. It is used where it helps, and avoided where it could fabricate facts.
+CloudoX treats AI as one tool among several. It is used where it helps, and avoided where it could fabricate facts.
 
 ## What AI is used for
 
@@ -21,7 +21,7 @@ Cloudox treats AI as one tool among several. It is used where it helps, and avoi
 - Inventing architecture.
 - Hiding uncertainty.
 
-If Cloudox can't back a statement with AWS-native evidence or labeled inference, it doesn't make the statement.
+If CloudoX can't back a statement with AWS-native evidence or labeled inference, it doesn't make the statement.
 
 ## Confidence and evidence
 
@@ -37,4 +37,4 @@ A single weak signal stays at **low** confidence. Conflicting weak signals colla
 
 ## Why this matters
 
-Cloud consultants and engineers are accountable for the documents they hand to stakeholders. A discovery report that fabricates ownership or invents a workload is worse than no report at all. Cloudox is built so the people who sign reports can defend every line.
+Cloud consultants and engineers are accountable for the documents they hand to stakeholders. A discovery report that fabricates ownership or invents a workload is worse than no report at all. CloudoX is built so the people who sign reports can defend every line.

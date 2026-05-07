@@ -7,16 +7,16 @@ import CTA from "@components/CTA.astro";
 const useCases = [
   {
     persona: "Consultants & solutions architects",
-    title: "Land a new engagement and ship a discovery report on day one.",
+    title: "Ship a discovery report on day one of an engagement.",
     bullets: [
-      "Run Cloudox against a new customer's AWS Organization with read-only access.",
+      "Run CloudoX against a customer's AWS Organization with read-only access.",
       "Walk into kickoff with a structured Markdown report instead of a blank slate.",
-      "Spend the workshop validating findings — not chasing console screenshots.",
+      "Validate findings during the workshop — not chase console screenshots.",
     ],
   },
   {
     persona: "Cloud engineers inheriting an environment",
-    title: "Get oriented in a brand-new environment in under 30 minutes.",
+    title: "Get oriented in an unfamiliar environment in 30 minutes.",
     bullets: [
       "Identify production workloads, internet-facing systems, and unclear ownership.",
       "Understand how environments and accounts are organized.",
@@ -24,54 +24,34 @@ const useCases = [
     ],
   },
   {
-    persona: "Pre-sales & cloud advisory",
-    title: "Qualify opportunities with real architectural understanding.",
-    bullets: [
-      "Quickly assess account structure, scale, and posture.",
-      "Identify integration points and modernization candidates.",
-      "Bring an evidence-based summary into the next conversation.",
-    ],
-  },
-  {
     persona: "Cloud platform & SRE teams",
     title: "Audit your own AWS Organization without manual spelunking.",
     bullets: [
       "Catalog accounts, environments, and workloads across regions.",
-      "Detect unmanaged exposure, missing observability, and gaps in tagging.",
+      "Detect unmanaged exposure, missing observability, and tagging gaps.",
       "Use the report as a starting point for governance conversations.",
     ],
   },
-];
-
-const fitTable = [
-  { row: "Multi-account AWS Organizations", good: true },
-  { row: "Multi-region AWS estates", good: true },
-  { row: "Single AWS account discovery", good: true },
-  { row: "Consultant-led engagements", good: true },
-  { row: "Real-time security alerting", good: false },
-  { row: "Vulnerability or compliance scanning", good: false },
-  { row: "CMDB / asset system of record", good: false },
 ];
 ---
 
 <BaseLayout
   title="Use Cases"
-  description="See how consultants, cloud engineers, and pre-sales teams use Cloudox to understand AWS environments faster."
+  description="How consultants, cloud engineers, and platform teams use CloudoX to understand AWS environments faster."
 >
   <Hero
     eyebrow="USE CASES"
     title="Built for the people who walk into unfamiliar cloud environments."
-    subtitle="Cloudox is shaped by real consulting work: engagements with AWS Organizations, multi-region environments, and stakeholders who need clear answers fast."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
     secondaryCta={{ label: "How it works", href: "/how-it-works" }}
   />
 
-  <Section eyebrow="WHO IT'S FOR" title="Discovery for the way you actually work.">
-    <div class="grid gap-5 md:grid-cols-2">
+  <Section>
+    <div class="grid gap-5 md:grid-cols-3">
       {useCases.map((u) => (
         <article class="surface p-6">
           <p class="eyebrow mb-2">{u.persona}</p>
-          <h3 class="text-lg font-semibold mb-3">{u.title}</h3>
+          <h3 class="text-base font-semibold mb-3">{u.title}</h3>
           <ul class="space-y-2 text-sm muted">
             {u.bullets.map((b) => (
               <li class="flex gap-2">
@@ -85,47 +65,8 @@ const fitTable = [
     </div>
   </Section>
 
-  <Section
-    eyebrow="GOOD FIT?"
-    title="Where Cloudox helps — and where it doesn't."
-    subtitle="Cloudox is opinionated about its scope. We'd rather do one thing well than overpromise."
-    muted
-  >
-    <div class="surface overflow-hidden">
-      <table class="w-full text-sm">
-        <thead>
-          <tr style="border-bottom: 1px solid var(--border); color: var(--fg-muted); text-align: left;">
-            <th class="px-5 py-3 font-medium">Scenario</th>
-            <th class="px-5 py-3 font-medium w-32">Cloudox?</th>
-          </tr>
-        </thead>
-        <tbody>
-          {fitTable.map((r) => (
-            <tr style={`border-top: 1px solid var(--border);`}>
-              <td class="px-5 py-3">{r.row}</td>
-              <td class="px-5 py-3">
-                {r.good ? (
-                  <span class="inline-flex items-center gap-1.5 text-sm" style="color: var(--accent);">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-                    Strong fit
-                  </span>
-                ) : (
-                  <span class="inline-flex items-center gap-1.5 text-sm muted">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    Not in scope
-                  </span>
-                )}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </Section>
-
   <CTA
-    title="Ready to try Cloudox on a real environment?"
-    subtitle="If you're a cloud consultant, architect, or engineer with an environment you'd like to understand faster — we'd like to talk."
+    title="Ready to try CloudoX on a real environment?"
     primary={{ label: "Request Early Access", href: "/contact" }}
   />
 </BaseLayout>

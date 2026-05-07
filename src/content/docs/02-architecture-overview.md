@@ -1,11 +1,11 @@
 ---
 title: Architecture overview
-description: The four layers of Cloudox — collection, modeling, interpretation, and reporting.
+description: The four layers of CloudoX — collection, modeling, interpretation, and reporting.
 section: Concepts
 order: 1
 ---
 
-Cloudox is built around four explicit layers. Each layer has one job, so output stays trustworthy and easy to reason about.
+CloudoX is built around four explicit layers. Each layer has one job, so output stays trustworthy and easy to reason about.
 
 ## 1. Data Collection Layer
 

@@ -1,11 +1,11 @@
 ---
-title: Introduction to Cloudox
-description: What Cloudox is, what it isn't, and who it's for.
+title: Introduction to CloudoX
+description: What CloudoX is, what it isn't, and who it's for.
 section: Getting Started
 order: 1
 ---
 
-Cloudox is an AI-powered cloud discovery and documentation platform. It scans cloud environments, builds a structured knowledge model, and generates stakeholder-ready discovery reports.
+CloudoX is an AI-powered cloud discovery and documentation platform. It scans cloud environments, builds a structured knowledge model, and generates stakeholder-ready discovery reports.
 
 The MVP focuses on **AWS**, including:
 
@@ -14,20 +14,20 @@ The MVP focuses on **AWS**, including:
 - Architecture, networking, security, and observability understanding
 - Markdown discovery reports
 
-Cloudox is designed to evolve into a broader multi-cloud discovery platform — Azure and GCP support are part of the roadmap.
+CloudoX is designed to evolve into a broader multi-cloud discovery platform — Azure and GCP support are part of the roadmap.
 
-## Who Cloudox is for
+## Who CloudoX is for
 
 - AWS solutions architects and consultants
 - Cloud engineers inheriting unfamiliar environments
 - Pre-sales and cloud advisory teams
 - Cloud platform and SRE teams auditing their own footprint
 
-## What Cloudox is *not*
+## What CloudoX is *not*
 
-- **Not a CMDB** — Cloudox builds working understanding for a moment in time, not a permanent system of record.
+- **Not a CMDB** — CloudoX builds working understanding for a moment in time, not a permanent system of record.
 - **Not a security scanner** — security findings focus on architectural exposure and obvious gaps, not vulnerability scanning or compliance.
-- **Not a diagram-only tool** — Cloudox produces structured Markdown documentation. Understanding comes first; visuals support it.
+- **Not a diagram-only tool** — CloudoX produces structured Markdown documentation. Understanding comes first; visuals support it.
 
 ## Core principles
 

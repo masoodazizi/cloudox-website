@@ -1,23 +1,23 @@
 ---
 title: FAQ
-description: Answers to common questions about Cloudox.
+description: Answers to common questions about CloudoX.
 section: Reference
 order: 1
 ---
 
-## Does Cloudox modify anything in my AWS environment?
+## Does CloudoX modify anything in my AWS environment?
 
-No. Cloudox uses **read-only** access. It doesn't create, modify, or delete anything in customer environments.
+No. CloudoX uses **read-only** access. It doesn't create, modify, or delete anything in customer environments.
 
-## Does Cloudox support AWS Organizations and multiple accounts?
+## Does CloudoX support AWS Organizations and multiple accounts?
 
-Yes. Cloudox is designed for multi-account AWS Organizations environments and tracks workloads, networking, and dependencies across accounts.
+Yes. CloudoX is designed for multi-account AWS Organizations environments and tracks workloads, networking, and dependencies across accounts.
 
-## Does Cloudox support multiple regions?
+## Does CloudoX support multiple regions?
 
 Yes. Resources, networking, and dependencies are tracked per region.
 
-## Does Cloudox use AI?
+## Does CloudoX use AI?
 
 Yes — for summarization, grouping, classification, and pattern recognition. AI does **not** invent ownership, environments, or architecture, and every important finding is backed by AWS-native evidence or clearly labeled as inferred.
 
@@ -29,13 +29,13 @@ A Markdown directory with eight predictable sections — executive summary, arch
 
 Yes. Reports are plain Markdown files. You can commit them to a repo, drop them into Confluence, or share them as you would any document.
 
-## Will Cloudox support Azure or GCP?
+## Will CloudoX support Azure or GCP?
 
 Azure and GCP are part of the roadmap. The architecture is designed to be multi-cloud — see the [multi-cloud vision doc](/docs/06-multi-cloud-vision).
 
-## Is Cloudox a CMDB or security scanner?
+## Is CloudoX a CMDB or security scanner?
 
-No. Cloudox is a cloud discovery and documentation platform. It is intentionally not a CMDB, vulnerability scanner, or compliance product.
+No. CloudoX is a cloud discovery and documentation platform. It is intentionally not a CMDB, vulnerability scanner, or compliance product.
 
 ## How do I get access?
 

@@ -5,7 +5,7 @@ section: Concepts
 order: 5
 ---
 
-The Cloudox MVP is focused on AWS, but the architecture is intentionally built to be multi-cloud.
+The CloudoX MVP is focused on AWS, but the architecture is intentionally built to be multi-cloud.
 
 ## Today: AWS-first
 

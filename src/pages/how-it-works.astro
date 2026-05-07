@@ -8,69 +8,33 @@ import CTA from "@components/CTA.astro";
 const flow = [
   {
     step: "01",
-    title: "Connect with read-only access",
+    title: "Connect",
     description:
-      "Cloudox uses a read-only role across the AWS Organization or target accounts. Nothing is created or modified inside the customer environment.",
-    bullets: [
-      "AWS Organizations cross-account role",
-      "Standard read-only permissions",
-      "Per-account and per-region scope control",
-    ],
+      "Read-only access to an AWS Organization, account set, or single account. Nothing is created or modified.",
   },
   {
     step: "02",
-    title: "Collect from AWS-native sources",
+    title: "Collect",
     description:
-      "Modular collectors fan out across accounts and regions. Each collector returns normalized results with raw payloads attached for evidence.",
-    bullets: [
-      "AWS Config, AWS Organizations, AWS Resource Explorer",
-      "Service APIs: EC2, VPC, RDS, IAM, ECS, EKS, S3, CloudFront, Route53, Lambda, CloudWatch, …",
-      "Resource tags as a primary signal",
-    ],
+      "Modular collectors fan out across accounts and regions, gathering metadata from AWS-native sources (Config, Organizations, Resource Explorer, service APIs, tags).",
   },
   {
     step: "03",
-    title: "Normalize into a typed knowledge graph",
+    title: "Model",
     description:
-      "Raw AWS data is normalized into typed entities — accounts, regions, environments, systems, workloads, resources — with explicit relationships.",
-    bullets: [
-      "Strong typing throughout",
-      "24+ relationship types across topology, network, security, IAM, compute, data, and DNS",
-      "Confidence levels on inferred entities",
-    ],
+      "Raw data is normalized into a typed knowledge graph: accounts, regions, environments, workloads, systems, resources, and explicit relationships.",
   },
   {
     step: "04",
-    title: "Run deterministic interpretation",
+    title: "Interpret",
     description:
-      "Pure functions over the graph extract relationships and run interpreters: environment classification, workload grouping, internet exposure detection.",
-    bullets: [
-      "Tag-based environment classification with explicit confidence",
-      "Workload anchors expanded via deterministic relationships",
-      "System grouping driven by application-level tags",
-    ],
+      "Deterministic rules classify environments, group workloads, and surface internet exposure. AI assists with summarization — never invention.",
   },
   {
     step: "05",
-    title: "Apply AI for summarization",
+    title: "Report",
     description:
-      "AI is used to summarize, group, and describe — never to invent ownership, environments, or architecture. Every important claim is backed by evidence.",
-    bullets: [
-      "Summarization of grouped findings",
-      "Pattern recognition across environments",
-      "Concise narrative for stakeholder-ready reports",
-    ],
-  },
-  {
-    step: "06",
-    title: "Generate the discovery report",
-    description:
-      "A clean Markdown report is generated with a predictable structure — easy to commit, easy to review, easy to share with stakeholders.",
-    bullets: [
-      "Executive summary, architecture, networking, security, observability",
-      "Findings, risks, assumptions, unknowns — clearly separated",
-      "Markdown only — no proprietary format",
-    ],
+      "A clean Markdown discovery report with a predictable structure — easy to commit, share, and review.",
   },
 ];
 
@@ -84,55 +48,32 @@ const reportStructure = `aws-discovery-report/
 ├── 06-observability.md
 ├── 07-findings-and-risks.md
 └── 08-assumptions-and-unknowns.md`;
-
-const principlesSnippet = `# Principles Cloudox follows
-
-- Evidence over assumptions.
-- AWS-native sources are the source of truth.
-- Structured data first; AI runs on top.
-- Confidence is explicit (high / medium / low).
-- Unknowns are surfaced — never silently guessed.
-`;
 ---
 
 <BaseLayout
   title="How It Works"
-  description="Cloudox connects to AWS, collects from AWS-native sources, builds a typed knowledge graph, interprets deterministically, and generates a Markdown discovery report."
+  description="CloudoX collects AWS-native data, builds a typed knowledge graph, interprets deterministically, and generates a Markdown discovery report."
 >
   <Hero
     eyebrow="HOW IT WORKS"
     title="From AWS APIs to a discovery report — without inventing anything."
-    subtitle="Cloudox follows a strict pipeline: collect, model, interpret, report. AI is used where it helps — summarization, pattern recognition — never where it could fabricate facts."
+    subtitle="A strict pipeline: collect, model, interpret, report. AI helps with summarization. It never fabricates facts."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
     secondaryCta={{ label: "See the docs", href: "/docs" }}
   />
 
-  <Section eyebrow="DISCOVERY WORKFLOW" title="The end-to-end flow.">
-    <ol class="space-y-5">
+  <Section eyebrow="WORKFLOW" title="The five steps.">
+    <ol class="grid gap-4 md:grid-cols-5">
       {flow.map((s) => (
-        <li class="surface p-6">
-          <div class="flex flex-col md:flex-row gap-6">
-            <div class="md:w-32 flex-shrink-0">
-              <span
-                class="inline-flex h-10 w-10 items-center justify-center rounded-md font-mono text-sm"
-                style="background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);"
-              >
-                {s.step}
-              </span>
-            </div>
-            <div class="flex-1">
-              <h3 class="text-lg font-semibold mb-2">{s.title}</h3>
-              <p class="text-sm muted leading-relaxed mb-4">{s.description}</p>
-              <ul class="grid sm:grid-cols-3 gap-3 text-sm">
-                {s.bullets.map((b) => (
-                  <li class="flex gap-2 muted">
-                    <span aria-hidden="true" style="color: var(--accent);">·</span>
-                    <span>{b}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+        <li class="surface p-5">
+          <span
+            class="inline-flex h-8 w-8 items-center justify-center rounded-md font-mono text-xs mb-3"
+            style="background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);"
+          >
+            {s.step}
+          </span>
+          <h3 class="text-sm font-semibold mb-2">{s.title}</h3>
+          <p class="text-xs muted leading-relaxed">{s.description}</p>
         </li>
       ))}
     </ol>
@@ -141,31 +82,16 @@ const principlesSnippet = `# Principles Cloudox follows
   <Section
     eyebrow="OUTPUT"
     title="A predictable report structure."
-    subtitle="The exact same sections every time — so reviewers know where to find what they need."
+    subtitle="Same sections every time — reviewers know where to find what they need."
     muted
   >
-    <div class="grid md:grid-cols-2 gap-5">
+    <div class="max-w-2xl">
       <CodeBlock title="aws-discovery-report/" language="markdown" code={reportStructure} />
-      <CodeBlock title="cloudox-principles.md" language="markdown" code={principlesSnippet} />
     </div>
   </Section>
 
-  <Section
-    eyebrow="WHAT WE DON'T DO"
-    title="Where the line is."
-    bordered
-  >
-    <ul class="grid gap-3 md:grid-cols-2 text-sm">
-      <li class="surface p-5"><strong>No write access.</strong> Cloudox is read-only inside customer environments.</li>
-      <li class="surface p-5"><strong>No invented architecture.</strong> If we can't back it up, we say so.</li>
-      <li class="surface p-5"><strong>No proprietary report format.</strong> Reports are Markdown — yours to keep.</li>
-      <li class="surface p-5"><strong>No silent guessing.</strong> Unknowns and assumptions are listed explicitly.</li>
-    </ul>
-  </Section>
-
   <CTA
-    title="Ready to see Cloudox in action?"
-    subtitle="Request early access and we'll work with you to run Cloudox on a real environment."
+    title="Ready to see CloudoX in action?"
     primary={{ label: "Request Early Access", href: "/contact" }}
   />
 </BaseLayout>

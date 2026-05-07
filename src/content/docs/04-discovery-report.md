@@ -1,11 +1,11 @@
 ---
 title: The discovery report
-description: What Cloudox produces — structure, tone, and what to expect.
+description: What CloudoX produces — structure, tone, and what to expect.
 section: Concepts
 order: 3
 ---
 
-Cloudox produces a Markdown discovery report with a predictable structure. Reviewers know exactly where to find what they need.
+CloudoX produces a Markdown discovery report with a predictable structure. Reviewers know exactly where to find what they need.
 
 ## Report structure
 
@@ -31,7 +31,7 @@ aws-discovery-report/
 - **Security overview** — architectural exposure, identity boundaries, tagging hygiene.
 - **Observability** — what's logged, what's monitored, and what isn't.
 - **Findings and risks** — operational gaps, exposure, missing observability, unclear ownership.
-- **Assumptions and unknowns** — everything Cloudox could not confirm — never silently guessed.
+- **Assumptions and unknowns** — everything CloudoX could not confirm — never silently guessed.
 
 ## Tone
 
@@ -53,4 +53,4 @@ Avoided:
 
 > 3 EC2 instances and 1 database were found.
 
-Cloudox prioritizes meaningful insight over raw inventory.
+CloudoX prioritizes meaningful insight over raw inventory.
