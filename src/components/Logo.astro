@@ -1,62 +1,92 @@
 ---
+/**
+ * CloudoX wordmark and icon.
+ *
+ * Uses the official PNG brand pack from `public/brand/logo/`. The bright
+ * variant is designed for light backgrounds; the dark variant is designed
+ * for dark backgrounds. We swap between them via `prefers-color-scheme`
+ * inside a <picture> element so the right asset loads automatically.
+ *
+ * Variants:
+ *   - default      (icon + "Cloudox" wordmark)
+ *   - icon-only    (just the cloud + document mark)
+ *   - with-tagline (full lockup including "Cloud Discovery, Intelligent Documentation.")
+ */
+
 interface Props {
   class?: string;
-  withWordmark?: boolean;
-  size?: "sm" | "md" | "lg";
+  /** Visual variant. */
+  variant?: "wordmark" | "icon" | "tagline";
+  /** Header / footer / hero scale. */
+  size?: "sm" | "md" | "lg" | "xl";
+  /**
+   * Hint to the browser whether this image is critical (above-the-fold).
+   * Defaults to "eager" since logos are typically in the header.
+   */
+  loading?: "eager" | "lazy";
+  /** Override link target. Set to `false` to render without an <a> wrapper. */
+  href?: string | false;
 }
 
 const {
   class: className = "",
-  withWordmark = true,
+  variant = "wordmark",
   size = "md",
+  loading = "eager",
+  href = "/",
 } = Astro.props as Props;
 
-const sizeClasses = {
-  sm: { box: "h-6", text: "text-base" },
-  md: { box: "h-7", text: "text-lg" },
-  lg: { box: "h-9", text: "text-2xl" },
-}[size];
+// Natural pixel dimensions used for aspect-ratio attributes (prevents CLS).
+const ASSETS = {
+  wordmark: {
+    bright: "/brand/logo/logo-v1-bright.png",
+    dark: "/brand/logo/logo-v1-dark.png",
+    intrinsic: { width: 892, height: 210 },
+  },
+  icon: {
+    bright: "/brand/logo/logo-v1-icon-bright.png",
+    dark: "/brand/logo/logo-v1-icon-dark.png",
+    intrinsic: { width: 294, height: 205 },
+  },
+  tagline: {
+    bright: "/brand/logo/logo-v1-sub-bright.png",
+    dark: "/brand/logo/logo-v1-sub-dark.png",
+    intrinsic: { width: 890, height: 275 },
+  },
+} as const;
+
+// Rendered height (in px) per size for each variant. Width follows from the
+// intrinsic aspect ratio.
+const HEIGHT_BY_SIZE = {
+  wordmark: { sm: 22, md: 28, lg: 36, xl: 48 },
+  icon: { sm: 22, md: 28, lg: 36, xl: 48 },
+  tagline: { sm: 36, md: 48, lg: 64, xl: 96 },
+} as const;
+
+const asset = ASSETS[variant];
+const height = HEIGHT_BY_SIZE[variant][size];
+const width = Math.round((asset.intrinsic.width / asset.intrinsic.height) * height);
+
+const Tag = href === false ? "span" : "a";
+const linkProps = href === false ? {} : { href };
 ---
 
-<a
-  href="/"
-  class={`inline-flex items-center gap-2.5 font-semibold tracking-tight ${className}`}
+<Tag
+  {...linkProps}
+  class={`inline-flex items-center ${className}`}
   aria-label="CloudoX home"
 >
-  <svg
-    class={sizeClasses.box}
-    viewBox="0 0 64 48"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    aria-hidden="true"
-  >
-    <path
-      d="M14 35h-1.5a8.5 8.5 0 0 1-1.4-16.88A11 11 0 0 1 32.4 14"
-      stroke="currentColor"
-      stroke-width="2.6"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      fill="none"
+  <picture>
+    <source srcset={asset.dark} media="(prefers-color-scheme: dark)" />
+    <img
+      src={asset.bright}
+      alt="CloudoX"
+      width={width}
+      height={height}
+      style={`height: ${height}px; width: auto;`}
+      loading={loading}
+      decoding="async"
+      draggable="false"
     />
-    <rect
-      x="24"
-      y="14"
-      width="26"
-      height="28"
-      rx="2.5"
-      stroke="currentColor"
-      stroke-width="2.6"
-      stroke-linejoin="round"
-      fill="none"
-    />
-    <line x1="29" y1="22" x2="45" y2="22" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
-    <line x1="29" y1="28" x2="45" y2="28" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
-    <line x1="29" y1="34" x2="40" y2="34" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
-  </svg>
-
-  {withWordmark && (
-    <span class={`leading-none ${sizeClasses.text}`}>
-      Cloudo<span style="color: var(--accent);">X</span>
-    </span>
-  )}
-</a>
+  </picture>
+</Tag>
