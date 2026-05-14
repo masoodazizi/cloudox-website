@@ -3,6 +3,7 @@ import BaseLayout from "@layouts/BaseLayout.astro";
 import Hero from "@components/Hero.astro";
 import Section from "@components/Section.astro";
 import CTA from "@components/CTA.astro";
+import { SITE } from "@/config/site";
 
 const useCases = [
   {
@@ -43,7 +44,7 @@ const useCases = [
     eyebrow="USE CASES"
     title="Built for the people who walk into unfamiliar cloud environments."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
-    secondaryCta={{ label: "How it works", href: "/how-it-works" }}
+    secondaryCta={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 
   <Section>
@@ -68,5 +69,6 @@ const useCases = [
   <CTA
     title="Ready to try CloudoX on a real environment?"
     primary={{ label: "Request Early Access", href: "/contact" }}
+    secondary={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 </BaseLayout>

@@ -1,10 +1,17 @@
 ---
+interface CtaProps {
+  label: string;
+  href: string;
+  /** Force external behaviour. Otherwise inferred from `href`. */
+  external?: boolean;
+}
+
 interface Props {
   eyebrow?: string;
   title: string;
   subtitle?: string;
-  primaryCta?: { label: string; href: string };
-  secondaryCta?: { label: string; href: string };
+  primaryCta?: CtaProps;
+  secondaryCta?: CtaProps;
 }
 
 const {
@@ -14,6 +21,9 @@ const {
   primaryCta,
   secondaryCta,
 } = Astro.props as Props;
+
+const isExternal = (cta: CtaProps) =>
+  cta.external ?? /^https?:\/\//i.test(cta.href);
 ---
 
 <section class="relative overflow-hidden">
@@ -40,7 +50,13 @@ const {
     {(primaryCta || secondaryCta) && (
       <div class="mt-9 flex flex-wrap gap-3">
         {primaryCta && (
-          <a href={primaryCta.href} class="btn btn-primary">
+          <a
+            href={primaryCta.href}
+            class="btn btn-primary"
+            {...(isExternal(primaryCta)
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
+          >
             {primaryCta.label}
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -49,7 +65,13 @@ const {
           </a>
         )}
         {secondaryCta && (
-          <a href={secondaryCta.href} class="btn btn-secondary">
+          <a
+            href={secondaryCta.href}
+            class="btn btn-secondary"
+            {...(isExternal(secondaryCta)
+              ? { target: "_blank", rel: "noopener noreferrer" }
+              : {})}
+          >
             {secondaryCta.label}
           </a>
         )}

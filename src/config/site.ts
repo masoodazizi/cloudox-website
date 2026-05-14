@@ -7,6 +7,12 @@ export const SITE = {
   ogImage: "/og/cloudox-og.svg",
   twitter: "",
   github: "",
+  /**
+   * Booking link for a 1:1 call. Uses Zeeg under the hood; centralising it
+   * here so it can be updated in one place if the scheduling provider
+   * changes.
+   */
+  bookingUrl: "https://zeeg.me/cloudox",
 } as const;
 
 export type NavItem = {
@@ -48,7 +54,7 @@ export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
     title: "Company",
     items: [
       { label: "Early Access", href: "/contact" },
-      { label: "Contact", href: "/contact" },
+      { label: "Book a call", href: "https://zeeg.me/cloudox", external: true },
     ],
   },
 ];

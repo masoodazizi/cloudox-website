@@ -4,6 +4,7 @@ import Hero from "@components/Hero.astro";
 import Section from "@components/Section.astro";
 import FeatureGrid from "@components/FeatureGrid.astro";
 import CTA from "@components/CTA.astro";
+import { SITE } from "@/config/site";
 
 const features = [
   {
@@ -48,7 +49,7 @@ const features = [
     title="A trustworthy discovery platform for cloud teams."
     subtitle="CloudoX collects AWS-native data, normalizes it into a typed knowledge graph, and writes documentation a human would actually trust."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
-    secondaryCta={{ label: "How it works", href: "/how-it-works" }}
+    secondaryCta={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 
   <Section eyebrow="CAPABILITIES" title="What CloudoX does today.">
@@ -86,6 +87,6 @@ const features = [
   <CTA
     title="See CloudoX on a real environment."
     primary={{ label: "Request Early Access", href: "/contact" }}
-    secondary={{ label: "Read the docs", href: "/docs" }}
+    secondary={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 </BaseLayout>

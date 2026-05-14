@@ -4,6 +4,7 @@ import Hero from "@components/Hero.astro";
 import Section from "@components/Section.astro";
 import FeatureGrid from "@components/FeatureGrid.astro";
 import CTA from "@components/CTA.astro";
+import { SITE } from "@/config/site";
 
 const capabilities = [
   {
@@ -54,7 +55,7 @@ const steps = [
     title="Understand any cloud environment in under 30 minutes."
     subtitle="CloudoX scans AWS Organizations across accounts and regions, builds a structured knowledge model, and generates stakeholder-ready discovery reports."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
-    secondaryCta={{ label: "How it works", href: "/how-it-works" }}
+    secondaryCta={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 
   <Section
@@ -93,6 +94,6 @@ const steps = [
     title="Be among the first consultants to use CloudoX."
     subtitle="Early access for cloud consultants, architects, and engineers. No marketing fluff — just real environments and real reports."
     primary={{ label: "Request Early Access", href: "/contact" }}
-    secondary={{ label: "Read the docs", href: "/docs" }}
+    secondary={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 </BaseLayout>

@@ -4,6 +4,7 @@ import Hero from "@components/Hero.astro";
 import Section from "@components/Section.astro";
 import CodeBlock from "@components/CodeBlock.astro";
 import CTA from "@components/CTA.astro";
+import { SITE } from "@/config/site";
 
 const flow = [
   {
@@ -93,5 +94,6 @@ const reportStructure = `aws-discovery-report/
   <CTA
     title="Ready to see CloudoX in action?"
     primary={{ label: "Request Early Access", href: "/contact" }}
+    secondary={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 </BaseLayout>
