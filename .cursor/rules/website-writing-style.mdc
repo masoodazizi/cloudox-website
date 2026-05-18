@@ -1,0 +1,67 @@
+---
+description: Writing style for CloudoX website blog posts, articles, and long-form docs
+globs: src/content/**/*.md,src/content/**/*.mdx
+alwaysApply: false
+---
+
+# Website writing style
+
+Write like a founder/engineer sharing a clear thought — not a marketing team
+launching a feature.
+
+## Voice and tone
+
+- Concise, clear, humanized. Short paragraphs.
+- Natural and professional. No buzzwords ("revolutionary",
+  "game-changing", "supercharge", "unlock", "leverage").
+- No hype, no exaggerated claims, no emojis or decorative symbols.
+- One clear idea or problem per post. Don't bundle multiple announcements.
+- Authenticity > polish. Credibility > excitement.
+
+## What to say (and not say)
+
+- Cover one specific topic and stop. Resist the urge to preview the full
+  roadmap or list every adjacent feature.
+- Don't expose the full product vision early. Keep room for future posts.
+- State uncertainty plainly ("on the roadmap", "we're exploring") rather
+  than promising delivery.
+- Prefer concrete examples and observable details to abstract claims.
+
+## Formatting
+
+- Headings: sentence case (`## Why we built this`, not `## Why We Built This`).
+- Lists are fine, but don't list-ify everything; prefer prose where it reads
+  better.
+- Code fences and internal Markdown links work; no custom shortcodes.
+- Bold sparingly — for the key noun in a sentence, not for emphasis spam.
+- Length: aim for what the idea needs. ~250–500 words is usually right for a
+  blog post; a doc page can be longer when the topic warrants it.
+
+## Frontmatter checklist (blog)
+
+```yaml
+---
+title: "Short, specific, no clickbait"
+description: "One sentence summarising the post"
+pubDate: 2026-05-18
+author: "The CloudoX team"
+tags: ["one", "two", "three"]
+draft: false
+---
+```
+
+`description` is shown on the index card and in `<meta>` — write it like a
+human would describe the post, not like an SEO blurb.
+
+## Audience
+
+Both technical (consultants, engineers, architects) and non-technical
+(decision-makers reading the marketing site). Explain just enough for the
+non-technical reader without diluting the technical core.
+
+## Quick sanity check before publishing
+
+- Could a real founder send this to a customer without it sounding generated?
+- Is there exactly one takeaway?
+- Did I avoid promising features that aren't shipped?
+- Did I cut every adjective that doesn't earn its place?
