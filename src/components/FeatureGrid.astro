@@ -6,6 +6,9 @@ interface Feature {
   description: string;
   icon?: string;
   href?: string;
+  badge?: string;
+  badgeVariant?: "accent" | "muted";
+  ctaLabel?: string;
 }
 
 interface Props {
@@ -29,6 +32,9 @@ const colsClass =
       description={f.description}
       icon={f.icon}
       href={f.href}
+      badge={f.badge}
+      badgeVariant={f.badgeVariant}
+      ctaLabel={f.ctaLabel}
     />
   ))}
 </div>

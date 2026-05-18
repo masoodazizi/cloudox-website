@@ -44,6 +44,43 @@ const steps = [
       "Generate a clean Markdown discovery report — ready to share with stakeholders.",
   },
 ];
+
+const reportingTargets = [
+  {
+    title: "CloudoX Dashboard",
+    description:
+      "Browse reports with sidebar navigation, search, and theming. A public preview is live with a sanitised example report.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="14" x2="15" y2="14"/></svg>`,
+    href: "https://preview.cloudox.io",
+    badge: "Live preview",
+    ctaLabel: "Open dashboard",
+  },
+  {
+    title: "Git repository",
+    description:
+      "Commit reports as plain Markdown. Diff, review, and version discovery documentation like code.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="19" r="2.5"/><path d="M6 8.5v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-3"/><line x1="12" y1="14.5" x2="12" y2="16.5"/></svg>`,
+    href: "https://github.com/masoodazizi/cloudox-example-report",
+    badge: "Live example",
+    ctaLabel: "View example on GitHub",
+  },
+  {
+    title: "Confluence",
+    description:
+      "Publish reports into Confluence spaces and pages alongside the rest of your team documentation.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16a4 4 0 0 0 4 4h3l3-4-3-4H7a4 4 0 0 0-4 4z"/><path d="M21 8a4 4 0 0 0-4-4h-3l-3 4 3 4h3a4 4 0 0 0 4-4z"/></svg>`,
+    badge: "Planned",
+    badgeVariant: "muted" as const,
+  },
+  {
+    title: "Notion",
+    description:
+      "Push reports into a Notion workspace as native pages, organised by account and environment.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6a2 2 0 0 0-2 2z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`,
+    badge: "Planned",
+    badgeVariant: "muted" as const,
+  },
+];
 ---
 
 <BaseLayout
@@ -88,6 +125,14 @@ const steps = [
     <div class="mt-10 flex justify-center">
       <a href="/how-it-works" class="btn btn-secondary">Read the full workflow</a>
     </div>
+  </Section>
+
+  <Section
+    eyebrow="WHERE REPORTS LIVE"
+    title="Discovery reports, where your team already works."
+    subtitle="CloudoX writes clean Markdown, so the same report can live in a hosted dashboard, your Git repository, or the documentation tool your team already uses. Two destinations are live today; more are on the roadmap."
+  >
+    <FeatureGrid features={reportingTargets} cols={4} />
   </Section>
 
   <CTA

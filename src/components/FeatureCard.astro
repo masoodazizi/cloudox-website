@@ -4,16 +4,57 @@ interface Props {
   description: string;
   icon?: string;
   href?: string;
+  /**
+   * Optional pill rendered in the top-right corner of the card. Used to mark
+   * publishing targets as "Live preview" / "Live example" / "Coming soon" on
+   * the homepage. Variant controls the color treatment.
+   */
+  badge?: string;
+  badgeVariant?: "accent" | "muted";
+  /**
+   * Overrides the default "Learn more" CTA label rendered when `href` is set.
+   * Has no effect when `href` is omitted.
+   */
+  ctaLabel?: string;
 }
 
-const { title, description, icon, href } = Astro.props as Props;
+const {
+  title,
+  description,
+  icon,
+  href,
+  badge,
+  badgeVariant = "accent",
+  ctaLabel = "Learn more",
+} = Astro.props as Props;
+
 const Tag = href ? "a" : "div";
+
+// Auto-detect external URLs so the card opens them in a new tab with safe
+// rel attributes. Internal links (/contact, /docs, …) keep default behavior.
+const isExternal = !!href && /^https?:\/\//i.test(href);
+const externalAttrs = isExternal
+  ? { target: "_blank", rel: "noopener noreferrer" }
+  : {};
+
+const badgeStyle =
+  badgeVariant === "muted"
+    ? "background: var(--bg-muted); color: var(--fg-muted); border: 1px solid var(--border);"
+    : "background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);";
 ---
 
 <Tag
-  {...(href ? { href } : {})}
-  class={`surface block p-6 transition ${href ? "hover:-translate-y-0.5 hover:shadow-sm" : ""}`}
+  {...(href ? { href, ...externalAttrs } : {})}
+  class={`surface relative block p-6 transition ${href ? "hover:-translate-y-0.5 hover:shadow-sm" : ""}`}
 >
+  {badge && (
+    <span
+      class="absolute top-4 right-4 rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.1em]"
+      style={badgeStyle}
+    >
+      {badge}
+    </span>
+  )}
   {icon && (
     <div
       class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-lg"
@@ -27,9 +68,16 @@ const Tag = href ? "a" : "div";
   <p class="text-sm muted leading-relaxed">{description}</p>
   {href && (
     <span class="mt-4 inline-flex items-center gap-1 text-sm font-medium" style="color: var(--accent);">
-      Learn more
+      {ctaLabel}
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <polyline points="9 18 15 12 9 6"></polyline>
+        {isExternal ? (
+          <>
+            <path d="M7 17 17 7"></path>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </>
+        ) : (
+          <polyline points="9 18 15 12 9 6"></polyline>
+        )}
       </svg>
     </span>
   )}
