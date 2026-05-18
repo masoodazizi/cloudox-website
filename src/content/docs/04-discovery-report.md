@@ -54,3 +54,24 @@ Avoided:
 > 3 EC2 instances and 1 database were found.
 
 CloudoX prioritizes meaningful insight over raw inventory.
+
+## Where reports live
+
+Because the output is plain Markdown, the same report can be published to
+whichever surface your team actually uses. Two destinations are live today:
+
+- **CloudoX Dashboard** — a hosted preview at
+  [preview.cloudox.io](https://preview.cloudox.io) with sidebar navigation,
+  search, and light/dark theming. Useful for sharing a polished read-only
+  view with stakeholders.
+- **Git repository** — the report is just files. Commit it to a normal Git
+  repo and diff, review, and version it like code. A sanitised public
+  example lives at
+  [github.com/masoodazizi/cloudox-example-report](https://github.com/masoodazizi/cloudox-example-report).
+
+Confluence and Notion integrations are on the roadmap so reports can land
+directly in the documentation tool your team already uses, without an extra
+copy step.
+
+The publishing surface is intentionally decoupled from the report format:
+new destinations slot in without changing the report itself.
