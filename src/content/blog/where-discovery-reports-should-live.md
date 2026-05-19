@@ -22,7 +22,7 @@ We have two live destinations a customer can look at right now.
 
 A **hosted dashboard** at [preview.cloudox.io](https://preview.cloudox.io) — sidebar navigation, search, light and dark mode, secure by default. It is the polished read-only view we would hand to a stakeholder.
 
-A **Git repository** is the second. Reports are just files; treat them like code. A sanitised public example lives at [github.com/masoodazizi/cloudox-example-report](https://github.com/masoodazizi/cloudox-example-report) — the same Markdown that comes out of a real run, with identifiers replaced. Diffable, reviewable, versioned.
+A **Git repository** is the second. Reports are just files; treat them like code. A sanitised public example lives at [github.com/cloudox-ai/cloudox-public-examples](https://github.com/cloudox-ai/cloudox-public-examples) — the same Markdown that comes out of a real run, with identifiers replaced. Diffable, reviewable, versioned.
 
 Between those two, most of the early conversations we are having are covered.
 

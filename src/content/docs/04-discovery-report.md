@@ -67,7 +67,7 @@ whichever surface your team actually uses. Two destinations are live today:
 - **Git repository** — the report is just files. Commit it to a normal Git
   repo and diff, review, and version it like code. A sanitised public
   example lives at
-  [github.com/masoodazizi/cloudox-example-report](https://github.com/masoodazizi/cloudox-example-report).
+  [github.com/cloudox-ai/cloudox-public-examples](https://github.com/cloudox-ai/cloudox-public-examples).
 
 Confluence and Notion integrations are on the roadmap so reports can land
 directly in the documentation tool your team already uses, without an extra
