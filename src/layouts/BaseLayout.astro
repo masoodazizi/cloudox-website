@@ -10,6 +10,8 @@ export interface Props {
   image?: string;
   canonical?: string;
   noindex?: boolean;
+  /** JSON-LD blocks to inject in addition to the base Organization/WebSite schemas. */
+  jsonLd?: object[];
 }
 
 const {
@@ -18,11 +20,55 @@ const {
   image = SITE.ogImage,
   canonical,
   noindex = false,
+  jsonLd = [],
 } = Astro.props as Props;
 
 const fullTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
 const canonicalURL = canonical ?? new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString();
 const ogImageURL = new URL(image, Astro.site ?? SITE.url).toString();
+
+// Base structured data present on every page.
+const baseSchemas = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": `${SITE.url}/#organization`,
+    name: SITE.name,
+    url: SITE.url,
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE.url}/brand/logo/logo-v1-bright.png`,
+      width: 892,
+      height: 210,
+    },
+    description: SITE.description,
+    contactPoint: {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      url: `${SITE.url}/contact`,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE.url}/#website`,
+    url: SITE.url,
+    name: SITE.name,
+    description: SITE.tagline,
+    publisher: { "@id": `${SITE.url}/#organization` },
+    // SiteNavigationElement tells Google which pages to surface as sitelinks.
+    hasPart: [
+      { "@type": "SiteNavigationElement", name: "Product",      url: `${SITE.url}/product/` },
+      { "@type": "SiteNavigationElement", name: "How It Works", url: `${SITE.url}/how-it-works/` },
+      { "@type": "SiteNavigationElement", name: "Use Cases",    url: `${SITE.url}/use-cases/` },
+      { "@type": "SiteNavigationElement", name: "Docs",         url: `${SITE.url}/docs/` },
+      { "@type": "SiteNavigationElement", name: "Blog",         url: `${SITE.url}/blog/` },
+      { "@type": "SiteNavigationElement", name: "Early Access", url: `${SITE.url}/contact/` },
+    ],
+  },
+];
+
+const allSchemas = [...baseSchemas, ...jsonLd];
 ---
 
 <!doctype html>
@@ -63,6 +109,11 @@ const ogImageURL = new URL(image, Astro.site ?? SITE.url).toString();
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
     />
+
+    {allSchemas.map((schema) => (
+      <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+    <slot name="head" />
   </head>
   <body class="min-h-screen flex flex-col antialiased">
     <a

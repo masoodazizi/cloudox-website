@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
+import { SITE } from "@/config/site";
 import type { GetStaticPaths } from "astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -11,7 +12,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }));
 };
 
-const { doc } = Astro.props as { doc: Awaited<ReturnType<typeof getCollection<"docs">>>[number] };
+const { doc } = Astro.props as {
+  doc: Awaited<ReturnType<typeof getCollection<"docs">>>[number];
+};
 const { Content } = await render(doc);
 
 const allDocs = await getCollection("docs", ({ data }) => !data.draft);
@@ -33,9 +36,109 @@ const sections = Object.keys(grouped).sort((a, b) => {
 for (const key of Object.keys(grouped)) {
   grouped[key].sort((a, b) => (a.data.order ?? 100) - (b.data.order ?? 100));
 }
+
+const pageUrl = `${SITE.url}/docs/${doc.id}/`;
+
+// BreadcrumbList — present on every doc page.
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home",       item: SITE.url },
+    { "@type": "ListItem", position: 2, name: "Docs",       item: `${SITE.url}/docs/` },
+    { "@type": "ListItem", position: 3, name: doc.data.title, item: pageUrl },
+  ],
+};
+
+// FAQPage — only for the FAQ doc; extracts h2 + following paragraphs via headings.
+// We hard-code the Q&A pairs here because the rendered Markdown is the canonical
+// source and the JSON-LD needs clean plain text.
+const faqSchema =
+  doc.id === "07-faq"
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "Does CloudoX modify anything in my AWS environment?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "No. CloudoX uses read-only access. It doesn't create, modify, or delete anything in customer environments.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Does CloudoX support AWS Organizations and multiple accounts?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes. CloudoX is designed for multi-account AWS Organizations environments and tracks workloads, networking, and dependencies across accounts.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Does CloudoX support multiple regions?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes. Resources, networking, and dependencies are tracked per region.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Does CloudoX use AI?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes — for summarization, grouping, classification, and pattern recognition. AI does not invent ownership, environments, or architecture, and every important finding is backed by AWS-native evidence or clearly labeled as inferred.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What does the report look like?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "A Markdown directory with eight predictable sections: executive summary, architecture overview, environment structure, networking, security overview, observability, findings and risks, and assumptions and unknowns.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Can I keep my report?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Yes. Reports are plain Markdown files. You can commit them to a repo, drop them into Confluence, or share them as you would any document.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Will CloudoX support Azure or GCP?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Azure and GCP are part of the roadmap. The architecture is designed to be multi-cloud.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Is CloudoX a CMDB or security scanner?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "No. CloudoX is a cloud discovery and documentation platform. It is intentionally not a CMDB, vulnerability scanner, or compliance product.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "How do I get access?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Request early access at cloudox.io/contact — we're working hands-on with a small group of consultants and engineers to shape the platform.",
+            },
+          },
+        ],
+      }
+    : null;
+
+const jsonLd = faqSchema ? [breadcrumbSchema, faqSchema] : [breadcrumbSchema];
 ---
 
-<BaseLayout title={doc.data.title} description={doc.data.description}>
+<BaseLayout title={doc.data.title} description={doc.data.description} jsonLd={jsonLd}>
   <div class="container-page py-12 md:py-16 grid md:grid-cols-12 gap-10">
     <aside class="md:col-span-3 md:sticky md:top-20 md:self-start">
       <nav aria-label="Docs navigation" class="space-y-6 text-sm">
@@ -48,6 +151,7 @@ for (const key of Object.keys(grouped)) {
                   <a
                     href={`/docs/${d.id}`}
                     class="block py-1"
+                    aria-current={d.id === doc.id ? "page" : undefined}
                     style={`color: ${d.id === doc.id ? "var(--fg)" : "var(--fg-muted)"}; ${d.id === doc.id ? "font-weight: 600;" : ""}`}
                   >
                     {d.data.title}

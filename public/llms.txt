@@ -1,0 +1,41 @@
+# CloudoX
+
+> Cloud Discovery, Intelligent Documentation.
+
+CloudoX helps cloud consultants, architects, and engineers understand unfamiliar AWS environments in under 30 minutes and generate stakeholder-ready discovery reports — without inventing architecture or ownership.
+
+## What CloudoX does
+
+- Scans AWS Organizations across accounts and regions with read-only access
+- Builds a typed knowledge graph from AWS-native sources (Config, Organizations, Resource Explorer, service APIs, resource tags)
+- Runs deterministic interpretation: environment classification, internet-exposure analysis, workload grouping
+- Generates a structured Markdown discovery report with eight predictable sections: executive summary, architecture, environment structure, networking, security, observability, findings and risks, assumptions and unknowns
+
+## Who it is for
+
+- Consultants and solutions architects doing environment discovery at the start of an engagement
+- Cloud engineers inheriting an unfamiliar AWS account or Organization
+- Cloud platform and SRE teams auditing their own AWS footprint
+
+## Key principles
+
+- Evidence-based: every finding cites AWS-native data or is explicitly labeled as inferred/unknown
+- Read-only: CloudoX never creates, modifies, or deletes anything in a customer environment
+- Deterministic-first: AI is used for summarization and classification, not for inventing facts
+- Multi-account and multi-region by design
+
+## Product status
+
+- AWS-first today; multi-cloud (Azure, GCP) is on the roadmap
+- Currently in early access with a small group of consultants and engineers
+
+## Key pages
+
+- Homepage: https://cloudox.io/
+- Product overview: https://cloudox.io/product/
+- How it works: https://cloudox.io/how-it-works/
+- Use cases: https://cloudox.io/use-cases/
+- Documentation: https://cloudox.io/docs/
+- Blog: https://cloudox.io/blog/
+- Early access / contact: https://cloudox.io/contact/
+- Book a call: https://zeeg.me/cloudox

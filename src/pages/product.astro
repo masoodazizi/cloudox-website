@@ -6,6 +6,15 @@ import FeatureGrid from "@components/FeatureGrid.astro";
 import CTA from "@components/CTA.astro";
 import { SITE } from "@/config/site";
 
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home",    item: SITE.url },
+    { "@type": "ListItem", position: 2, name: "Product", item: `${SITE.url}/product/` },
+  ],
+};
+
 const features = [
   {
     title: "AWS Organizations awareness",
@@ -78,8 +87,9 @@ const reportingTargets = [
 ---
 
 <BaseLayout
-  title="Product"
-  description="CloudoX is a structured cloud discovery and documentation platform — evidence-based, multi-account, multi-region."
+  title="AWS Cloud Discovery & Documentation Platform"
+  description="CloudoX is a structured cloud discovery and documentation platform — evidence-based, multi-account, multi-region AWS discovery with stakeholder-ready Markdown reports."
+  jsonLd={[breadcrumb]}
 >
   <Hero
     eyebrow="PRODUCT"

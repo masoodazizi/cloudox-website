@@ -5,6 +5,15 @@ import Section from "@components/Section.astro";
 import CTA from "@components/CTA.astro";
 import { SITE } from "@/config/site";
 
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home",      item: SITE.url },
+    { "@type": "ListItem", position: 2, name: "Use Cases", item: `${SITE.url}/use-cases/` },
+  ],
+};
+
 const useCases = [
   {
     persona: "Consultants & solutions architects",
@@ -37,8 +46,9 @@ const useCases = [
 ---
 
 <BaseLayout
-  title="Use Cases"
-  description="How consultants, cloud engineers, and platform teams use CloudoX to understand AWS environments faster."
+  title="Use Cases — Consultants, Cloud Engineers & Platform Teams"
+  description="How consultants, cloud engineers, and platform teams use CloudoX to understand AWS environments faster and generate stakeholder-ready discovery reports."
+  jsonLd={[breadcrumb]}
 >
   <Hero
     eyebrow="USE CASES"

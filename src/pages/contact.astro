@@ -10,11 +10,21 @@ import { SITE } from "@/config/site";
 // to ship to the client.
 const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
 const formConfigured = WEB3FORMS_KEY.length > 0;
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home",         item: SITE.url },
+    { "@type": "ListItem", position: 2, name: "Early Access", item: `${SITE.url}/contact/` },
+  ],
+};
 ---
 
 <BaseLayout
-  title="Early Access"
+  title="Request Early Access to CloudoX"
   description="Request early access to CloudoX — AI-powered cloud discovery and documentation for consultants and cloud engineers."
+  jsonLd={[breadcrumb]}
 >
   <Hero
     eyebrow="EARLY ACCESS"
