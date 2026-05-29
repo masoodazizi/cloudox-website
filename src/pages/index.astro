@@ -8,22 +8,51 @@ import { SITE } from "@/config/site";
 
 const capabilities = [
   {
-    title: "Multi-account, multi-region",
+    title: "Evidence-grounded knowledge",
     description:
-      "Discover AWS Organizations across accounts and regions in a single, coherent view.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>`,
-  },
-  {
-    title: "Evidence-based",
-    description:
-      "Every important finding cites tags, Config data, or AWS-native signals — never invented.",
+      "A typed knowledge graph of accounts, environments, workloads, and relationships — every important finding cites AWS-native evidence, never invented.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/><path d="m9 12 2 2 4-4"/></svg>`,
   },
   {
-    title: "Stakeholder-ready reports",
+    title: "Interpretation, not inventory",
     description:
-      "Clean Markdown documentation: architecture, networking, security, observability, findings.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`,
+      "CloudoX explains how the environment works — production workloads, internet exposure, ownership signals — instead of listing resources.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>`,
+  },
+  {
+    title: "Documentation & dashboard",
+    description:
+      "Read the same knowledge as stakeholder-ready Markdown, architecture diagrams, or in a hosted dashboard. One source of truth, many views.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="14" x2="15" y2="14"/></svg>`,
+  },
+];
+
+const questions = [
+  "What exists?",
+  "How does it work?",
+  "Why does it exist?",
+  "What changed?",
+  "How is it evolving?",
+  "What should we consider next?",
+];
+
+const flow = ["Cloud environment", "Discovery", "Knowledge graph", "Interpretation", "Documentation & insights"];
+
+const direction = [
+  {
+    title: "Environment evolution",
+    description:
+      "Designed for continuous understanding — tracking what changed and how an environment evolves over time, not just a one-time snapshot.",
+  },
+  {
+    title: "Cost intelligence",
+    description:
+      "Costs explained in architectural context — the drivers behind spend and where optimization opportunities sit. Not a billing tool or a Cost Explorer replacement.",
+  },
+  {
+    title: "Stakeholder views & search",
+    description:
+      "Different lenses on the same knowledge for security, operations, and leadership — plus search across everything CloudoX understands.",
   },
 ];
 
@@ -34,41 +63,66 @@ const steps = [
       "Read-only access to an AWS Organization, account set, or single account.",
   },
   {
-    title: "Discover",
+    title: "Discover & model",
     description:
       "Collect AWS-native data across accounts and regions and build a typed knowledge graph.",
   },
   {
-    title: "Report",
+    title: "Understand",
     description:
-      "Generate a clean Markdown discovery report — ready to share with stakeholders.",
+      "Read the interpreted environment as a stakeholder-ready report and an architecture view.",
   },
 ];
 ---
 
 <BaseLayout
-  description="CloudoX scans AWS Organizations across accounts and regions, builds a structured knowledge model, and generates stakeholder-ready discovery reports. Cloud Discovery, Intelligent Documentation."
+  description="CloudoX is the intelligent cloud knowledge platform that continuously discovers, documents, analyzes, and tracks the evolution of your cloud infrastructure. Understand any cloud environment in under 30 minutes."
 >
   <Hero
-    eyebrow="CLOUD DISCOVERY, INTELLIGENT DOCUMENTATION"
+    eyebrow="INTELLIGENT CLOUD KNOWLEDGE PLATFORM"
     title="Understand any cloud environment in under 30 minutes."
-    subtitle="CloudoX scans AWS Organizations across accounts and regions, builds a structured knowledge model, and generates stakeholder-ready discovery reports."
+    subtitle="The intelligent cloud knowledge platform that continuously discovers, documents, analyzes, and tracks the evolution of your cloud infrastructure."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
     secondaryCta={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 
   <Section
-    eyebrow="WHY CLOUDOX"
-    title="A trustworthy discovery platform — not a console crawler."
-    subtitle="AWS-first today. Built to evolve to Azure, GCP, and broader multi-cloud."
+    eyebrow="WHAT CLOUDOX DOES"
+    title="A cloud knowledge platform — not just a documentation tool."
+    subtitle="CloudoX turns AWS-native evidence into a structured knowledge graph, then makes that knowledge readable. AWS-first today, built to evolve to Azure, GCP, and broader multi-cloud."
   >
     <FeatureGrid features={capabilities} cols={3} />
   </Section>
 
   <Section
+    eyebrow="THE QUESTIONS IT ANSWERS"
+    title="From raw cloud APIs to real understanding."
+    subtitle="CloudoX builds and maintains cloud knowledge in a clear path — so you can answer the questions that actually matter."
+    muted
+  >
+    <ol class="flex flex-wrap items-center gap-x-2 gap-y-3 mb-10">
+      {flow.map((node, i) => (
+        <li class="flex items-center gap-2">
+          <span class="surface px-3 py-2 text-sm font-medium">{node}</span>
+          {i < flow.length - 1 && (
+            <span aria-hidden="true" class="font-mono text-sm" style="color: var(--accent);">→</span>
+          )}
+        </li>
+      ))}
+    </ol>
+    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {questions.map((q) => (
+        <li class="surface flex items-center gap-3 p-4">
+          <span aria-hidden="true" class="font-mono text-sm" style="color: var(--accent);">?</span>
+          <span class="text-sm font-medium">{q}</span>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section
     eyebrow="HOW IT WORKS"
     title="From AWS APIs to a discovery report."
-    muted
   >
     <ol class="grid gap-5 md:grid-cols-3">
       {steps.map((step, i) => (
@@ -86,6 +140,23 @@ const steps = [
     </ol>
     <div class="mt-10 flex justify-center">
       <a href="/how-it-works" class="btn btn-secondary">Read the full workflow</a>
+    </div>
+  </Section>
+
+  <Section
+    eyebrow="WHERE IT'S HEADING"
+    title="A foundation that grows beyond documentation."
+    subtitle="Discovery and documentation are the start. Because everything is built on a knowledge graph, the same foundation extends to new capabilities over time. These describe direction — not features available today."
+    muted
+  >
+    <div class="grid gap-5 md:grid-cols-3">
+      {direction.map((d) => (
+        <div class="surface p-6">
+          <span class="eyebrow mb-3 block" style="color: var(--fg-muted);">On the roadmap</span>
+          <h3 class="text-base font-semibold mb-2">{d.title}</h3>
+          <p class="text-sm muted leading-relaxed">{d.description}</p>
+        </div>
+      ))}
     </div>
   </Section>
 

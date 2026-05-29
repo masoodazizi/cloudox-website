@@ -17,34 +17,34 @@ const breadcrumb = {
 
 const features = [
   {
-    title: "AWS Organizations awareness",
+    title: "Multi-account, multi-region discovery",
     description:
-      "Discover the org tree, accounts, and shared services with environment classification.",
-  },
-  {
-    title: "Multi-region resource discovery",
-    description:
-      "Capture compute, networking, data, IAM, and DNS resources where they actually live.",
+      "Discover the AWS Organization tree, accounts, and shared services across regions — compute, networking, data, IAM, and DNS where they actually live.",
   },
   {
     title: "Typed knowledge graph",
     description:
-      "Resources, environments, workloads, and systems are first-class entities with explicit relationships.",
+      "Resources, environments, workloads, and systems are first-class entities with explicit, evidence-bearing relationships — the canonical record of what was discovered.",
   },
   {
-    title: "Environment classification",
+    title: "Interpretation",
     description:
-      "Production, staging, development, and sandbox — driven by tags, naming, and account-level signals.",
+      "Deterministic logic classifies environments, groups workloads, and detects internet exposure — so the output explains how the environment works, not just what exists.",
   },
   {
-    title: "Internet exposure detection",
+    title: "Intelligent documentation",
     description:
-      "Identify which resources are reachable from the internet and the path that exposes them.",
+      "Predictable Markdown structure: executive summary, architecture, networking, security, observability, findings, and assumptions.",
   },
   {
-    title: "Stakeholder-ready reports",
+    title: "Architecture visualization",
     description:
-      "Predictable Markdown structure: executive summary, architecture, networking, security, findings.",
+      "Diagrams generated from the knowledge graph — architecture, networking, and account structure — embedded in the report to support understanding.",
+  },
+  {
+    title: "Dashboard experience",
+    description:
+      "Browse the same knowledge in a hosted, read-only dashboard with navigation, search, and theming — a public preview is live today.",
   },
 ];
 
@@ -87,19 +87,23 @@ const reportingTargets = [
 ---
 
 <BaseLayout
-  title="AWS Cloud Discovery & Documentation Platform"
-  description="CloudoX is a structured cloud discovery and documentation platform — evidence-based, multi-account, multi-region AWS discovery with stakeholder-ready Markdown reports."
+  title="Intelligent Cloud Knowledge Platform"
+  description="CloudoX is an intelligent cloud knowledge platform — evidence-based, multi-account, multi-region AWS discovery that builds a typed knowledge graph and makes it readable as documentation, diagrams, and a dashboard."
   jsonLd={[breadcrumb]}
 >
   <Hero
     eyebrow="PRODUCT"
-    title="A trustworthy discovery platform for cloud teams."
-    subtitle="CloudoX collects AWS-native data, normalizes it into a typed knowledge graph, and writes documentation a human would actually trust."
+    title="A cloud knowledge platform for the people who run cloud."
+    subtitle="CloudoX collects AWS-native data, builds a typed knowledge graph, interprets it, and makes that understanding readable — as documentation a human would trust, diagrams, and a dashboard."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
     secondaryCta={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 
-  <Section eyebrow="CAPABILITIES" title="What CloudoX does today.">
+  <Section
+    eyebrow="CAPABILITIES"
+    title="What CloudoX does today."
+    subtitle="Discovery, a knowledge graph, interpretation, documentation, diagrams, and a dashboard — built on one evidence-grounded foundation."
+  >
     <FeatureGrid features={features} cols={3} />
   </Section>
 
@@ -113,15 +117,48 @@ const reportingTargets = [
   </Section>
 
   <Section
+    eyebrow="WHERE IT'S HEADING"
+    title="A foundation that grows beyond documentation."
+    subtitle="Because everything is built on a knowledge graph, the same foundation extends over time. These describe direction — not features available today."
+  >
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="surface p-6">
+        <span class="eyebrow mb-3 block" style="color: var(--fg-muted);">On the roadmap</span>
+        <h3 class="text-base font-semibold mb-2">Environment evolution</h3>
+        <p class="text-sm muted">
+          Designed for continuous understanding — tracking what changed and how
+          an environment evolves over time, not just a one-time snapshot.
+        </p>
+      </div>
+      <div class="surface p-6">
+        <span class="eyebrow mb-3 block" style="color: var(--fg-muted);">On the roadmap</span>
+        <h3 class="text-base font-semibold mb-2">Cost intelligence</h3>
+        <p class="text-sm muted">
+          Costs explained in architectural context — the drivers behind spend
+          and where to optimize. Not a billing tool or a Cost Explorer replacement.
+        </p>
+      </div>
+      <div class="surface p-6">
+        <span class="eyebrow mb-3 block" style="color: var(--fg-muted);">On the roadmap</span>
+        <h3 class="text-base font-semibold mb-2">Stakeholder views & search</h3>
+        <p class="text-sm muted">
+          Different lenses on the same knowledge for security, operations, and
+          leadership — plus search across everything CloudoX understands.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <Section
     eyebrow="WHAT CLOUDOX IS NOT"
-    title="A discovery platform — nothing more, nothing less."
+    title="A focused platform — clear about its boundaries."
   >
     <div class="grid md:grid-cols-3 gap-5">
       <div class="surface p-6">
         <h3 class="text-base font-semibold mb-2">Not a CMDB</h3>
         <p class="text-sm muted">
-          Not a system of record for every IT asset. CloudoX builds working
-          understanding for a moment in time.
+          Not a system of record for every IT asset. CloudoX builds evidence-grounded
+          understanding of how an environment actually works.
         </p>
       </div>
       <div class="surface p-6">
@@ -131,9 +168,10 @@ const reportingTargets = [
         </p>
       </div>
       <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Not a diagram tool</h3>
+        <h3 class="text-base font-semibold mb-2">Not a diagram-only tool</h3>
         <p class="text-sm muted">
-          CloudoX produces structured Markdown documentation. Understanding first; visuals support it.
+          CloudoX generates architecture diagrams, but they support the
+          understanding — the knowledge graph and documentation come first.
         </p>
       </div>
     </div>

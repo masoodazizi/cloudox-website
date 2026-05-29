@@ -35,7 +35,11 @@ Azure and GCP are part of the roadmap. The architecture is designed to be multi-
 
 ## Is CloudoX a CMDB or security scanner?
 
-No. CloudoX is a cloud discovery and documentation platform. It is intentionally not a CMDB, vulnerability scanner, or compliance product.
+No. CloudoX is an intelligent cloud knowledge platform — it discovers, interprets, and documents cloud environments. It is intentionally not a CMDB, vulnerability scanner, compliance product, or billing tool.
+
+## Is CloudoX only a documentation tool?
+
+No. Documentation is one way to read the knowledge CloudoX builds. The core is an evidence-grounded knowledge graph; reports, architecture diagrams, and a hosted dashboard are all views on top of it. Continuous understanding (tracking how an environment changes over time) and cost-in-context are directions on the roadmap, not features available today.
 
 ## How do I get access?
 

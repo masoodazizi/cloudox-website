@@ -1,6 +1,6 @@
 ---
 title: "Welcome to CloudoX"
-description: "Why we're building an AI-powered cloud discovery and documentation platform — and what makes it different."
+description: "Why we're building an intelligent cloud knowledge platform — and what makes it different."
 pubDate: 2026-05-07
 author: "The CloudoX team"
 tags: ["cloudox", "discovery", "aws"]
@@ -23,13 +23,15 @@ Generic AI tools haven't solved this. They invent architecture, fabricate owners
 
 ## What CloudoX is
 
-CloudoX is a structured cloud discovery and documentation platform. The MVP focuses on AWS:
+CloudoX is an intelligent cloud knowledge platform. It discovers a cloud environment, builds a typed knowledge graph of what's there and how it connects, and makes that knowledge readable. The MVP focuses on AWS:
 
 - Multi-account AWS Organizations
 - Multi-region discovery
 - A typed knowledge graph with explicit relationships
 - Deterministic interpretation with confidence and evidence
-- Stakeholder-ready Markdown discovery reports
+- Stakeholder-ready Markdown reports, architecture diagrams, and a hosted dashboard
+
+The knowledge graph is the core. Documentation and the dashboard are how you read it today — and because the knowledge sits underneath, the same foundation can grow over time rather than being locked to a single output.
 
 The architecture is intentionally cloud-shaped, not AWS-shaped — Azure and GCP support are next on the roadmap.
 

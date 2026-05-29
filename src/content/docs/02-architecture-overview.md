@@ -45,9 +45,11 @@ Pure functions over the knowledge graph extract relationships and run interprete
 
 This layer never calls AWS and never invents architecture.
 
-## 4. Output Generation Layer
+## 4. Consumption Layer
 
-The graph is rendered into a clean Markdown discovery report:
+The knowledge graph is the foundation; this layer is how people read it. Today that means a clean Markdown discovery report, architecture diagrams, and a hosted dashboard — all rendered from the same graph, never re-derived.
+
+The report has a predictable structure:
 
 - Executive summary
 - Architecture overview
@@ -58,4 +60,4 @@ The graph is rendered into a clean Markdown discovery report:
 - Findings and risks
 - Assumptions and unknowns
 
-Reports are predictable, scannable, and easy to commit alongside code.
+Reports are predictable, scannable, and easy to commit alongside code. Because everything reads from one knowledge graph, additional ways to consume that knowledge can be added without changing the layers beneath.

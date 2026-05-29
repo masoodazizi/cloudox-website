@@ -1,8 +1,8 @@
 export const SITE = {
   name: "CloudoX",
-  tagline: "Cloud Discovery, Intelligent Documentation.",
+  tagline: "Intelligent Cloud Knowledge Platform",
   description:
-    "CloudoX helps consultants and cloud engineers understand cloud environments in under 30 minutes and generate stakeholder-ready discovery reports — AWS-first today, multi-cloud tomorrow.",
+    "CloudoX is the intelligent cloud knowledge platform that continuously discovers, documents, analyzes, and tracks the evolution of your cloud infrastructure. Understand any cloud environment in under 30 minutes — AWS-first today, multi-cloud tomorrow.",
   url: "https://cloudox.io",
   ogImage: "/og/cloudox-og.svg",
   twitter: "",
