@@ -28,33 +28,33 @@ const capabilities = [
 ];
 
 const questions = [
-  "What exists?",
-  "How does it work?",
-  "Why does it exist?",
-  "What changed?",
-  "How is it evolving?",
-  "What should we consider next?",
+  {
+    q: "What exists?",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>`,
+  },
+  {
+    q: "How does it work?",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915Z"/><circle cx="12" cy="12" r="3"/></svg>`,
+  },
+  {
+    q: "Why does it exist?",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>`,
+  },
+  {
+    q: "What changed?",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/></svg>`,
+  },
+  {
+    q: "How is it evolving?",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
+  },
+  {
+    q: "What should we consider next?",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
+  },
 ];
 
 const flow = ["Cloud environment", "Discovery", "Knowledge graph", "Interpretation", "Documentation & insights"];
-
-const direction = [
-  {
-    title: "Environment evolution",
-    description:
-      "Designed for continuous understanding — tracking what changed and how an environment evolves over time, not just a one-time snapshot.",
-  },
-  {
-    title: "Cost intelligence",
-    description:
-      "Costs explained in architectural context — the drivers behind spend and where optimization opportunities sit. Not a billing tool or a Cost Explorer replacement.",
-  },
-  {
-    title: "Stakeholder views & search",
-    description:
-      "Different lenses on the same knowledge for security, operations, and leadership — plus search across everything CloudoX understands.",
-  },
-];
 
 const steps = [
   {
@@ -110,11 +110,19 @@ const steps = [
         </li>
       ))}
     </ol>
-    <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      {questions.map((q) => (
-        <li class="surface flex items-center gap-3 p-4">
-          <span aria-hidden="true" class="font-mono text-sm" style="color: var(--accent);">?</span>
-          <span class="text-sm font-medium">{q}</span>
+    <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {questions.map(({ q, icon }, i) => (
+        <li class="surface group relative flex items-start gap-4 p-5 transition hover:-translate-y-0.5 hover:shadow-sm">
+          <span
+            class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
+            style="background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);"
+            aria-hidden="true"
+            set:html={icon}
+          />
+          <div>
+            <span class="block font-mono text-xs mb-1" style="color: var(--accent);">{String(i + 1).padStart(2, "0")}</span>
+            <span class="text-base font-semibold leading-snug">{q}</span>
+          </div>
         </li>
       ))}
     </ul>
@@ -140,23 +148,6 @@ const steps = [
     </ol>
     <div class="mt-10 flex justify-center">
       <a href="/how-it-works" class="btn btn-secondary">Read the full workflow</a>
-    </div>
-  </Section>
-
-  <Section
-    eyebrow="WHERE IT'S HEADING"
-    title="A foundation that grows beyond documentation."
-    subtitle="Discovery and documentation are the start. Because everything is built on a knowledge graph, the same foundation extends to new capabilities over time. These describe direction — not features available today."
-    muted
-  >
-    <div class="grid gap-5 md:grid-cols-3">
-      {direction.map((d) => (
-        <div class="surface p-6">
-          <span class="eyebrow mb-3 block" style="color: var(--fg-muted);">On the roadmap</span>
-          <h3 class="text-base font-semibold mb-2">{d.title}</h3>
-          <p class="text-sm muted leading-relaxed">{d.description}</p>
-        </div>
-      ))}
     </div>
   </Section>
 
