@@ -41,6 +41,10 @@ No. CloudoX is an intelligent cloud knowledge platform — it discovers, interpr
 
 No. Documentation is one way to read the knowledge CloudoX builds. The core is an evidence-grounded knowledge graph; reports, architecture diagrams, and a hosted dashboard are all views on top of it. Continuous understanding (tracking how an environment changes over time) and cost-in-context are directions on the roadmap, not features available today.
 
+## Where does the name CloudoX come from?
+
+It started as a play on **Cloud Documentation**: Cloud Documentation → Cloud Docs → Cloudocs → **CloudoX**. The capital `X` keeps the nod to documentation while signalling discovery and exploration — "X marks the spot" for mapping unfamiliar cloud territory. The product has since grown into a cloud knowledge platform, but the name kept its roots.
+
 ## How do I get access?
 
 [Request early access](/contact) — we're working hands-on with a small group of consultants and engineers to shape the platform.
