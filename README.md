@@ -95,7 +95,7 @@ Add a new Markdown file under `src/content/blog/`:
 title: "Your post title"
 description: "One-sentence summary used for SEO and listings."
 pubDate: 2026-05-07
-author: "The Cloudox team"
+author: "The CloudoX team"
 tags: ["aws", "discovery"]
 draft: false
 ---

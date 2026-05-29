@@ -59,9 +59,34 @@ Both technical (consultants, engineers, architects) and non-technical
 (decision-makers reading the marketing site). Explain just enough for the
 non-technical reader without diluting the technical core.
 
+## Confidentiality
+
+Some details belong to the internal knowledge of how CloudoX works and
+should not be exposed on the public website. Discovery strategy, filtering
+heuristics, deduplication rules, prompt engineering specifics, performance
+numbers, cost breakdowns, customer environment data, internal benchmarks,
+roadmap timing, and competitive positioning are confidential by default.
+When a post touches on how the product works:
+
+- **Generalize, don't itemize.** Talk about principles ("we combine deep
+  and broad collection") rather than mechanisms ("we deny-list these
+  CloudFormation types and cap at N per region").
+- **Name only shipped, publicly known capabilities.** If a feature is not
+  already discoverable from the public README, the public GitHub repo, or
+  the marketing site, do not name it on the website yet.
+- **No internal data.** Do not share customer environment sizes, internal
+  performance numbers, cost breakdowns, or roadmap dates.
+- **Skip the cookbook.** Specific service inventories, filter rules,
+  identifier mappings, allow/deny lists, type-coverage lists, and
+  competitive comparisons stay inside the engineering repo.
+
+When in doubt, omit the detail. A post can still be useful at the level
+of "what changed and why it matters" without the underlying mechanism.
+
 ## Quick sanity check before publishing
 
 - Could a real founder send this to a customer without it sounding generated?
 - Is there exactly one takeaway?
 - Did I avoid promising features that aren't shipped?
 - Did I cut every adjective that doesn't earn its place?
+- Did I generalize internal mechanisms rather than exposing them?

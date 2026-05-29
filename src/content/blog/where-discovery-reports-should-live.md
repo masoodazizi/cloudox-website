@@ -1,7 +1,7 @@
 ---
 title: "Where a discovery report should live"
 description: "A report only matters when someone reads it. A short note on why CloudoX writes plain Markdown — and where that report can show up today."
-pubDate: 2026-05-18
+pubDate: 2026-05-12
 author: "The CloudoX team"
 tags: ["cloudox", "reporting", "markdown"]
 ---
