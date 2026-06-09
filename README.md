@@ -28,9 +28,10 @@ cloudox-website/
 ├── package.json
 ├── public/
 │   ├── _headers               # Cloudflare Pages headers
-│   ├── favicon.svg
+│   ├── favicon.png            # Browser tab icon (v4 "CdX" mark)
 │   ├── robots.txt
-│   ├── brand/cloudox-logo.png # Source brand asset
+│   ├── llms.txt               # LLM-readable site summary
+│   ├── brand/logo/v4/         # Official v4 brand pack (wordmark, icon, favicons)
 │   └── og/cloudox-og.svg      # Default OG/social image
 └── src/
     ├── env.d.ts               # ImportMetaEnv types for env vars

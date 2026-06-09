@@ -60,4 +60,4 @@ The report has a predictable structure:
 - Findings and risks
 - Assumptions and unknowns
 
-Reports are predictable, scannable, and easy to commit alongside code. Because everything reads from one knowledge graph, additional ways to consume that knowledge can be added without changing the layers beneath.
+Reports are predictable, scannable, and easy to commit alongside code. Because everything reads from one knowledge graph, additional ways to consume that knowledge can be added without changing the layers beneath. Two early examples ship today: **Environment Evolution** (comparing two discovery runs to report what changed) and **Cost Intelligence** (explaining spend in architectural context). Both are pure readers of the graph — deterministic analysis first, AI narration second — so they never re-derive or invent facts.

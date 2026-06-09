@@ -33,6 +33,8 @@ aws-discovery-report/
 - **Findings and risks** — operational gaps, exposure, missing observability, unclear ownership.
 - **Assumptions and unknowns** — everything CloudoX could not confirm — never silently guessed.
 
+Depending on what was discovered and which options are enabled, the report can also include a **Coverage and gaps** section (what was captured versus what AWS reports the deep collectors don't yet type), an **Environment Evolution** section (what changed since the previous run), and a **Cost Intelligence** section (spend explained in architectural context). Each is evidence-grounded and labelled, and omitted cleanly when there's nothing to show.
+
 ## Tone
 
 Reports are written to be:

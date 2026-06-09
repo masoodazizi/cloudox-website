@@ -39,7 +39,15 @@ No. CloudoX is an intelligent cloud knowledge platform — it discovers, interpr
 
 ## Is CloudoX only a documentation tool?
 
-No. Documentation is one way to read the knowledge CloudoX builds. The core is an evidence-grounded knowledge graph; reports, architecture diagrams, and a hosted dashboard are all views on top of it. Continuous understanding (tracking how an environment changes over time) and cost-in-context are directions on the roadmap, not features available today.
+No. Documentation is one way to read the knowledge CloudoX builds. The core is an evidence-grounded knowledge graph; reports, architecture diagrams, and a hosted dashboard are all views on top of it. Two further views ship in early form today: **Environment Evolution** (what changed between two discovery runs) and **Cost Intelligence** (spend explained in architectural context). Both are first versions and deliberately narrow.
+
+## Does CloudoX track what changes over time?
+
+A first version does. **Environment Evolution** records each discovery run and compares the current one against the previous run, then reports what was added, removed, or modified — backed by evidence, never invented. The first run is recorded as a baseline. Continuous and scheduled discovery is still a direction on the roadmap.
+
+## Does CloudoX cover every AWS service?
+
+CloudoX combines deep collectors for the architecture-critical services with a broader, lightweight sweep across the rest of the account. The report includes a **Coverage and gaps** section that states what was captured and where resources exist that the deep collectors do not yet type — so you always know what was and wasn't looked at.
 
 ## Where does the name CloudoX come from?
 

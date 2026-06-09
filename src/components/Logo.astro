@@ -2,21 +2,21 @@
 /**
  * CloudoX wordmark and icon.
  *
- * Uses the official PNG brand pack from `public/brand/logo/`. The bright
- * variant is designed for light backgrounds; the dark variant is designed
- * for dark backgrounds. We swap between them via `prefers-color-scheme`
- * inside a <picture> element so the right asset loads automatically.
+ * Uses the official v4 PNG brand pack from `public/brand/logo/v4/`. The
+ * `*-bright-bg` assets are drawn for light backgrounds (dark glyphs); the
+ * `*-dark-bg` assets are drawn for dark backgrounds (light glyphs). We swap
+ * between them via `prefers-color-scheme` inside a <picture> element so the
+ * right asset loads automatically.
  *
  * Variants:
- *   - default      (icon + "CloudoX" wordmark)
- *   - icon-only    (just the cloud + document mark)
- *   - with-tagline (full lockup including "Cloud Discovery, Intelligent Documentation.")
+ *   - wordmark  (full "CloudoX" lockup)
+ *   - icon      (the compact "CdX" mark)
  */
 
 interface Props {
   class?: string;
   /** Visual variant. */
-  variant?: "wordmark" | "icon" | "tagline";
+  variant?: "wordmark" | "icon";
   /** Header / footer / hero scale. */
   size?: "sm" | "md" | "lg" | "xl";
   /**
@@ -39,28 +39,22 @@ const {
 // Natural pixel dimensions used for aspect-ratio attributes (prevents CLS).
 const ASSETS = {
   wordmark: {
-    bright: "/brand/logo/logo-v1-bright.png",
-    dark: "/brand/logo/logo-v1-dark.png",
-    intrinsic: { width: 892, height: 210 },
+    bright: "/brand/logo/v4/logo-v4-bright-bg.png",
+    dark: "/brand/logo/v4/logo-v4-dark-bg.png",
+    intrinsic: { width: 2454, height: 448 },
   },
   icon: {
-    bright: "/brand/logo/logo-v1-icon-bright.png",
-    dark: "/brand/logo/logo-v1-icon-dark.png",
-    intrinsic: { width: 294, height: 205 },
-  },
-  tagline: {
-    bright: "/brand/logo/logo-v1-sub-bright.png",
-    dark: "/brand/logo/logo-v1-sub-dark.png",
-    intrinsic: { width: 890, height: 275 },
+    bright: "/brand/logo/v4/logo-v4-icon-bright-bg.png",
+    dark: "/brand/logo/v4/logo-v4-icon-dark-bg.png",
+    intrinsic: { width: 935, height: 445 },
   },
 } as const;
 
 // Rendered height (in px) per size for each variant. Width follows from the
 // intrinsic aspect ratio.
 const HEIGHT_BY_SIZE = {
-  wordmark: { sm: 22, md: 28, lg: 36, xl: 48 },
+  wordmark: { sm: 20, md: 26, lg: 32, xl: 44 },
   icon: { sm: 22, md: 28, lg: 36, xl: 48 },
-  tagline: { sm: 36, md: 48, lg: 64, xl: 96 },
 } as const;
 
 const asset = ASSETS[variant];

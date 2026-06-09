@@ -19,7 +19,7 @@ const features = [
   {
     title: "Multi-account, multi-region discovery",
     description:
-      "Discover the AWS Organization tree, accounts, and shared services across regions — compute, networking, data, IAM, and DNS where they actually live.",
+      "Discover the AWS Organization tree, accounts, and shared services across regions. Deep collectors cover the architecture-critical services; a broader sweep keeps the long tail from disappearing — and the report names what it did and didn't see.",
   },
   {
     title: "Typed knowledge graph",
@@ -34,7 +34,7 @@ const features = [
   {
     title: "Intelligent documentation",
     description:
-      "Predictable Markdown structure: executive summary, architecture, networking, security, observability, findings, and assumptions.",
+      "Predictable Markdown structure — executive summary, architecture, networking, security, observability, findings, and assumptions — backed by a built-in quality check that flags ungrounded claims before you ship.",
   },
   {
     title: "Architecture visualization",
@@ -45,6 +45,23 @@ const features = [
     title: "Dashboard experience",
     description:
       "Browse the same knowledge in a hosted, read-only dashboard with navigation, search, and theming — a public preview is live today.",
+  },
+];
+
+const beyond = [
+  {
+    title: "Environment Evolution",
+    description:
+      "Compare a discovery run against the previous one and read what actually changed — new regions and services, a workload that grew, an exposure that opened. A first version is available today.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/></svg>`,
+    badge: "First version",
+  },
+  {
+    title: "Cost Intelligence",
+    description:
+      "Explain spend in the context of the architecture CloudoX already understands — the patterns behind the bill, not a replacement for Cost Explorer or FinOps tooling. A first version is available today.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+    badge: "First version",
   },
 ];
 
@@ -105,6 +122,15 @@ const reportingTargets = [
     subtitle="Discovery, a knowledge graph, interpretation, documentation, diagrams, and a dashboard — built on one evidence-grounded foundation."
   >
     <FeatureGrid features={features} cols={3} />
+  </Section>
+
+  <Section
+    eyebrow="BEYOND THE FIRST REPORT"
+    title="The knowledge graph keeps paying off."
+    subtitle="Because everything reads from one evidence-grounded graph, CloudoX can answer more than 'what exists?' over time. Two early consumption layers are live today — each deterministic first, AI narration second."
+    muted
+  >
+    <FeatureGrid features={beyond} cols={2} />
   </Section>
 
   <Section
