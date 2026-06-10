@@ -4,6 +4,8 @@ description: "A report only matters when someone reads it. A short note on why C
 pubDate: 2026-05-12
 author: "The CloudoX team"
 tags: ["cloudox", "reporting", "markdown"]
+cover: "/blog/covers/where-discovery-reports-should-live.svg"
+coverAlt: "CloudoX cover image for Where a discovery report should live"
 ---
 
 A discovery report only earns its value when someone reads it. The most carefully written report is still wasted if it ends up in a shared drive nobody opens.

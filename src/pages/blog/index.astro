@@ -32,17 +32,34 @@ const formatDate = (d: Date) =>
       <ul class="grid gap-5 md:grid-cols-2">
         {posts.map((post) => (
           <li>
-            <a href={`/blog/${post.id}`} class="surface block p-6 transition hover:-translate-y-0.5">
-              <p class="text-xs muted mb-2">
-                {formatDate(post.data.pubDate)}
-                {post.data.tags.length > 0 && (
-                  <>
-                    {" "}· {post.data.tags.slice(0, 2).join(" · ")}
-                  </>
-                )}
-              </p>
-              <h2 class="text-lg font-semibold mb-2">{post.data.title}</h2>
-              <p class="text-sm muted leading-relaxed">{post.data.description}</p>
+            <a
+              href={`/blog/${post.id}`}
+              class="surface block overflow-hidden transition hover:-translate-y-0.5"
+            >
+              {post.data.cover && (
+                <img
+                  src={post.data.cover}
+                  alt={post.data.coverAlt ?? post.data.title}
+                  width="1200"
+                  height="630"
+                  loading="lazy"
+                  decoding="async"
+                  class="aspect-[1200/630] w-full border-b object-cover"
+                  style="border-color: var(--border);"
+                />
+              )}
+              <div class="p-6">
+                <p class="text-xs muted mb-2">
+                  {formatDate(post.data.pubDate)}
+                  {post.data.tags.length > 0 && (
+                    <>
+                      {" "}· {post.data.tags.slice(0, 2).join(" · ")}
+                    </>
+                  )}
+                </p>
+                <h2 class="text-lg font-semibold mb-2">{post.data.title}</h2>
+                <p class="text-sm muted leading-relaxed">{post.data.description}</p>
+              </div>
             </a>
           </li>
         ))}

@@ -24,7 +24,13 @@ const formatDate = (d: Date) =>
     day: "numeric",
   });
 
+const wordCount = (post.body ?? "").split(/\s+/).filter(Boolean).length;
+const readingMinutes = Math.max(1, Math.round(wordCount / 200));
+
 const postUrl = `${SITE.url}/blog/${post.id}/`;
+const coverUrl = post.data.cover
+  ? new URL(post.data.cover, SITE.url).toString()
+  : undefined;
 
 const blogPostSchema = {
   "@context": "https://schema.org",
@@ -42,6 +48,7 @@ const blogPostSchema = {
     name: post.data.author ?? SITE.name,
   },
   publisher: { "@id": `${SITE.url}/#organization` },
+  ...(coverUrl ? { image: coverUrl } : {}),
   url: postUrl,
   isPartOf: { "@id": `${SITE.url}/#website` },
   keywords: post.data.tags.join(", "),
@@ -51,6 +58,7 @@ const blogPostSchema = {
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
+  image={post.data.cover ?? SITE.ogImage}
   jsonLd={[blogPostSchema]}
 >
   <Fragment slot="head">
@@ -77,15 +85,29 @@ const blogPostSchema = {
       {post.data.title}
     </h1>
     <p class="text-base muted mb-3">{post.data.description}</p>
-    <p class="text-sm muted mb-10">
+    <p class="text-sm muted mb-8">
       <time datetime={post.data.pubDate.toISOString()}>
         {formatDate(post.data.pubDate)}
       </time>
       {" "}· {post.data.author}
+      {" "}· {readingMinutes} min read
       {post.data.tags.length > 0 && (
         <> · {post.data.tags.join(" · ")}</>
       )}
     </p>
+
+    {post.data.cover && (
+      <img
+        src={post.data.cover}
+        alt={post.data.coverAlt ?? post.data.title}
+        width="1200"
+        height="630"
+        decoding="async"
+        class="blog-cover mb-10 aspect-[1200/630] w-full rounded-xl border object-cover"
+        style="border-color: var(--border);"
+      />
+    )}
+
     <hr />
     <Content />
 

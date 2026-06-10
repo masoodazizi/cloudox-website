@@ -4,6 +4,8 @@ description: "A first look at Cost Intelligence: explaining cloud spend in the c
 pubDate: 2026-05-26
 author: "The CloudoX team"
 tags: ["cloudox", "cost", "aws"]
+cover: "/blog/covers/cost-in-architectural-context.svg"
+coverAlt: "CloudoX cover image for Why a cloud environment costs what it costs"
 draft: false
 ---
 

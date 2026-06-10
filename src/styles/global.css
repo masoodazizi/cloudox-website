@@ -214,4 +214,15 @@
     color: var(--fg-muted);
     font-style: italic;
   }
+  .prose-cloudox img {
+    border-radius: 0.5rem;
+    border: 1px solid var(--border);
+    margin: 1.5rem 0;
+    width: 100%;
+    height: auto;
+  }
+  /* The cover image already sets its own border/spacing utilities. */
+  .prose-cloudox img.blog-cover {
+    margin: 0 0 2.5rem;
+  }
 }

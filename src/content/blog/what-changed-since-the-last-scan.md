@@ -4,6 +4,8 @@ description: "A first look at Environment Evolution: comparing two CloudoX disco
 pubDate: 2026-06-02
 author: "The CloudoX team"
 tags: ["cloudox", "evolution", "aws"]
+cover: "/blog/covers/what-changed-since-the-last-scan.svg"
+coverAlt: "CloudoX cover image for What changed since the last scan"
 draft: false
 ---
 

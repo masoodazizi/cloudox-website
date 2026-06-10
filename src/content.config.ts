@@ -11,6 +11,10 @@ const blog = defineCollection({
     author: z.string().default("CloudoX"),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
+    /** Cover image path (served from /public), e.g. "/blog/covers/<slug>.svg". */
+    cover: z.string().optional(),
+    /** Alt text for the cover image; falls back to the title when omitted. */
+    coverAlt: z.string().optional(),
   }),
 });
 

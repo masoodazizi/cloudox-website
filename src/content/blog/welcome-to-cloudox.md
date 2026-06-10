@@ -4,6 +4,8 @@ description: "Why we're building an intelligent cloud knowledge platform — and
 pubDate: 2026-05-07
 author: "The CloudoX team"
 tags: ["cloudox", "discovery", "aws"]
+cover: "/blog/covers/welcome-to-cloudox.svg"
+coverAlt: "CloudoX cover image for Welcome to CloudoX"
 ---
 
 Understanding a new cloud environment shouldn't take days.

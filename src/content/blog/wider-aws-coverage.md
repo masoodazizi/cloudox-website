@@ -4,6 +4,8 @@ description: "How CloudoX's AWS discovery grew from a handful of services to lay
 pubDate: 2026-05-19
 author: "The CloudoX team"
 tags: ["cloudox", "discovery", "aws"]
+cover: "/blog/covers/wider-aws-coverage.svg"
+coverAlt: "CloudoX cover image for More of AWS, with the gaps shown"
 ---
 
 The first version of CloudoX covered a few AWS services well. EC2, S3, IAM, VPC, RDS, Lambda — the core surface a cloud architect actually reasons about. It was enough for the first useful report, and we shipped it.

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Why a cloud environment costs what it costs">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0d12"/>
+      <stop offset="1" stop-color="#11161f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="8%" r="70%">
+      <stop offset="0" stop-color="#22b8a6" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#22b8a6" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#1f2733" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)" opacity="0.5"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <g opacity="0.9">
+    <line x1="1109.5" y1="265.3" x2="830.6" y2="232.5" stroke="#22b8a6" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="830.6" y1="232.5" x2="809.7" y2="493.3" stroke="#22b8a6" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="1109.5" y1="265.3" x2="756.8" y2="220.7" stroke="#22b8a6" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="1109.5" y1="265.3" x2="986.0" y2="305.4" stroke="#22b8a6" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="986.0" y1="305.4" x2="809.7" y2="493.3" stroke="#22b8a6" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="1109.5" y1="265.3" x2="809.7" y2="493.3" stroke="#22b8a6" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="1109.5" y1="265.3" x2="947.4" y2="428.9" stroke="#22b8a6" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="947.4" y1="428.9" x2="986.0" y2="305.4" stroke="#22b8a6" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="1109.5" y1="265.3" x2="841.4" y2="462.3" stroke="#22b8a6" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="841.4" y1="462.3" x2="986.0" y2="305.4" stroke="#22b8a6" stroke-width="1.5" stroke-opacity="0.28"/>
+    <circle cx="830.6" cy="232.5" r="13.0" fill="#22b8a6" opacity="0.10"/>
+    <circle cx="830.6" cy="232.5" r="7.0" fill="#58a3ff" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="756.8" cy="220.7" r="17.3" fill="#22b8a6" opacity="0.10"/>
+    <circle cx="756.8" cy="220.7" r="11.3" fill="#2a3340" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="986.0" cy="305.4" r="12.9" fill="#22b8a6" opacity="0.10"/>
+    <circle cx="986.0" cy="305.4" r="6.9" fill="#58a3ff" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="809.7" cy="493.3" r="16.0" fill="#22b8a6" opacity="0.10"/>
+    <circle cx="809.7" cy="493.3" r="10.0" fill="#2a3340" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="947.4" cy="428.9" r="16.4" fill="#22b8a6" opacity="0.10"/>
+    <circle cx="947.4" cy="428.9" r="10.4" fill="#58a3ff" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="1109.5" cy="265.3" r="22.0" fill="#22b8a6" opacity="0.10"/>
+    <circle cx="1109.5" cy="265.3" r="16.0" fill="#22b8a6" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="841.4" cy="462.3" r="17.7" fill="#22b8a6" opacity="0.10"/>
+    <circle cx="841.4" cy="462.3" r="11.7" fill="#58a3ff" stroke="#0a0d12" stroke-width="2"/>
+  </g>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+    <text x="100" y="120" font-size="22" letter-spacing="4" font-weight="600" fill="#22b8a6">COST</text>
+
+    <text font-size="76" font-weight="700" letter-spacing="-1.5" fill="#f7f8fa">
+      <tspan x="100" y="263">Why a cloud</tspan>
+      <tspan x="100" y="348">environment costs</tspan>
+      <tspan x="100" y="433">what it costs</tspan>
+    </text>
+
+    <text x="100" y="556" font-size="26" font-weight="700" letter-spacing="-0.5">
+      <tspan fill="#eef0f4">Cloudo</tspan><tspan fill="#22b8a6">X</tspan>
+    </text>
+    <text x="1100" y="556" font-size="24" font-weight="600" fill="#8b95a7" text-anchor="end">cloudox.io</text>
+  </g>
+</svg>
