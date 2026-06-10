@@ -27,4 +27,4 @@ It won't invent a cause. The AI narrates the figures and the architectural signa
 
 If the cost data isn't available — permissions aren't there, or a team would rather not pull it — the section still works from the architecture alone and says plainly that spend figures are missing.
 
-This is a first version, and intentionally narrow. It's the start of explaining cost the way the rest of CloudoX explains an environment: from evidence, in context, without overstating what it knows.
+We kept this first version small on purpose. It explains cost the same way CloudoX explains the rest of an environment — from what the evidence shows, not from what would sound good on a slide.

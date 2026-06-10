@@ -11,14 +11,14 @@ description: >-
 # Create a CloudoX blog post
 
 Produce one blog post that reads like a founder/engineer wrote it — clear,
-simple, human — and ships with a generated cover image. Two things must always
-happen: (1) the prose passes the humanization bar below, (2) the post has a
-cover.
+simple, human — and ships with a generated cover image. Three things must always
+hold: (1) the prose passes the humanization bar below, (2) the post exposes **no
+internal knowledge** (see Confidentiality), (3) the post has a cover.
 
 Also load the repo rule `.cursor/rules/website-writing-style.mdc` (voice,
-formatting, frontmatter, confidentiality). This skill adds the cover workflow
-and a stronger humanization standard; the rule is the source of truth for voice
-and what is safe to publish.
+formatting, frontmatter, confidentiality). This skill adds the cover workflow, a
+stronger humanization standard, and a self-contained confidentiality gate; the
+rule is the source of truth for voice and what is safe to publish.
 
 ## Workflow
 
@@ -26,9 +26,10 @@ and what is safe to publish.
 - [ ] 1. Agree the slug + one-sentence takeaway
 - [ ] 2. Write the post (humanized — see standard below)
 - [ ] 3. Self-edit against the humanization checklist
-- [ ] 4. Generate the cover image
-- [ ] 5. Add cover/coverAlt to frontmatter
-- [ ] 6. Verify (npm run check)
+- [ ] 4. Confidentiality pass — strip any internal knowledge
+- [ ] 5. Generate the cover image
+- [ ] 6. Add cover/coverAlt to frontmatter
+- [ ] 7. Verify (npm run check)
 ```
 
 ### 1. Slug + takeaway
@@ -39,7 +40,7 @@ and what is safe to publish.
 
 ### 2. Write the post
 
-Frontmatter (the `cover` lines are added in step 5):
+Frontmatter (the `cover` lines are added in step 6):
 
 ```yaml
 ---
@@ -53,9 +54,9 @@ draft: false
 ```
 
 Body: ~250–500 words, sentence-case headings, short paragraphs, prose over
-bullet spam. Follow the writing-style rule for confidentiality (generalize how
-the product works; never expose internal mechanisms, customer data, numbers, or
-roadmap dates).
+bullet spam. As you draft, stay inside the Confidentiality boundary below —
+write about *what changed and why it matters*, not how the product works
+internally.
 
 ### 3. Humanization standard (the important part)
 
@@ -93,7 +94,39 @@ Avoid the AI tells:
 Read it out loud in your head. If a real founder couldn't send it to a customer
 without it sounding generated, rewrite it.
 
-### 4. Generate the cover image
+### Confidentiality — never expose internal knowledge
+
+A public post must not leak how CloudoX works internally, the decisions behind
+it, or its strategy. This is a hard gate, equal to humanization — a beautifully
+written post that exposes an internal mechanism still fails.
+
+Keep these **out** of any post:
+
+- **Internal mechanisms / decisions.** Discovery, filtering, deduplication, and
+  interpretation logic; prompt engineering; allow/deny lists; type-coverage
+  lists; identifier mappings; thresholds, caps, and tuning choices.
+- **Internal data.** Customer environment details or sizes, performance numbers,
+  cost breakdowns, internal benchmarks.
+- **Strategy / timing.** Roadmap dates and sequencing, pricing strategy,
+  competitive positioning.
+- **Anything not already public.** If it isn't in the public README, the public
+  GitHub repo, or the live marketing site, don't name it on the website yet.
+
+How to write about the product safely:
+
+- **Generalize, don't itemize.** "We combine deep and broad collection" — not
+  the specific rules, lists, or limits behind it.
+- **Name only shipped, publicly known capabilities.** Describe the *what* and
+  the *why*, not the *how*.
+- **State direction as direction.** "On the roadmap" / "we're exploring" — never
+  a delivery date or commitment.
+- **When in doubt, omit.** The post is still useful at the level of "what
+  changed and why it matters."
+
+The full policy lives in `.cursor/rules/website-writing-style.mdc`
+(Confidentiality); if it and this section ever drift, the rule wins.
+
+### 5. Generate the cover image
 
 Run from the repo root:
 
@@ -118,7 +151,7 @@ The cover doubles as the post's social `og:image`, so no separate OG step is
 needed. If you ever want a custom (non-generated) image, point `cover` at any
 path under `public/` instead — the templates render whatever it points to.
 
-### 5. Add cover frontmatter
+### 6. Add cover frontmatter
 
 Paste the printed lines into the post frontmatter:
 
@@ -131,7 +164,7 @@ The blog index card and the post page render the cover automatically once these
 fields exist (both are optional in the schema, so a post without them still
 builds).
 
-### 6. Verify
+### 7. Verify
 
 ```bash
 npm run check        # astro type/content check
@@ -144,6 +177,9 @@ reading-time and date line looks right, and `npm run check` is clean.
 ## Pre-publish sanity check
 
 - One takeaway, stated plainly.
-- Reads human — passes the step-3 checklist, no AI tells.
-- No unshipped promises, no confidential mechanisms/numbers/dates.
+- Reads human — passes the humanization checklist, no AI tells.
+- **Exposes no internal knowledge** — passes the Confidentiality gate: no
+  internal mechanisms/decisions, no internal data, no strategy or roadmap dates,
+  nothing that isn't already public.
+- No unshipped promises.
 - Cover generated and wired into frontmatter; `npm run check` passes.
