@@ -2,7 +2,7 @@
 title: Multi-cloud vision
 description: AWS-first today, multi-cloud tomorrow — and why the architecture is ready for it.
 section: Concepts
-order: 5
+order: 7
 ---
 
 The CloudoX MVP is focused on AWS, but the architecture is intentionally built to be multi-cloud.
@@ -26,11 +26,11 @@ The roadmap covers:
 
 ## Why the architecture is ready
 
-The four-layer architecture (collection → modeling → interpretation → reporting) makes adding a new cloud a matter of:
+The layered architecture (discovery → knowledge graph → interpretation → intelligence → views → narration) makes adding a new cloud a matter of:
 
 1. Adding new collectors for the cloud's native data sources.
 2. Mapping the cloud's resources into the existing typed knowledge model.
 3. Adding cloud-specific relationship extractors.
-4. Reusing the same interpretation and reporting layers.
+4. Reusing the same interpretation, intelligence, Knowledge Views, and narration layers.
 
-The knowledge model is designed to be cloud-shaped, not AWS-shaped — so Azure and GCP plug in without rewriting the platform.
+Only the discovery and graph-mapping layers are provider-specific. The knowledge model, interpretation, intelligence, and Knowledge Views are designed to be cloud-shaped, not AWS-shaped — so Azure and GCP plug in without rewriting the platform.

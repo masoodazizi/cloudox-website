@@ -1,43 +1,21 @@
 ---
-title: The discovery report
-description: What CloudoX produces — structure, tone, and what to expect.
+title: Reports and output
+description: How you read CloudoX — Knowledge Views, AI-narrated reports, diagrams, and where they live.
 section: Concepts
-order: 3
+order: 5
 ---
 
-CloudoX produces a Markdown discovery report with a predictable structure. Reviewers know exactly where to find what they need.
+A report is one way to read interpreted knowledge — not the product. CloudoX produces **audience-specific understanding**, and the reports, diagrams, and dashboard are lenses on the same knowledge foundation.
 
-## Report structure
+## View-centric output
 
-```text
-aws-discovery-report/
-├── README.md
-├── 01-executive-summary.md
-├── 02-architecture-overview.md
-├── 03-environment-structure.md
-├── 04-networking.md
-├── 05-security-overview.md
-├── 06-observability.md
-├── 07-findings-and-risks.md
-└── 08-assumptions-and-unknowns.md
-```
+Instead of a single fixed document, CloudoX renders **one page per Knowledge View** — Generic, Executive, Architect, Operations, Security, and FinOps — each framed for its audience and narrated in plain language. A reader picks who they are and reads understanding written for them, not a wall of inventory.
 
-## Sections at a glance
-
-- **Executive summary** — high-level overview of the environment, key workloads, environments, and notable risks.
-- **Architecture overview** — inferred workloads and systems, written in plain language with evidence.
-- **Environment structure** — accounts, organizational units, environment classification.
-- **Networking** — VPC topology, peering, internet exposure, routing.
-- **Security overview** — architectural exposure, identity boundaries, tagging hygiene.
-- **Observability** — what's logged, what's monitored, and what isn't.
-- **Findings and risks** — operational gaps, exposure, missing observability, unclear ownership.
-- **Assumptions and unknowns** — everything CloudoX could not confirm — never silently guessed.
-
-Depending on what was discovered and which options are enabled, the report can also include a **Coverage and gaps** section (what was captured versus what AWS reports the deep collectors don't yet type), an **Environment Evolution** section (what changed since the previous run), and a **Cost Intelligence** section (spend explained in architectural context). Each is evidence-grounded and labelled, and omitted cleanly when there's nothing to show.
+Each view leads with understanding (what matters and why), then supports it with evidence: key entities by friendly name, assumptions, unknowns, and a reference appendix that traces every name back to its raw identifier.
 
 ## Tone
 
-Reports are written to be:
+Output is written to be:
 
 - concise
 - consultant-friendly
@@ -45,11 +23,11 @@ Reports are written to be:
 
 Avoiding hype, generic AI wording, and filler.
 
-## Findings style
+## Understanding before inventory
 
 Preferred:
 
-> A likely production workload is running behind an Application Load Balancer and connected to an RDS database. No centralized monitoring configuration was detected.
+> A likely production workload runs behind an Application Load Balancer and connects to an RDS database. No centralized monitoring configuration was detected.
 
 Avoided:
 
@@ -57,23 +35,15 @@ Avoided:
 
 CloudoX prioritizes meaningful insight over raw inventory.
 
-## Where reports live
+## Diagrams
 
-Because the output is plain Markdown, the same report can be published to
-whichever surface your team actually uses. Two destinations are live today:
+Architecture diagrams — account structure, workload architecture, and network topology — are generated deterministically from the knowledge graph and embedded where they support understanding. They illustrate the interpreted knowledge; they are never the source of it.
 
-- **CloudoX Dashboard** — a hosted preview at
-  [preview.cloudox.io](https://preview.cloudox.io) with sidebar navigation,
-  search, and light/dark theming. Useful for sharing a polished read-only
-  view with stakeholders.
-- **Git repository** — the report is just files. Commit it to a normal Git
-  repo and diff, review, and version it like code. A sanitised public
-  example lives at
-  [github.com/cloudox-ai/cloudox-public-examples](https://github.com/cloudox-ai/cloudox-public-examples).
+## Where it lives
 
-Confluence and Notion integrations are on the roadmap so reports can land
-directly in the documentation tool your team already uses, without an extra
-copy step.
+Because the output is plain Markdown, the same understanding can be published to whichever surface your team uses. Live today:
 
-The publishing surface is intentionally decoupled from the report format:
-new destinations slot in without changing the report itself.
+- **CloudoX Dashboard** — a hosted preview at [preview.cloudox.io](https://preview.cloudox.io) with navigation, search, and theming. The dashboard is evolving toward a knowledge-centric experience organized around Knowledge Views and snapshots.
+- **Git repository** — the output is just files. Commit it to a normal Git repo and diff, review, and version it like code. A sanitised public example lives at [github.com/cloudox-ai/cloudox-public-examples](https://github.com/cloudox-ai/cloudox-public-examples).
+
+Confluence and Notion integrations are on the roadmap so understanding can land directly in the documentation tool your team already uses. The publishing surface is intentionally decoupled from the format: new destinations slot in without changing the output.

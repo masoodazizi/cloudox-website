@@ -15,36 +15,58 @@ const breadcrumb = {
   ],
 };
 
-const features = [
+// The platform layers — one foundation, interpreted once, consumed many ways.
+const layers = [
   {
     title: "Multi-account, multi-region discovery",
     description:
-      "Discover the AWS Organization tree, accounts, and shared services across regions. Deep collectors cover the architecture-critical services; a broader sweep keeps the long tail from disappearing — and the report names what it did and didn't see.",
+      "Discover an entire AWS Organization in one pass — the org tree, accounts, regions, and shared services. Deep collectors cover the architecture-critical services; a broader sweep keeps the long tail visible, and the output names what it did and didn't see.",
   },
   {
     title: "Typed knowledge graph",
     description:
-      "Resources, environments, workloads, and systems are first-class entities with explicit, evidence-bearing relationships — the canonical record of what was discovered.",
+      "Accounts, environments, workloads, systems, resources, and their typed, evidence-bearing relationships — the canonical source of truth for what exists and how it connects.",
   },
   {
-    title: "Interpretation",
+    title: "Canonical interpretation",
     description:
-      "Deterministic logic classifies environments, groups workloads, and detects internet exposure — so the output explains how the environment works, not just what exists.",
+      "Deterministic logic classifies environments, groups workloads, and detects exposure — then captures the meaning once, per domain, so every channel reads the same interpretation instead of re-deriving it.",
   },
   {
-    title: "Intelligent documentation",
+    title: "Knowledge Intelligence",
     description:
-      "Predictable Markdown structure — executive summary, architecture, networking, security, observability, findings, and assumptions — backed by a built-in quality check that flags ungrounded claims before you ship.",
+      "Ranked, evidence-grounded findings, risks, and opportunities — generated once across architecture, operations, security, cost, and change, then prioritized by significance for each audience.",
   },
   {
-    title: "Architecture visualization",
+    title: "Knowledge Views",
     description:
-      "Diagrams generated from the knowledge graph — architecture, networking, and account structure — embedded in the report to support understanding.",
+      "Audience lenses — Executive, Architect, Operations, Security, FinOps, and Generic — that project the same understanding for each stakeholder. Different explanations and priorities, never different truths.",
   },
   {
-    title: "Dashboard experience",
+    title: "AI-narrated understanding",
     description:
-      "Browse the same knowledge in a hosted, read-only dashboard with navigation, search, and theming — a public preview is live today.",
+      "Each view is narrated in plain language from a closed, citeable context. The model explains interpreted knowledge — it never invents facts, ownership, or architecture.",
+  },
+];
+
+const trust = [
+  {
+    title: "Confidence model",
+    description:
+      "Inferred findings carry a user-facing confidence — Verified, Likely, Assumed, or Unknown — so readers know exactly how much weight to give each statement.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/><path d="m9 12 2 2 4-4"/></svg>`,
+  },
+  {
+    title: "Friendly naming",
+    description:
+      "Main content reads in human terms — Production Account, Production VPC — while every reference still traces back to its raw identifier in an appendix.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2"/><path d="M9 20h6M12 4v16"/></svg>`,
+  },
+  {
+    title: "Knowledge Quality",
+    description:
+      "Every view is scored on usefulness — coverage, signal-to-noise, actionability, prioritization — with an optional AI quality review that never changes the facts.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
   },
 ];
 
@@ -52,7 +74,7 @@ const beyond = [
   {
     title: "Environment Evolution",
     description:
-      "Compare a discovery run against the previous one and read what actually changed — new regions and services, a workload that grew, an exposure that opened. A first version is available today.",
+      "Compare a discovery against the previous one and read what actually changed — new regions and services, a workload that grew, an exposure that opened. A first version is available today.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/></svg>`,
     badge: "First version",
   },
@@ -65,11 +87,18 @@ const beyond = [
   },
 ];
 
-const reportingTargets = [
+const channels = [
+  {
+    title: "AI-narrated reports",
+    description:
+      "Stakeholder-ready, view-centric documentation in clean Markdown, with architecture diagrams generated from the knowledge graph.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6a2 2 0 0 0-2 2z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`,
+    badge: "Live",
+  },
   {
     title: "CloudoX Dashboard",
     description:
-      "Browse reports with sidebar navigation, search, and theming. A public preview is live with a sanitised example report.",
+      "Browse the same knowledge in a hosted, read-only dashboard with navigation, search, and theming. A public preview is live today.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="14" x2="15" y2="14"/></svg>`,
     href: "https://preview.cloudox.io",
     badge: "Live preview",
@@ -78,25 +107,17 @@ const reportingTargets = [
   {
     title: "Git repository",
     description:
-      "Commit reports as plain Markdown. Diff, review, and version discovery documentation like code.",
+      "The output is plain Markdown. Commit it to a repo and diff, review, and version your cloud understanding like code.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="19" r="2.5"/><path d="M6 8.5v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-3"/><line x1="12" y1="14.5" x2="12" y2="16.5"/></svg>`,
     href: "https://github.com/cloudox-ai/cloudox-public-examples",
     badge: "Live example",
     ctaLabel: "View example on GitHub",
   },
   {
-    title: "Confluence",
+    title: "Confluence & Notion",
     description:
-      "Publish reports into Confluence spaces and pages alongside the rest of your team documentation.",
+      "Publish into the documentation tool your team already uses, organised by account and environment. On the roadmap.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16a4 4 0 0 0 4 4h3l3-4-3-4H7a4 4 0 0 0-4 4z"/><path d="M21 8a4 4 0 0 0-4-4h-3l-3 4 3 4h3a4 4 0 0 0 4-4z"/></svg>`,
-    badge: "Planned",
-    badgeVariant: "muted" as const,
-  },
-  {
-    title: "Notion",
-    description:
-      "Push reports into a Notion workspace as native pages, organised by account and environment.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6a2 2 0 0 0-2 2z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`,
     badge: "Planned",
     badgeVariant: "muted" as const,
   },
@@ -105,41 +126,49 @@ const reportingTargets = [
 
 <BaseLayout
   title="Intelligent Cloud Knowledge Platform"
-  description="CloudoX is an intelligent cloud knowledge platform — evidence-based, multi-account, multi-region AWS discovery that builds a typed knowledge graph and makes it readable as documentation, diagrams, and a dashboard."
+  description="CloudoX is an intelligent cloud knowledge platform — evidence-grounded, multi-account, multi-region AWS discovery that builds a typed knowledge graph, interprets it, and projects audience-specific Knowledge Views narrated in plain language."
   jsonLd={[breadcrumb]}
 >
   <Hero
     eyebrow="PRODUCT"
-    title="A cloud knowledge platform for the people who run cloud."
-    subtitle="CloudoX collects AWS-native data, builds a typed knowledge graph, interprets it, and makes that understanding readable — as documentation a human would trust, diagrams, and a dashboard."
+    title="A knowledge platform for the people who run cloud."
+    subtitle="CloudoX collects AWS-native data, builds a typed knowledge graph, interprets it once, and projects audience-specific understanding — Knowledge Views, intelligence, and AI-narrated reports built on one evidence-grounded foundation."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
-    secondaryCta={{ label: "Book a call", href: SITE.bookingUrl }}
+    secondaryCta={{ label: "Explore Knowledge Views", href: "/knowledge-views" }}
   />
 
   <Section
-    eyebrow="CAPABILITIES"
-    title="What CloudoX does today."
-    subtitle="Discovery, a knowledge graph, interpretation, documentation, diagrams, and a dashboard — built on one evidence-grounded foundation."
+    eyebrow="THE PLATFORM"
+    title="One foundation, interpreted once, consumed many ways."
+    subtitle="CloudoX is layered so a single evidence-grounded knowledge foundation feeds every audience and channel. Each layer has one job, so the output stays trustworthy."
   >
-    <FeatureGrid features={features} cols={3} />
+    <FeatureGrid features={layers} cols={3} />
   </Section>
 
   <Section
-    eyebrow="BEYOND THE FIRST REPORT"
-    title="The knowledge graph keeps paying off."
-    subtitle="Because everything reads from one evidence-grounded graph, CloudoX can answer more than 'what exists?' over time. Two early consumption layers are live today — each deterministic first, AI narration second."
+    eyebrow="BUILT TO BE TRUSTED"
+    title="Knowledge you can defend, line by line."
+    subtitle="Trust isn't a tagline — it's three concrete mechanisms running on every environment."
     muted
+  >
+    <FeatureGrid features={trust} cols={3} />
+  </Section>
+
+  <Section
+    eyebrow="CHANGE AND COST"
+    title="The knowledge graph keeps paying off."
+    subtitle="Because everything reads from one evidence-grounded foundation, CloudoX answers more than 'what exists?' over time. Two consumption layers ship today — each deterministic first, AI narration second."
   >
     <FeatureGrid features={beyond} cols={2} />
   </Section>
 
   <Section
-    eyebrow="WHERE REPORTS LIVE"
-    title="Reports where your team already works."
-    subtitle="CloudoX writes clean Markdown, so the same report can live in a hosted dashboard, your Git repository, or the documentation tool your team already uses. Two destinations are live today; more are on the roadmap."
+    eyebrow="WHERE UNDERSTANDING LIVES"
+    title="Read it where your team already works."
+    subtitle="The understanding CloudoX produces is plain Markdown, so it lives in a hosted dashboard, your Git repository, or the documentation tool your team already uses. Several destinations are live today; more are on the roadmap."
     muted
   >
-    <FeatureGrid features={reportingTargets} cols={4} />
+    <FeatureGrid features={channels} cols={4} />
   </Section>
 
   <Section
@@ -157,14 +186,13 @@ const reportingTargets = [
       <div class="surface p-6">
         <h3 class="text-base font-semibold mb-2">Not a security scanner</h3>
         <p class="text-sm muted">
-          Findings cover architectural exposure and obvious gaps — not vulnerability or compliance scanning.
+          Security intelligence covers architectural exposure and obvious gaps — not vulnerability or compliance scanning.
         </p>
       </div>
       <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Not a diagram-only tool</h3>
+        <h3 class="text-base font-semibold mb-2">Not a FinOps platform</h3>
         <p class="text-sm muted">
-          CloudoX generates architecture diagrams, but they support the
-          understanding — the knowledge graph and documentation come first.
+          CloudoX explains cost in architectural context. It complements Cost Explorer, the CUR, and FinOps tools — it doesn't replace them.
         </p>
       </div>
     </div>

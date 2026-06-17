@@ -33,7 +33,7 @@ Every important relationship carries source and target IDs, a confidence level, 
 
 ## Confidence levels
 
-Inferred findings include a confidence level:
+Internally, inferred findings carry a confidence level:
 
 - **high** — backed by an authoritative AWS-API field or an explicit tag.
 - **medium** — backed by deterministic but indirect evidence (account naming, cross-resource tag consistency).
@@ -41,6 +41,21 @@ Inferred findings include a confidence level:
 
 Conflicting weak signals collapse to **unknown** rather than guessing.
 
+## The confidence model
+
+For readers, those internal levels are projected into a plain, user-facing confidence model:
+
+- **Verified** — backed by authoritative evidence.
+- **Likely** — backed by deterministic but indirect evidence.
+- **Assumed** — backed by weaker signals; treat with care.
+- **Unknown** — not enough evidence to claim.
+
+The projection only ever *maps* certainty — it never raises it. A reader always knows how much weight to give a statement, and the underlying evidence is one click away.
+
+## Friendly naming
+
+Cloud identifiers are precise but unreadable. CloudoX derives human-friendly names from evidence — Production Account, Shared Services Account, Production VPC — and leads with those in the main content. Names are never invented: each one records the evidence it came from, raw identifiers are always preserved in a reference appendix, and collisions are disambiguated deterministically. So prose reads in human terms while every reference stays traceable.
+
 ## Why this matters
 
-Because the knowledge model is structured, AI doesn't have to read raw cloud responses or guess context. AI runs on top of explicit data — which keeps the output explainable.
+Because the knowledge model is structured, AI doesn't have to read raw cloud responses or guess context. AI narrates explicit, interpreted data — which keeps the output explainable and defensible.

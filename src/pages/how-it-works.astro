@@ -2,7 +2,6 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import Hero from "@components/Hero.astro";
 import Section from "@components/Section.astro";
-import CodeBlock from "@components/CodeBlock.astro";
 import CTA from "@components/CTA.astro";
 import { SITE } from "@/config/site";
 
@@ -24,57 +23,70 @@ const flow = [
   },
   {
     step: "02",
-    title: "Collect",
+    title: "Discover",
     description:
-      "Modular collectors fan out across accounts and regions, gathering metadata from AWS-native sources (Config, Organizations, Resource Explorer, service APIs, tags).",
+      "Modular collectors fan out across accounts and regions, gathering metadata from AWS-native sources — Config, Organizations, Resource Explorer, service APIs, and tags.",
   },
   {
     step: "03",
-    title: "Model",
+    title: "Build the knowledge graph",
     description:
-      "Raw data is normalized into a typed knowledge graph: accounts, regions, environments, workloads, systems, resources, and explicit relationships.",
+      "Raw data is normalized into a typed knowledge graph: accounts, regions, environments, workloads, systems, resources, and explicit, evidence-bearing relationships.",
   },
   {
     step: "04",
     title: "Interpret",
     description:
-      "Deterministic rules classify environments, group workloads, and surface internet exposure. AI assists with summarization — never invention.",
+      "Deterministic logic classifies environments, groups workloads, and detects exposure, then captures the meaning once per domain — the reusable interpretation every channel reads.",
   },
   {
     step: "05",
-    title: "Report",
+    title: "Generate intelligence",
     description:
-      "A clean Markdown discovery report with a predictable structure — easy to commit, share, and review.",
+      "Ranked, evidence-grounded findings, risks, and opportunities are derived across architecture, operations, security, cost, and change — once, for every audience to draw from.",
+  },
+  {
+    step: "06",
+    title: "Project & narrate",
+    description:
+      "The understanding is projected into audience-specific Knowledge Views and narrated in plain language — grounded in a closed, citeable context, never invented.",
   },
 ];
 
-const reportStructure = `aws-discovery-report/
-├── README.md
-├── 01-executive-summary.md
-├── 02-architecture-overview.md
-├── 03-environment-structure.md
-├── 04-networking.md
-├── 05-security-overview.md
-├── 06-observability.md
-├── 07-findings-and-risks.md
-└── 08-assumptions-and-unknowns.md`;
+const outputs = [
+  {
+    title: "Audience-specific understanding",
+    description:
+      "Executive, Architect, Operations, Security, FinOps, and Generic views — each answering the questions its audience actually asks.",
+  },
+  {
+    title: "Architecture diagrams",
+    description:
+      "Account structure, workload architecture, and network topology, generated deterministically from the knowledge graph and embedded where they help.",
+  },
+  {
+    title: "Quality you can check",
+    description:
+      "Every view is scored on usefulness — coverage, signal-to-noise, actionability, prioritization — so you know where it's strong before you share it.",
+  },
+];
 ---
 
 <BaseLayout
-  title="How CloudoX Works — From AWS APIs to a Discovery Report"
-  description="CloudoX collects AWS-native data, builds a typed knowledge graph, interprets deterministically, and generates a Markdown discovery report in minutes."
+  title="How CloudoX Works — From AWS APIs to Audience-Specific Understanding"
+  description="CloudoX collects AWS-native data, builds a typed knowledge graph, interprets it deterministically, generates ranked intelligence, and projects audience-specific Knowledge Views narrated in plain language — without inventing anything."
   jsonLd={[breadcrumb]}
 >
   <Hero
     eyebrow="HOW IT WORKS"
-    title="From AWS APIs to a discovery report — without inventing anything."
-    subtitle="A strict pipeline: collect, model, interpret, report. AI helps with summarization. It never fabricates facts."
+    title="From AWS APIs to understanding — without inventing anything."
+    subtitle="A strict pipeline: discover, model, interpret, generate intelligence, project, and narrate. Deterministic analysis decides the facts and the meaning. AI only narrates — it never fabricates."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
     secondaryCta={{ label: "See the docs", href: "/docs" }}
   />
 
-  <Section eyebrow="WORKFLOW" title="The five steps.">
-    <ol class="grid gap-4 md:grid-cols-5">
+  <Section eyebrow="WORKFLOW" title="The pipeline.">
+    <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {flow.map((s) => (
         <li class="surface p-5">
           <span
@@ -91,16 +103,36 @@ const reportStructure = `aws-discovery-report/
   </Section>
 
   <Section
-    eyebrow="OUTPUT"
-    title="A predictable report structure."
-    subtitle="Same sections every time — reviewers know where to find what they need."
+    eyebrow="WHY THE DISCIPLINE MATTERS"
+    title="The model never sees raw cloud data."
+    subtitle="Every AI-assisted experience follows the same rule: deterministic analysis, then interpretation, then projection, and only then narration. No capability sends raw infrastructure data straight to a model."
     muted
   >
-    <div class="max-w-2xl">
-      <CodeBlock title="aws-discovery-report/" language="markdown" code={reportStructure} />
-      <p class="mt-6 text-sm muted leading-relaxed">
-        A sanitised example report is published publicly so you can read the
-        exact structure, tone, and level of detail CloudoX produces.
+    <p class="text-sm muted max-w-2xl leading-relaxed">
+      The knowledge graph holds the facts. The interpretation layer holds the
+      meaning. AI is given a closed, citeable context and asked to explain it —
+      anything outside that context is rejected before it reaches the page. That's
+      what keeps the output something a consultant can sign their name to.
+    </p>
+  </Section>
+
+  <Section
+    eyebrow="OUTPUT"
+    title="What you get."
+    subtitle="Not a fixed eight-file report — audience-specific understanding you can read, share, and trust."
+  >
+    <div class="grid gap-5 md:grid-cols-3">
+      {outputs.map((o) => (
+        <div class="surface p-6">
+          <h3 class="text-base font-semibold mb-2">{o.title}</h3>
+          <p class="text-sm muted leading-relaxed">{o.description}</p>
+        </div>
+      ))}
+    </div>
+    <div class="mt-10 max-w-2xl">
+      <p class="text-sm muted leading-relaxed">
+        A sanitised example is published publicly so you can read the exact
+        structure, tone, and level of detail CloudoX produces.
       </p>
       <div class="mt-4 flex flex-wrap gap-3">
         <a

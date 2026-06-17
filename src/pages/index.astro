@@ -6,131 +6,208 @@ import FeatureGrid from "@components/FeatureGrid.astro";
 import CTA from "@components/CTA.astro";
 import { SITE } from "@/config/site";
 
-const capabilities = [
+// The CloudoX pipeline — one evidence-grounded foundation, many lenses.
+const pipeline = [
+  "Cloud environment",
+  "Discovery",
+  "Knowledge graph",
+  "Interpretation",
+  "Knowledge Intelligence",
+  "Knowledge Views",
+  "AI-narrated understanding",
+];
+
+const foundations = [
   {
-    title: "Evidence-grounded knowledge",
+    title: "Knowledge graph, not inventory",
     description:
-      "A typed knowledge graph of accounts, environments, workloads, and relationships — every important finding cites AWS-native evidence, never invented.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/><path d="m9 12 2 2 4-4"/></svg>`,
+      "A typed graph of accounts, environments, workloads, systems, and their relationships — the canonical record of what exists and how it connects. Not a flat list of resources.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2.5"/><circle cx="19" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M7 7.5 10.5 16M17 7.5 13.5 16M7.5 6h9"/></svg>`,
   },
   {
-    title: "Interpretation, not inventory",
+    title: "Interpretation, not guesswork",
     description:
-      "CloudoX explains how the environment works — production workloads, internet exposure, ownership signals — instead of listing resources.",
+      "Deterministic logic classifies environments, groups workloads, and detects internet exposure — then a reusable interpretation layer captures the meaning once, for every channel to read.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>`,
   },
   {
-    title: "Documentation & dashboard",
+    title: "Understanding, framed for you",
     description:
-      "Read the same knowledge as stakeholder-ready Markdown, architecture diagrams, or in a hosted dashboard. One source of truth, many views.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="14" x2="15" y2="14"/></svg>`,
+      "The same interpreted knowledge is projected into audience-specific Knowledge Views and narrated in plain language — so each stakeholder gets the explanation they need, never a different truth.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>`,
   },
 ];
 
-const questions = [
+// The six Knowledge Views: one environment, every audience.
+const views = [
+  { name: "Executive", focus: "Risk, decisions, and cost at a glance — no inventory." },
+  { name: "Architect", focus: "Architecture, workloads, dependencies, and design risks." },
+  { name: "Operations", focus: "Connectivity, observability, and recovery readiness." },
+  { name: "Security", focus: "Exposure, identity, governance, and evidence gaps." },
+  { name: "FinOps", focus: "Cost drivers and optimization in architectural context." },
+  { name: "Generic", focus: "A balanced, full-depth read for any technical reader." },
+];
+
+// Intelligence across domains — generated once, consumed everywhere.
+const intelligence = [
   {
-    q: "What exists?",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>`,
+    title: "Architecture intelligence",
+    description:
+      "Workloads, systems, dependencies, and design risks — what the environment is, and what to reconsider.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>`,
   },
   {
-    q: "How does it work?",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915Z"/><circle cx="12" cy="12" r="3"/></svg>`,
+    title: "Operational intelligence",
+    description:
+      "Connectivity, routing, observability, and backup coverage — where operations and recovery are exposed.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
   },
   {
-    q: "Why does it exist?",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>`,
+    title: "Security intelligence",
+    description:
+      "Internet exposure, identity boundaries, and governance gaps — labelled by confidence, never invented.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/><path d="m9 12 2 2 4-4"/></svg>`,
   },
   {
-    q: "What changed?",
+    title: "Cost intelligence",
+    description:
+      "Spend explained in the context of the architecture CloudoX already understands — the patterns behind the bill.",
+    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
+  },
+  {
+    title: "Evolution intelligence",
+    description:
+      "What changed since the last discovery — new regions, a workload that grew, an exposure that opened.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/></svg>`,
   },
-  {
-    q: "How is it evolving?",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>`,
-  },
-  {
-    q: "What should we consider next?",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>`,
-  },
 ];
 
-const flow = ["Cloud environment", "Discovery", "Knowledge graph", "Interpretation", "Documentation & insights"];
+const differentiators = [
+  {
+    title: "Knowledge-first",
+    description:
+      "The product is the knowledge graph and its interpretation. Reports, the dashboard, and exports are lenses on top — never the thing itself.",
+  },
+  {
+    title: "Evidence-grounded",
+    description:
+      "Every important statement cites AWS-native evidence or is clearly labelled as inferred, with a confidence level you can defend.",
+  },
+  {
+    title: "Multi-account, multi-region",
+    description:
+      "Discover an entire AWS Organization in one pass — accounts, regions, and shared services merged into a single knowledge graph.",
+  },
+  {
+    title: "AI-assisted, not AI-invented",
+    description:
+      "Deterministic analysis decides the facts and the meaning. AI only narrates interpreted knowledge — it is never the source of truth.",
+  },
+];
 
 const steps = [
   {
     title: "Connect",
     description:
-      "Read-only access to an AWS Organization, account set, or single account.",
+      "Read-only access to an AWS Organization, account set, or single account. Nothing is created or modified.",
   },
   {
-    title: "Discover & model",
+    title: "Discover & interpret",
     description:
-      "Collect AWS-native data across accounts and regions and build a typed knowledge graph.",
+      "Collect AWS-native data across accounts and regions, build a typed knowledge graph, and interpret what it means.",
   },
   {
     title: "Understand",
     description:
-      "Read the interpreted environment as a stakeholder-ready report and an architecture view.",
+      "Read audience-specific Knowledge Views — AI-narrated, evidence-grounded, ready to share with stakeholders.",
   },
 ];
 ---
 
 <BaseLayout
-  description="CloudoX is the intelligent cloud knowledge platform that continuously discovers, documents, analyzes, and tracks the evolution of your cloud infrastructure. Understand any cloud environment in under 30 minutes."
+  description="CloudoX is the intelligent cloud knowledge platform. It turns AWS-native evidence into a knowledge graph, interprets it, and projects audience-specific understanding. Understand any cloud environment in under 30 minutes."
 >
   <Hero
     eyebrow="INTELLIGENT CLOUD KNOWLEDGE PLATFORM"
     title="Understand any cloud environment in under 30 minutes."
-    subtitle="The intelligent cloud knowledge platform that continuously discovers, documents, analyzes, and tracks the evolution of your cloud infrastructure."
+    subtitle="CloudoX turns AWS-native evidence into a knowledge graph, interprets it, and projects audience-specific understanding for executives, architects, operations, security, and FinOps — grounded in evidence, never invented."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
     secondaryCta={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 
   <Section
     eyebrow="WHAT CLOUDOX DOES"
-    title="A cloud knowledge platform — not just a documentation tool."
-    subtitle="CloudoX turns AWS-native evidence into a structured knowledge graph, then makes that knowledge readable. AWS-first today, built to evolve to Azure, GCP, and broader multi-cloud."
+    title="A cloud knowledge platform — not another inventory or report tool."
+    subtitle="CloudoX builds one evidence-grounded foundation and interprets it once, then frames that understanding for whoever is reading. The same knowledge serves every audience and channel."
   >
-    <FeatureGrid features={capabilities} cols={3} />
-  </Section>
-
-  <Section
-    eyebrow="THE QUESTIONS IT ANSWERS"
-    title="From raw cloud APIs to real understanding."
-    subtitle="CloudoX builds and maintains cloud knowledge in a clear path — so you can answer the questions that actually matter."
-    muted
-  >
-    <ol class="flex flex-wrap items-center gap-x-2 gap-y-3 mb-10">
-      {flow.map((node, i) => (
+    <ol class="flex flex-wrap items-center gap-x-2 gap-y-3 mb-12">
+      {pipeline.map((node, i) => (
         <li class="flex items-center gap-2">
           <span class="surface px-3 py-2 text-sm font-medium">{node}</span>
-          {i < flow.length - 1 && (
+          {i < pipeline.length - 1 && (
             <span aria-hidden="true" class="font-mono text-sm" style="color: var(--accent);">→</span>
           )}
         </li>
       ))}
     </ol>
+    <FeatureGrid features={foundations} cols={3} />
+  </Section>
+
+  <Section
+    eyebrow="KNOWLEDGE VIEWS"
+    title="One environment. Every audience."
+    subtitle="Different stakeholders ask different questions of the same cloud. CloudoX projects the interpreted knowledge into audience-specific views — different explanations and priorities, never different truths."
+    muted
+  >
     <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {questions.map(({ q, icon }, i) => (
+      {views.map((v, i) => (
         <li class="surface group relative flex items-start gap-4 p-5 transition hover:-translate-y-0.5 hover:shadow-sm">
           <span
-            class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg"
+            class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg font-mono text-sm"
             style="background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);"
             aria-hidden="true"
-            set:html={icon}
-          />
+          >
+            {String(i + 1).padStart(2, "0")}
+          </span>
           <div>
-            <span class="block font-mono text-xs mb-1" style="color: var(--accent);">{String(i + 1).padStart(2, "0")}</span>
-            <span class="text-base font-semibold leading-snug">{q}</span>
+            <span class="block text-base font-semibold leading-snug mb-1">{v.name} View</span>
+            <span class="text-sm muted leading-relaxed">{v.focus}</span>
           </div>
         </li>
       ))}
     </ul>
+    <div class="mt-10">
+      <a href="/knowledge-views" class="btn btn-secondary">Explore Knowledge Views</a>
+    </div>
+  </Section>
+
+  <Section
+    eyebrow="INTELLIGENCE ACROSS DOMAINS"
+    title="From facts to what actually matters."
+    subtitle="CloudoX generates ranked, evidence-grounded intelligence once per environment — findings, risks, and opportunities across architecture, operations, security, cost, and change — then every view selects what its audience needs."
+  >
+    <FeatureGrid features={intelligence} cols={3} />
+  </Section>
+
+  <Section
+    eyebrow="WHY CLOUDOX"
+    title="Built to be trusted."
+    subtitle="Cloud consultants and engineers are accountable for what they hand to stakeholders. CloudoX is built so every line can be defended."
+    muted
+  >
+    <div class="grid gap-5 sm:grid-cols-2">
+      {differentiators.map((d) => (
+        <div class="surface p-6">
+          <h3 class="text-base font-semibold mb-2">{d.title}</h3>
+          <p class="text-sm muted leading-relaxed">{d.description}</p>
+        </div>
+      ))}
+    </div>
   </Section>
 
   <Section
     eyebrow="HOW IT WORKS"
-    title="From AWS APIs to a discovery report."
+    title="From AWS APIs to understanding."
   >
     <ol class="grid gap-5 md:grid-cols-3">
       {steps.map((step, i) => (
@@ -152,8 +229,8 @@ const steps = [
   </Section>
 
   <CTA
-    title="Be among the first consultants to use CloudoX."
-    subtitle="Early access for cloud consultants, architects, and engineers. No marketing fluff — just real environments and real reports."
+    title="See CloudoX on a real environment."
+    subtitle="Early access for cloud consultants, architects, and engineers. No marketing fluff — just real environments and understanding you can trust."
     primary={{ label: "Request Early Access", href: "/contact" }}
     secondary={{ label: "Book a call", href: SITE.bookingUrl }}
   />

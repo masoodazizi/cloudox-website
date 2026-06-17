@@ -1,6 +1,6 @@
 # CloudoX Website
 
-Public marketing and documentation site for **CloudoX** — Cloud Discovery, Intelligent Documentation.
+Public marketing and documentation site for **CloudoX** — the Intelligent Cloud Knowledge Platform.
 
 This repository is **public**. It does not contain any internal CloudoX implementation, prompts, scanning logic, or proprietary heuristics. It only contains the public-facing website content.
 
@@ -47,6 +47,7 @@ cloudox-website/
     └── pages/
         ├── index.astro        # Home
         ├── product.astro
+        ├── knowledge-views.astro
         ├── use-cases.astro
         ├── how-it-works.astro
         ├── contact.astro      # Early-access form (Web3Forms)

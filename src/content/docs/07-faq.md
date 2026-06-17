@@ -19,11 +19,15 @@ Yes. Resources, networking, and dependencies are tracked per region.
 
 ## Does CloudoX use AI?
 
-Yes — for summarization, grouping, classification, and pattern recognition. AI does **not** invent ownership, environments, or architecture, and every important finding is backed by AWS-native evidence or clearly labeled as inferred.
+CloudoX is AI-assisted, not AI-invented. Deterministic analysis decides the facts and the meaning; AI narrates that interpreted knowledge in plain language. AI does **not** invent ownership, environments, or architecture, and the model never sees raw cloud data — only a closed, citeable context. See [trust and the role of AI](/docs/05-trust-and-ai).
 
-## What does the report look like?
+## What are Knowledge Views?
 
-A Markdown directory with eight predictable sections — executive summary, architecture, environment structure, networking, security, observability, findings, and assumptions. See the [discovery report doc](/docs/04-discovery-report).
+Knowledge Views are audience lenses over the same interpreted knowledge — Generic, Executive, Architect, Operations, Security, and FinOps. Each one frames the understanding a specific stakeholder needs. Different audiences get different explanations and priorities, never different truths. See [Knowledge Views](/docs/knowledge-views).
+
+## What does the output look like?
+
+Audience-specific, AI-narrated understanding in clean Markdown — one page per Knowledge View — plus architecture diagrams generated from the knowledge graph. You can read it in a hosted dashboard, commit it to Git, or browse the [sanitised public example](/docs/04-discovery-report).
 
 ## Can I keep my report?
 
@@ -35,11 +39,11 @@ Azure and GCP are part of the roadmap. The architecture is designed to be multi-
 
 ## Is CloudoX a CMDB or security scanner?
 
-No. CloudoX is an intelligent cloud knowledge platform — it discovers, interprets, and documents cloud environments. It is intentionally not a CMDB, vulnerability scanner, compliance product, or billing tool.
+No. CloudoX is an intelligent cloud knowledge platform — it discovers, interprets, and explains cloud environments. It is intentionally not a CMDB, vulnerability scanner, compliance product, or FinOps platform.
 
 ## Is CloudoX only a documentation tool?
 
-No. Documentation is one way to read the knowledge CloudoX builds. The core is an evidence-grounded knowledge graph; reports, architecture diagrams, and a hosted dashboard are all views on top of it. Two further views ship in early form today: **Environment Evolution** (what changed between two discovery runs) and **Cost Intelligence** (spend explained in architectural context). Both are first versions and deliberately narrow.
+No. A report is one way to read the knowledge CloudoX builds — not the product. The core is an evidence-grounded knowledge graph and its interpretation; Knowledge Views, AI-narrated reports, architecture diagrams, and a hosted dashboard are all lenses on top of it. Two further consumption layers ship in early form today: **Environment Evolution** (what changed between two discoveries) and **Cost Intelligence** (spend explained in architectural context). Both are first versions and deliberately narrow.
 
 ## Does CloudoX track what changes over time?
 

@@ -2,7 +2,7 @@ export const SITE = {
   name: "CloudoX",
   tagline: "Intelligent Cloud Knowledge Platform",
   description:
-    "CloudoX is the intelligent cloud knowledge platform that continuously discovers, documents, analyzes, and tracks the evolution of your cloud infrastructure. Understand any cloud environment in under 30 minutes — AWS-first today, multi-cloud tomorrow.",
+    "CloudoX is the intelligent cloud knowledge platform. It turns AWS-native evidence into a knowledge graph, interprets it, and projects audience-specific understanding for executives, architects, operations, security, and FinOps. Understand any cloud environment in under 30 minutes — AWS-first today, multi-cloud tomorrow.",
   url: "https://cloudox.io",
   ogImage: "/og/cloudox-og.svg",
   twitter: "",
@@ -23,8 +23,9 @@ export type NavItem = {
 
 export const PRIMARY_NAV: NavItem[] = [
   { label: "Product", href: "/product" },
-  { label: "Use Cases", href: "/use-cases" },
+  { label: "Knowledge Views", href: "/knowledge-views" },
   { label: "How It Works", href: "/how-it-works" },
+  { label: "Use Cases", href: "/use-cases" },
   { label: "Docs", href: "/docs" },
   { label: "Blog", href: "/blog" },
 ];
@@ -38,6 +39,7 @@ export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
     title: "Product",
     items: [
       { label: "Overview", href: "/product" },
+      { label: "Knowledge Views", href: "/knowledge-views" },
       { label: "How It Works", href: "/how-it-works" },
       { label: "Use Cases", href: "/use-cases" },
     ],

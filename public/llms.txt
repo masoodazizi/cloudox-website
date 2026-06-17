@@ -2,41 +2,54 @@
 
 > The intelligent cloud knowledge platform.
 
-CloudoX helps cloud consultants, architects, and engineers understand unfamiliar AWS environments in under 30 minutes and generate stakeholder-ready discovery reports — without inventing architecture or ownership.
+CloudoX turns AWS-native evidence into a typed knowledge graph, interprets what it means, and projects audience-specific understanding — so executives, architects, operations, security, and FinOps can understand any cloud environment in under 30 minutes. CloudoX is not a report-generation tool; a report is one way to read interpreted knowledge.
+
+## The conceptual model
+
+Cloud environment → Discovery → Knowledge graph → Interpretation → Knowledge Intelligence → Knowledge Views → AI-narrated understanding.
+
+One evidence-grounded foundation is interpreted once and read many ways. The knowledge graph is the source of truth; the interpretation layer is the source of meaning; AI narrates interpreted knowledge — it is never the source of truth.
 
 ## What CloudoX does
 
-- Scans AWS Organizations across accounts and regions with read-only access
-- Combines deep per-service collectors with a broader sweep across the rest of the account, and reports coverage and gaps honestly
+- Discovers AWS Organizations across accounts and regions with read-only access
 - Builds a typed knowledge graph from AWS-native sources (Config, Organizations, Resource Explorer, service APIs, resource tags)
-- Runs deterministic interpretation: environment classification, internet-exposure analysis, workload grouping
-- Generates a structured Markdown discovery report, architecture diagrams, and a hosted dashboard — all rendered from the same knowledge graph
-- Adds early consumption layers on top of the graph: Environment Evolution (what changed between two runs) and Cost Intelligence (spend explained in architectural context)
-- Runs a built-in quality check over the generated report to flag claims that aren't grounded in the evidence
+- Interprets the graph deterministically: environment classification, internet-exposure analysis, workload and system grouping
+- Generates ranked, evidence-grounded Knowledge Intelligence (findings, risks, recommendations, opportunities, evidence gaps) once per environment
+- Projects audience-specific Knowledge Views: Generic, Executive, Architect, Operations, Security, FinOps
+- Narrates each view in plain language from a closed, citeable context — AI-assisted, not AI-invented
+- Scores each view on usefulness (Knowledge Quality), with an optional AI quality review that never changes the facts
+- Adds change-over-time and cost layers: Environment Evolution (what changed) and Cost Intelligence (spend in architectural context)
+
+## Key differentiators
+
+- Knowledge-first: the product is the knowledge graph and its interpretation, not any single report
+- Evidence-grounded: every important statement cites AWS-native evidence or is labelled as inferred, with a confidence level (Verified / Likely / Assumed / Unknown)
+- Multi-account, multi-region by design
+- Stakeholder-specific understanding through Knowledge Views — different lenses, never different truths
+- AI-assisted, not AI-invented: deterministic analysis decides the facts and meaning; the model only narrates
 
 ## Who it is for
 
-- Consultants and solutions architects doing environment discovery at the start of an engagement
-- Cloud engineers inheriting an unfamiliar AWS account or Organization
-- Cloud platform and SRE teams auditing their own AWS footprint
-
-## Key principles
-
-- Evidence-based: every finding cites AWS-native data or is explicitly labeled as inferred/unknown
-- Read-only: CloudoX never creates, modifies, or deletes anything in a customer environment
-- Deterministic-first: AI is used for summarization and classification, not for inventing facts
-- Multi-account and multi-region by design
+- Executives and engineering leadership
+- Cloud and solutions architects
+- Platform and DevOps engineers
+- Security and governance teams
+- FinOps and finance
+- Consultants and pre-sales teams
 
 ## Product status
 
 - AWS-first today; multi-cloud (Azure, GCP) is on the roadmap
-- Environment Evolution and Cost Intelligence ship as first versions; continuous/scheduled discovery remains on the roadmap
+- Knowledge Views, Knowledge Intelligence, Knowledge Quality, and AI-narrated reports are part of the platform today
+- Environment Evolution and Cost Intelligence ship as first versions; continuous/scheduled discovery and the conversational CDX Agent remain on the roadmap
 - Currently in early access with a small group of consultants and engineers
 
 ## Key pages
 
 - Homepage: https://cloudox.io/
 - Product overview: https://cloudox.io/product/
+- Knowledge Views: https://cloudox.io/knowledge-views/
 - How it works: https://cloudox.io/how-it-works/
 - Use cases: https://cloudox.io/use-cases/
 - Documentation: https://cloudox.io/docs/
