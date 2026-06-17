@@ -49,7 +49,7 @@ One evidence-grounded foundation is interpreted once and read many ways. The kno
 
 - Homepage: https://cloudox.io/
 - Product overview: https://cloudox.io/product/
-- Knowledge Views: https://cloudox.io/knowledge-views/
+- Knowledge Views: https://cloudox.io/product/#knowledge-views
 - How it works: https://cloudox.io/how-it-works/
 - Use cases: https://cloudox.io/use-cases/
 - Documentation: https://cloudox.io/docs/

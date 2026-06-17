@@ -47,7 +47,6 @@ cloudox-website/
     └── pages/
         ├── index.astro        # Home
         ├── product.astro
-        ├── knowledge-views.astro
         ├── use-cases.astro
         ├── how-it-works.astro
         ├── contact.astro      # Early-access form (Web3Forms)

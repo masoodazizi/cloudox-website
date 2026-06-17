@@ -15,7 +15,7 @@ const breadcrumb = {
   ],
 };
 
-// The platform layers — one foundation, interpreted once, consumed many ways.
+// The platform — one foundation, interpreted once, consumed many ways.
 const layers = [
   {
     title: "Multi-account, multi-region discovery",
@@ -38,67 +38,66 @@ const layers = [
       "Ranked, evidence-grounded findings, risks, and opportunities — generated once across architecture, operations, security, cost, and change, then prioritized by significance for each audience.",
   },
   {
-    title: "Knowledge Views",
-    description:
-      "Audience lenses — Executive, Architect, Operations, Security, FinOps, and Generic — that project the same understanding for each stakeholder. Different explanations and priorities, never different truths.",
-  },
-  {
     title: "AI-narrated understanding",
     description:
-      "Each view is narrated in plain language from a closed, citeable context. The model explains interpreted knowledge — it never invents facts, ownership, or architecture.",
-  },
-];
-
-const trust = [
-  {
-    title: "Confidence model",
-    description:
-      "Inferred findings carry a user-facing confidence — Verified, Likely, Assumed, or Unknown — so readers know exactly how much weight to give each statement.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/><path d="m9 12 2 2 4-4"/></svg>`,
-  },
-  {
-    title: "Friendly naming",
-    description:
-      "Main content reads in human terms — Production Account, Production VPC — while every reference still traces back to its raw identifier in an appendix.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2"/><path d="M9 20h6M12 4v16"/></svg>`,
+      "Each Knowledge View is narrated in plain language from a closed, citeable context. The model explains interpreted knowledge — it never invents facts, ownership, or architecture.",
   },
   {
     title: "Knowledge Quality",
     description:
       "Every view is scored on usefulness — coverage, signal-to-noise, actionability, prioritization — with an optional AI quality review that never changes the facts.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>`,
   },
-];
-
-const beyond = [
   {
     title: "Environment Evolution",
     description:
-      "Compare a discovery against the previous one and read what actually changed — new regions and services, a workload that grew, an exposure that opened. A first version is available today.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/></svg>`,
-    badge: "First version",
+      "Compare a discovery against the previous one and read what actually changed — new regions and services, a workload that grew, an exposure that opened. Available today as a first version.",
   },
   {
     title: "Cost Intelligence",
     description:
-      "Explain spend in the context of the architecture CloudoX already understands — the patterns behind the bill, not a replacement for Cost Explorer or FinOps tooling. A first version is available today.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
-    badge: "First version",
+      "Explain spend in the context of the architecture CloudoX already understands — the patterns behind the bill, not a replacement for Cost Explorer or FinOps tooling. Available today as a first version.",
+  },
+];
+
+// Knowledge Views — audience lenses over one interpreted foundation.
+const views = [
+  {
+    name: "Executive",
+    audience: "CTOs & engineering leadership",
+    purpose: "Risk, decisions, and cost at a glance — understanding first, inventory never.",
+  },
+  {
+    name: "Architect",
+    audience: "Solutions & cloud architects",
+    purpose: "Architecture, workloads, dependencies, networking, and the design risks worth acting on.",
+  },
+  {
+    name: "Operations",
+    audience: "Platform & operations engineers",
+    purpose: "Connectivity, routing, observability, backup, and recovery readiness.",
+  },
+  {
+    name: "Security",
+    audience: "Security & governance teams",
+    purpose: "Exposure, identity, governance, and the evidence gaps that hide risk.",
+  },
+  {
+    name: "FinOps",
+    audience: "FinOps & finance",
+    purpose: "Cost drivers and optimization opportunities, connected to the workloads that cause them.",
+  },
+  {
+    name: "Generic",
+    audience: "Any technical reader",
+    purpose: "A balanced, full-depth read. The default when no audience is selected.",
   },
 ];
 
 const channels = [
   {
-    title: "AI-narrated reports",
-    description:
-      "Stakeholder-ready, view-centric documentation in clean Markdown, with architecture diagrams generated from the knowledge graph.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6H6a2 2 0 0 0-2 2z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>`,
-    badge: "Live",
-  },
-  {
     title: "CloudoX Dashboard",
     description:
-      "Browse the same knowledge in a hosted, read-only dashboard with navigation, search, and theming. A public preview is live today.",
+      "Browse the knowledge in a hosted, read-only dashboard with navigation, search, and theming. A public preview is live today.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="14" x2="15" y2="14"/></svg>`,
     href: "https://preview.cloudox.io",
     badge: "Live preview",
@@ -134,7 +133,7 @@ const channels = [
     title="A knowledge platform for the people who run cloud."
     subtitle="CloudoX collects AWS-native data, builds a typed knowledge graph, interprets it once, and projects audience-specific understanding — Knowledge Views, intelligence, and AI-narrated reports built on one evidence-grounded foundation."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
-    secondaryCta={{ label: "Explore Knowledge Views", href: "/knowledge-views" }}
+    secondaryCta={{ label: "Explore Knowledge Views", href: "#knowledge-views" }}
   />
 
   <Section
@@ -146,34 +145,41 @@ const channels = [
   </Section>
 
   <Section
-    eyebrow="BUILT TO BE TRUSTED"
-    title="Knowledge you can defend, line by line."
-    subtitle="Trust isn't a tagline — it's three concrete mechanisms running on every environment."
+    id="knowledge-views"
+    eyebrow="KNOWLEDGE VIEWS"
+    title="One environment. Every audience."
+    subtitle="Different stakeholders ask different questions of the same cloud. CloudoX projects the interpreted knowledge into audience lenses — different explanations and priorities, never different truths. A view curates and frames; it never re-derives the facts."
     muted
   >
-    <FeatureGrid features={trust} cols={3} />
-  </Section>
-
-  <Section
-    eyebrow="CHANGE AND COST"
-    title="The knowledge graph keeps paying off."
-    subtitle="Because everything reads from one evidence-grounded foundation, CloudoX answers more than 'what exists?' over time. Two consumption layers ship today — each deterministic first, AI narration second."
-  >
-    <FeatureGrid features={beyond} cols={2} />
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {views.map((v) => (
+        <article class="surface flex flex-col p-6">
+          <p class="eyebrow mb-2">{v.audience}</p>
+          <h3 class="text-lg font-semibold mb-2">{v.name} View</h3>
+          <p class="text-sm muted leading-relaxed">{v.purpose}</p>
+        </article>
+      ))}
+    </div>
+    <p class="mt-8 text-sm muted max-w-2xl leading-relaxed">
+      Views lean on friendly names and a plain confidence label (Verified /
+      Likely / Assumed / Unknown) so prose reads in human terms, while every
+      reference still traces back to its raw identifier. Read more in the
+      <a href="/docs/knowledge-views" class="font-medium" style="color: var(--accent);">Knowledge Views docs</a>.
+    </p>
   </Section>
 
   <Section
     eyebrow="WHERE UNDERSTANDING LIVES"
     title="Read it where your team already works."
     subtitle="The understanding CloudoX produces is plain Markdown, so it lives in a hosted dashboard, your Git repository, or the documentation tool your team already uses. Several destinations are live today; more are on the roadmap."
-    muted
   >
-    <FeatureGrid features={channels} cols={4} />
+    <FeatureGrid features={channels} cols={3} />
   </Section>
 
   <Section
     eyebrow="WHAT CLOUDOX IS NOT"
     title="A focused platform — clear about its boundaries."
+    muted
   >
     <div class="grid md:grid-cols-3 gap-5">
       <div class="surface p-6">

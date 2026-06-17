@@ -48,40 +48,6 @@ const views = [
   { name: "Generic", focus: "A balanced, full-depth read for any technical reader." },
 ];
 
-// Intelligence across domains — generated once, consumed everywhere.
-const intelligence = [
-  {
-    title: "Architecture intelligence",
-    description:
-      "Workloads, systems, dependencies, and design risks — what the environment is, and what to reconsider.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>`,
-  },
-  {
-    title: "Operational intelligence",
-    description:
-      "Connectivity, routing, observability, and backup coverage — where operations and recovery are exposed.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>`,
-  },
-  {
-    title: "Security intelligence",
-    description:
-      "Internet exposure, identity boundaries, and governance gaps — labelled by confidence, never invented.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 7v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-5z"/><path d="m9 12 2 2 4-4"/></svg>`,
-  },
-  {
-    title: "Cost intelligence",
-    description:
-      "Spend explained in the context of the architecture CloudoX already understands — the patterns behind the bill.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>`,
-  },
-  {
-    title: "Evolution intelligence",
-    description:
-      "What changed since the last discovery — new regions, a workload that grew, an exposure that opened.",
-    icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/></svg>`,
-  },
-];
-
 const differentiators = [
   {
     title: "Knowledge-first",
@@ -130,7 +96,7 @@ const steps = [
   <Hero
     eyebrow="INTELLIGENT CLOUD KNOWLEDGE PLATFORM"
     title="Understand any cloud environment in under 30 minutes."
-    subtitle="CloudoX turns AWS-native evidence into a knowledge graph, interprets it, and projects audience-specific understanding for executives, architects, operations, security, and FinOps — grounded in evidence, never invented."
+    subtitle="The intelligent cloud knowledge platform that discovers, interprets, and explains your cloud infrastructure — framed for every stakeholder, grounded in evidence."
     primaryCta={{ label: "Request Early Access", href: "/contact" }}
     secondaryCta={{ label: "Book a call", href: SITE.bookingUrl }}
   />
@@ -177,16 +143,8 @@ const steps = [
       ))}
     </ul>
     <div class="mt-10">
-      <a href="/knowledge-views" class="btn btn-secondary">Explore Knowledge Views</a>
+      <a href="/product#knowledge-views" class="btn btn-secondary">Explore Knowledge Views</a>
     </div>
-  </Section>
-
-  <Section
-    eyebrow="INTELLIGENCE ACROSS DOMAINS"
-    title="From facts to what actually matters."
-    subtitle="CloudoX generates ranked, evidence-grounded intelligence once per environment — findings, risks, and opportunities across architecture, operations, security, cost, and change — then every view selects what its audience needs."
-  >
-    <FeatureGrid features={intelligence} cols={3} />
   </Section>
 
   <Section

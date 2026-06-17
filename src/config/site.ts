@@ -23,7 +23,6 @@ export type NavItem = {
 
 export const PRIMARY_NAV: NavItem[] = [
   { label: "Product", href: "/product" },
-  { label: "Knowledge Views", href: "/knowledge-views" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Use Cases", href: "/use-cases" },
   { label: "Docs", href: "/docs" },
@@ -39,7 +38,7 @@ export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
     title: "Product",
     items: [
       { label: "Overview", href: "/product" },
-      { label: "Knowledge Views", href: "/knowledge-views" },
+      { label: "Knowledge Views", href: "/product#knowledge-views" },
       { label: "How It Works", href: "/how-it-works" },
       { label: "Use Cases", href: "/use-cases" },
     ],
