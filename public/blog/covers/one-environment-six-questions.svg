@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="One cloud environment, six different questions">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0d12"/>
+      <stop offset="1" stop-color="#11161f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="78%" cy="8%" r="70%">
+      <stop offset="0" stop-color="#2f80ff" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#2f80ff" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#1f2733" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#grid)" opacity="0.5"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <g opacity="0.9">
+    <line x1="754.9" y1="373.4" x2="1018.7" y2="417.1" stroke="#2f80ff" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="754.9" y1="373.4" x2="842.2" y2="180.5" stroke="#2f80ff" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="754.9" y1="373.4" x2="956.2" y2="384.8" stroke="#2f80ff" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="754.9" y1="373.4" x2="788.9" y2="469.9" stroke="#2f80ff" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="754.9" y1="373.4" x2="1028.8" y2="135.2" stroke="#2f80ff" stroke-width="1.5" stroke-opacity="0.28"/>
+    <line x1="754.9" y1="373.4" x2="749.6" y2="184.4" stroke="#2f80ff" stroke-width="1.5" stroke-opacity="0.28"/>
+    <circle cx="1018.7" cy="417.1" r="12.3" fill="#2f80ff" opacity="0.10"/>
+    <circle cx="1018.7" cy="417.1" r="6.3" fill="#58a3ff" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="754.9" cy="373.4" r="22.0" fill="#2f80ff" opacity="0.10"/>
+    <circle cx="754.9" cy="373.4" r="16.0" fill="#2f80ff" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="842.2" cy="180.5" r="15.1" fill="#2f80ff" opacity="0.10"/>
+    <circle cx="842.2" cy="180.5" r="9.1" fill="#58a3ff" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="956.2" cy="384.8" r="14.4" fill="#2f80ff" opacity="0.10"/>
+    <circle cx="956.2" cy="384.8" r="8.4" fill="#2a3340" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="788.9" cy="469.9" r="15.1" fill="#2f80ff" opacity="0.10"/>
+    <circle cx="788.9" cy="469.9" r="9.1" fill="#58a3ff" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="1028.8" cy="135.2" r="15.8" fill="#2f80ff" opacity="0.10"/>
+    <circle cx="1028.8" cy="135.2" r="9.8" fill="#2a3340" stroke="#0a0d12" stroke-width="2"/>
+    <circle cx="749.6" cy="184.4" r="15.8" fill="#2f80ff" opacity="0.10"/>
+    <circle cx="749.6" cy="184.4" r="9.8" fill="#58a3ff" stroke="#0a0d12" stroke-width="2"/>
+  </g>
+
+  <g font-family="Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif">
+    <text x="100" y="120" font-size="22" letter-spacing="4" font-weight="600" fill="#2f80ff">KNOWLEDGE-VIEWS</text>
+
+    <text font-size="68" font-weight="700" letter-spacing="-1.5" fill="#f7f8fa">
+      <tspan x="100" y="270">One cloud</tspan>
+      <tspan x="100" y="346">environment, six</tspan>
+      <tspan x="100" y="422">different questions</tspan>
+    </text>
+
+    <text x="100" y="556" font-size="26" font-weight="700" letter-spacing="-0.5">
+      <tspan fill="#eef0f4">Cloudo</tspan><tspan fill="#2f80ff">X</tspan>
+    </text>
+    <text x="1100" y="556" font-size="24" font-weight="600" fill="#8b95a7" text-anchor="end">cloudox.io</text>
+  </g>
+</svg>

@@ -17,9 +17,9 @@ So the first version of **Cost Intelligence** does one thing: it explains cost i
 
 ## How it works
 
-CloudoX already builds a knowledge graph of the environment — the resources, how they connect, and the workloads they form. Cost Intelligence reads a small, high-level slice of cost data and links it back to that graph. The result is a short artifact, and a report section, that puts spend next to the architecture that drives it.
+Cost Intelligence works from the same knowledge graph CloudoX already builds — the resources, how they connect, and the workloads they form. It reads a small, high-level slice of cost data and connects it to that picture, so the report can put spend next to the architecture that drives it.
 
-The architectural signals are deterministic. CloudoX counts the cost-relevant patterns it can actually see — networking choices, compute shapes, storage and database configurations — and names them as observed facts or clearly labelled inferences. It does not attribute dollars to individual resources, because splitting a bill that way is guesswork, and guesswork is the opposite of what a discovery tool should produce.
+The architectural signals are deterministic. CloudoX looks at the cost-relevant signals it can actually see — networking choices, compute shapes, storage and database configurations — and names them as observed facts or clearly labelled inferences. It does not attribute dollars to individual resources, because splitting a bill that way is guesswork, and guesswork is the opposite of what a discovery tool should produce.
 
 ## What it won't do
 

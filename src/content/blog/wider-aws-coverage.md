@@ -6,36 +6,23 @@ author: "The CloudoX team"
 tags: ["cloudox", "discovery", "aws"]
 cover: "/blog/covers/wider-aws-coverage.svg"
 coverAlt: "CloudoX cover image for More of AWS, with the gaps shown"
+draft: false
 ---
 
-The first version of CloudoX covered a few AWS services well. EC2, S3, IAM, VPC, RDS, Lambda — the core surface a cloud architect actually reasons about. It was enough for the first useful report, and we shipped it.
+AWS is enormous. A single account can lean on a handful of core services or a few hundred, and no report can go deep on everything at once without turning into noise. That's the honest problem behind AWS discovery, and it's worth being upfront about.
 
-Then the feedback started landing.
+The first version of CloudoX covered the services a cloud architect reasons about most — EC2, S3, IAM, VPC, RDS, Lambda, and a handful of others. That was enough for a genuinely useful first report.
 
-> "Great, but we use Cognito heavily for the auth side."
->
-> "What about the EventBridge buses our platform team relies on?"
->
-> "Our long tail is Step Functions and AppSync. Why are they missing?"
+But almost every real environment eventually reaches past that list. Auth built on Cognito, an event bus in EventBridge, a long tail that includes Step Functions or AppSync. A report that stays silent about those resources isn't more focused — it's just incomplete, and incomplete reports lose trust the moment someone notices what's missing.
 
-The answer at the time was: each new service meant a new collector, a normalisation pass, and a new test suite. We kept adding them — Backup, Access Analyzer, GuardDuty, ECS, EKS, CloudFront, KMS, and a few dozen others — until typed coverage spanned the services that show up in most real engagements.
+## Depth where it matters, breadth for the rest
 
-That bought us breadth, but not enough.
+Going equally deep on every AWS service doesn't scale, and most of the long tail doesn't need the same depth as a VPC or an IAM role. What it does need is to be seen at all — named, placed in the picture, and counted as evidence, even without every property filled in.
 
-## The wall we hit
+So CloudoX combines two things: deep, opinionated understanding for the services that drive the architecture story, and a broader, lighter pass that keeps the rest of the account visible. Both feed the same knowledge graph, and nothing gets counted twice.
 
-AWS has hundreds of services. Writing one collector per service does not scale, and most of the long tail does not need the same depth as a VPC or an IAM role. A team that uses MediaStore or AppMesh wants the report to *know* those resources exist; it does not need the full property bag for them.
+## Naming the gaps
 
-We needed two things working together: deep, opinionated collection for the architecture-critical services, and broad, lightweight coverage for everything else.
+A discovery report that quietly underreports is worse than a thin one that says so. That's why the report carries a **Coverage and gaps** section: what was captured, and where AWS shows resources CloudoX hasn't gone deep on yet. If the broader pass is off for a given run, the section says that plainly instead of implying complete coverage.
 
-## The shape we landed on
-
-CloudoX now runs a layered discovery model. The deep collectors keep doing what they did — pulling typed properties, tags, and relationships for the services that drive the architecture story. On top of them, a second layer uses AWS-native cross-service inventory to sweep the rest of the account.
-
-The combined output flows through the same knowledge graph, with one safeguard: a resource the deep collectors already captured is never re-listed by the broader sweep. The reader sees one consistent picture, not two overlapping ones.
-
-## Why the gaps are part of the report
-
-A discovery report that quietly underreports is worse than a thin one. So the report carries a new section, **Coverage and gaps**, that states what CloudoX captured and where AWS itself reports resources the deep collectors do not yet type. If the broader layer is turned off, the section says so plainly rather than implying total coverage.
-
-The point is small but, we think, important. Consultants walking into an unfamiliar AWS estate need to know what was looked at, what was found, and what the tool could not yet see. Deep collectors will keep landing where the property bag matters. The broader layer is what keeps the rest of the account from quietly disappearing in between.
+Consultants walking into an unfamiliar AWS estate need to know what was looked at, not just what was found. That's the smaller, more honest promise underneath this: not "we saw everything," but "here's exactly what we saw, and here's what's still open."

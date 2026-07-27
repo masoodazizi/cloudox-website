@@ -6,6 +6,7 @@ author: "The CloudoX team"
 tags: ["cloudox", "discovery", "aws"]
 cover: "/blog/covers/welcome-to-cloudox.svg"
 coverAlt: "CloudoX cover image for Welcome to CloudoX"
+draft: false
 ---
 
 Understanding a new cloud environment shouldn't take days.
@@ -21,11 +22,11 @@ Cloud teams keep facing the same problem from different angles:
 - Pre-sales teams need to qualify opportunities without the time to actually understand them.
 - Platform teams audit their own AWS Organization and find tribal knowledge instead of documentation.
 
-Generic AI tools haven't solved this. They invent architecture, fabricate ownership, and produce documents that nobody is willing to sign.
+Generic AI tools haven't solved this either. Handed the same raw, disconnected cloud data, they can produce plausible-sounding architecture that isn't actually backed by evidence — the kind of document nobody is willing to put their name on.
 
 ## What CloudoX is
 
-CloudoX is an intelligent cloud knowledge platform. It discovers a cloud environment, builds a typed knowledge graph of what's there and how it connects, and makes that knowledge readable. The MVP focuses on AWS:
+CloudoX is an intelligent cloud knowledge platform. It discovers a cloud environment, builds a typed knowledge graph of what's there and how it connects, and makes that knowledge readable. CloudoX is AWS-first today:
 
 - Multi-account AWS Organizations
 - Multi-region discovery
@@ -35,7 +36,7 @@ CloudoX is an intelligent cloud knowledge platform. It discovers a cloud environ
 
 The knowledge graph is the core. Documentation and the dashboard are how you read it today — and because the knowledge sits underneath, the same foundation can grow over time rather than being locked to a single output.
 
-The architecture is intentionally cloud-shaped, not AWS-shaped — Azure and GCP support are next on the roadmap.
+The architecture is intentionally cloud-shaped, not AWS-shaped, so it's built for a multi-cloud future — Azure and GCP are part of the roadmap.
 
 ## What CloudoX is *not*
 

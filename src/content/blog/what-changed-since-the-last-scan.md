@@ -9,7 +9,7 @@ coverAlt: "CloudoX cover image for What changed since the last scan"
 draft: false
 ---
 
-CloudoX started as a way to understand an unfamiliar cloud environment quickly — point it at an account, get an evidence-grounded report in about half an hour. That's still the core. But cloud environments don't hold still. A week later there's a new region, a database has grown, a security group has been opened "just for debugging." The report you generated on Monday is already drifting from reality.
+CloudoX started as a way to understand an unfamiliar cloud environment quickly — point it at an account or an AWS Organization, get an evidence-grounded report in about half an hour. That's still the core. But cloud environments don't hold still. A week later there's a new region, a database has grown, a security group has been opened "just for debugging." The report you generated on Monday is already drifting from reality.
 
 So the question we kept hearing changed from "what's in here?" to "what changed since last time?"
 
@@ -17,7 +17,7 @@ That's what **Environment Evolution** answers.
 
 ## Comparing two runs
 
-CloudoX already builds a knowledge graph of an environment on every run. Environment Evolution keeps a record of those runs and compares the current one against the previous one. The comparison is deterministic: it looks at the resources, relationships, and workloads in each graph and works out what was added, removed, modified, or moved — new regions and services, a workload that grew, an exposure that opened, a governance control that changed.
+CloudoX already builds a knowledge graph of an environment on every run. Environment Evolution keeps a record of those runs and compares the current one against the previous one. The comparison is deterministic: it looks at the resources, relationships, and workloads in each graph and works out what was added, removed, or changed — new regions and services, a workload's footprint growing or shrinking, an exposure that opened, a governance control that changed.
 
 The output is a short evolution summary and a report section that answers three things: what changed, which changes are worth attention, and what a reviewer should look at first.
 
