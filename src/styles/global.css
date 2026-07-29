@@ -214,6 +214,20 @@
     color: var(--fg-muted);
     font-style: italic;
   }
+  .prose-cloudox table {
+    @apply my-6 w-full border-collapse text-sm;
+  }
+  .prose-cloudox th,
+  .prose-cloudox td {
+    border: 1px solid var(--border);
+    padding: 0.6rem 0.75rem;
+    text-align: left;
+    vertical-align: top;
+  }
+  .prose-cloudox th {
+    background-color: var(--bg-muted);
+    font-weight: 600;
+  }
   .prose-cloudox img {
     border-radius: 0.5rem;
     border: 1px solid var(--border);

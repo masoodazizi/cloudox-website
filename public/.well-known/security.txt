@@ -1,0 +1,17 @@
+# CloudoX security contact
+# https://cloudox.io/security
+
+Contact: mailto:security@cloudox.io
+Preferred-Languages: en, de
+Canonical: https://cloudox.io/.well-known/security.txt
+Policy: https://cloudox.io/security
+
+# Reporting a vulnerability
+#
+# Email the address above with enough detail to reproduce the issue. We will
+# acknowledge receipt and follow up directly. Please give us a reasonable
+# window to fix an issue before disclosing it publicly, and please do not
+# access, modify, or exfiltrate data that is not yours while testing.
+#
+# No Expires field: this file is not on an automated renewal schedule yet,
+# so we do not publish an expiry date we cannot guarantee to keep current.

@@ -119,7 +119,18 @@ const breadcrumb = {
                 class="w-full rounded-md px-3 py-2.5 text-sm font-sans resize-y"
                 style="background: var(--bg); border: 1px solid var(--border); color: var(--fg);"
               ></textarea>
+              <p class="text-xs muted mt-1.5">
+                Please don't include AWS credentials, account exports,
+                secrets, or other confidential infrastructure data here.
+              </p>
             </div>
+
+            <p class="text-xs muted leading-relaxed">
+              By submitting this form, you acknowledge that {SITE.name} will
+              process the information you provide to respond to your enquiry
+              and evaluate your early-access request. See our{" "}
+              <a href="/privacy" class="underline">Privacy Notice</a>.
+            </p>
 
             <button type="submit" class="btn btn-primary w-full sm:w-auto" data-submit>
               <span data-submit-label>Send request</span>
@@ -196,9 +207,13 @@ const breadcrumb = {
           <h3 class="text-base font-semibold mb-2">What we don't do</h3>
           <ul class="text-sm muted space-y-1.5">
             <li class="flex gap-2"><span style="color: var(--accent);">›</span> Add you to a marketing newsletter</li>
-            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Share your information</li>
+            <li class="flex gap-2"><span style="color: var(--accent);">›</span> Sell your information or use it for third-party advertising</li>
             <li class="flex gap-2"><span style="color: var(--accent);">›</span> Run anything in your AWS environment beyond read-only discovery</li>
           </ul>
+          <p class="text-xs muted mt-3">
+            We use named service providers to deliver this site, process this
+            form, and handle scheduling — see our <a href="/privacy" class="underline">Privacy Notice</a>.
+          </p>
         </div>
       </aside>
     </div>

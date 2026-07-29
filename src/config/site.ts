@@ -25,6 +25,7 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "Product", href: "/product" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Use Cases", href: "/use-cases" },
+  { label: "Security", href: "/security" },
   { label: "Docs", href: "/docs" },
   { label: "Blog", href: "/blog" },
 ];
@@ -58,4 +59,17 @@ export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
       { label: "Book a call", href: "https://zeeg.me/cloudox", external: true },
     ],
   },
+];
+
+/**
+ * The four legal/trust routes every public page links to directly from the
+ * footer's bottom bar (never nested inside a collapsible menu), per German
+ * Digital Services Act (DDG) §5 accessibility expectations and the site's
+ * own trust commitments.
+ */
+export const LEGAL_NAV: NavItem[] = [
+  { label: "Imprint", href: "/imprint" },
+  { label: "Privacy", href: "/privacy" },
+  { label: "Terms", href: "/terms" },
+  { label: "Security", href: "/security" },
 ];

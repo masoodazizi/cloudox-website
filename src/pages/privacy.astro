@@ -1,0 +1,315 @@
+---
+import LegalLayout from "@layouts/LegalLayout.astro";
+import { LEGAL_OPERATOR, LEGAL_LAST_UPDATED, WEBSITE_PROCESSORS } from "@/config/legal";
+import { SITE } from "@/config/site";
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
+    { "@type": "ListItem", position: 2, name: "Privacy", item: `${SITE.url}/privacy/` },
+  ],
+};
+
+const op = LEGAL_OPERATOR;
+const berlinAuthorityUrl = "https://www.datenschutz-berlin.de/";
+---
+
+<LegalLayout
+  title="Privacy Notice"
+  eyebrow="LEGAL"
+  description="How the CloudoX website, contact form, and meeting scheduling process personal data, and which service providers are involved."
+  lastUpdated={LEGAL_LAST_UPDATED.privacy}
+  jsonLd={[breadcrumb]}
+>
+  <h2>1. Controller</h2>
+  <p>The controller responsible for processing personal data through this website is:</p>
+  <p>
+    {op.operatorName}<br />
+    trading as {op.tradingName}<br />
+    {op.streetAddress}<br />
+    {op.postalCode} {op.city}<br />
+    {op.country}
+  </p>
+  <p>
+    Email: <a href={`mailto:${op.legalEmail}`}>{op.legalEmail}</a>
+  </p>
+  <p>No data-protection officer has been appointed.</p>
+
+  <h2>2. Scope</h2>
+  <p>
+    This notice covers the public CloudoX website, its early-access and
+    contact forms, and the meeting-scheduling link. It does not yet govern
+    customer cloud-environment discovery or a production SaaS service. Those
+    activities will require separate customer contractual and privacy
+    documentation before commercial operation.
+  </p>
+
+  <h2>3. Website delivery, CDN, and security</h2>
+  <p>The website uses Cloudflare for DNS, content delivery, hosting, and security.</p>
+  <p>
+    When you access the website, Cloudflare and the underlying hosting
+    infrastructure may process technical information required to deliver
+    and protect the site, including:
+  </p>
+  <ul>
+    <li>IP address</li>
+    <li>requested URL and file</li>
+    <li>date and time of access</li>
+    <li>HTTP method and status</li>
+    <li>referrer, where provided</li>
+    <li>browser and device information</li>
+    <li>security and diagnostic information</li>
+  </ul>
+  <p><strong>Purposes:</strong> delivering the website, maintaining availability and performance, preventing abuse and attacks, and diagnosing technical faults.</p>
+  <p>
+    <strong>Legal basis:</strong> Article 6(1)(f) GDPR — legitimate interests
+    in providing a secure, reliable, and functional website.
+  </p>
+  <p>
+    Cloudflare operates a global network, and processing can involve
+    infrastructure or systems outside the EEA. Where that occurs, it is
+    carried out under Cloudflare's applicable safeguards, including
+    contractual transfer mechanisms (see Section 9).
+  </p>
+  <p>
+    Technical data of this kind is retained only for as long as required for
+    the operational and security purposes described above, according to
+    Cloudflare's account configuration and applicable contractual terms. We
+    have not independently verified an exact retention period and do not
+    state one we cannot confirm.
+  </p>
+
+  <h2>4. Contact and early-access forms</h2>
+  <p>
+    The website uses <strong>Web3Forms</strong> to process contact and
+    early-access submissions and forward them to us by email. The current
+    form (at <a href="/contact">/contact</a>) submits exactly the following
+    fields:
+  </p>
+  <ul>
+    <li>name</li>
+    <li>email address</li>
+    <li>company or role (optional)</li>
+    <li>approximate AWS environment scale (optional)</li>
+    <li>a free-text message describing your interest</li>
+    <li>
+      a small amount of technically generated metadata associated with the
+      submission (a static subject line, a honeypot anti-spam field that
+      stays empty for human visitors, and the public Web3Forms form
+      identifier)
+    </li>
+  </ul>
+  <p>
+    We do not currently ask for, and you should not submit, AWS credentials,
+    account exports, secrets, or other confidential infrastructure data
+    through this form.
+  </p>
+  <p><strong>Purposes:</strong></p>
+  <ul>
+    <li>responding to your enquiry</li>
+    <li>evaluating early-access interest</li>
+    <li>communicating about a requested pilot or product discussion</li>
+    <li>protecting the form from misuse</li>
+  </ul>
+  <p><strong>Legal bases:</strong></p>
+  <ul>
+    <li>Article 6(1)(b) GDPR, where processing is necessary to respond to a request connected with potential contractual steps;</li>
+    <li>Article 6(1)(f) GDPR, for general business communication, abuse prevention, and managing genuine early-access interest;</li>
+    <li>Article 6(1)(a) GDPR (consent) only for processing that is genuinely optional and implemented with a valid opt-in — we do not currently run any such optional processing on this form.</li>
+  </ul>
+  <p>
+    Submitting this form is not treated as, and does not create, marketing
+    consent.
+  </p>
+  <p><strong>How your submission is processed:</strong></p>
+  <ol>
+    <li>You submit the form.</li>
+    <li>Web3Forms processes and forwards the submission.</li>
+    <li>The resulting message is received and stored in our IONOS-hosted mailbox.</li>
+    <li>{op.operatorName} reviews and responds to it.</li>
+  </ol>
+  <p>
+    Web3Forms states that it does not retain form submissions as stored
+    records, but it may temporarily process submission data and maintain
+    server logs that can contain personal data; those logs are periodically
+    deleted according to Web3Forms' own practice. We do not claim that "your
+    information is never stored" — only what is stated above. Web3Forms may
+    rely on infrastructure located outside the EEA; see Section 9.
+  </p>
+  <p><strong>Retention:</strong></p>
+  <ul>
+    <li>rejected spam or clearly irrelevant submissions: deleted when no longer operationally required;</li>
+    <li>ordinary early-access enquiries: retained while the discussion remains active and for a reasonable follow-up period;</li>
+    <li>correspondence connected to an actual business relationship: retained according to applicable legal and contractual record-keeping obligations.</li>
+  </ul>
+  <p>
+    We do not currently commit to a fixed number of months for enquiry
+    retention; we are establishing a practical deletion routine for
+    abandoned early-access enquiries (see the notice immediately above the
+    submit button on the form).
+  </p>
+  <p>We do not automatically subscribe form submitters to a newsletter.</p>
+
+  <h2>5. Email communication</h2>
+  <p>Email communication is hosted by <strong>IONOS</strong>.</p>
+  <p>
+    When you contact us by email, or through a form forwarded to email, we
+    process your contact information, message content, associated metadata,
+    and subsequent correspondence to respond to and manage your enquiry.
+  </p>
+  <p>
+    <strong>Legal bases:</strong> Article 6(1)(b) GDPR for pre-contractual or
+    contractual communication; Article 6(1)(f) GDPR for other legitimate
+    business communication.
+  </p>
+  <p>
+    We do not claim end-to-end encryption for ordinary email. Internet email
+    may not be completely secure in transit; please do not send highly
+    confidential information through the public contact form or by email.
+  </p>
+
+  <h2>6. Meeting scheduling with Zeeg</h2>
+  <p>We use Zeeg for optional appointment scheduling, linked from this site — not embedded in it.</p>
+  <p>
+    When you choose to follow the booking link and schedule a meeting, Zeeg
+    may process information such as your name, email address, selected
+    appointment, timezone, any answers you enter in the booking form,
+    technical information required to provide the booking, and calendar or
+    notification information.
+  </p>
+  <p><strong>Purposes:</strong> displaying availability, arranging the requested appointment, sending confirmations and reminders, and managing changes and cancellations.</p>
+  <p>
+    <strong>Legal basis:</strong> Article 6(1)(b) GDPR for requested
+    pre-contractual communication, or Article 6(1)(f) GDPR for efficient
+    scheduling of business enquiries.
+  </p>
+  <p>
+    Zeeg states that its scheduling data is stored and processed on servers
+    in Germany. Because the booking link opens Zeeg's own site, processing
+    begins once you follow the link and interact with it there — visiting a
+    CloudoX page that merely links to Zeeg does not by itself send Zeeg any
+    data.
+  </p>
+
+  <h2>7. Cookies and similar technologies</h2>
+  <p>
+    This website does not set any cookies and does not write to local or
+    session storage from its own code. We do not run analytics, advertising
+    trackers, or cross-site marketing scripts, and we do not embed
+    third-party widgets that load automatically. Fonts are self-hosted
+    rather than loaded from a third-party font service.
+  </p>
+  <p>
+    Because no technology on this site currently requires consent under the
+    ePrivacy rules, we do not show a cookie-consent banner — adding one
+    without a technical reason would be misleading rather than helpful. If
+    that changes (for example, if we ever add optional analytics), we will
+    implement prior consent before any such technology loads and update this
+    section accordingly.
+  </p>
+
+  <h2>8. Recipients and processors</h2>
+  <p>The following providers process website data on our behalf, to the extent described above:</p>
+  <table>
+    <thead>
+      <tr>
+        <th>Provider</th>
+        <th>Role</th>
+        <th>Data categories</th>
+      </tr>
+    </thead>
+    <tbody>
+      {WEBSITE_PROCESSORS.map((p) => (
+        <tr>
+          <td>{p.name}</td>
+          <td>{p.role}</td>
+          <td>{p.dataCategories}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+  <p>
+    We may also disclose personal data to professional advisers, public
+    authorities, or other service providers where legally required or
+    necessary.
+  </p>
+
+  <h2>9. International data transfers</h2>
+  <p>
+    Some providers we use — particularly globally operating infrastructure
+    providers such as Cloudflare, and potentially Web3Forms — may process
+    data outside Germany or the EEA. We do not claim that all website data
+    remains exclusively in Germany.
+  </p>
+  <p>Where a transfer outside the EEA occurs, it is made only under an applicable legal mechanism, such as:</p>
+  <ul>
+    <li>an adequacy decision,</li>
+    <li>the EU Standard Contractual Clauses, or</li>
+    <li>another legally recognized safeguard.</li>
+  </ul>
+
+  <h2>10. Retention</h2>
+  <p>
+    Personal data is retained only as long as needed for the purpose for
+    which it was collected and as required by applicable law. Technical
+    logs, form submissions, correspondence, and scheduling records may have
+    different retention periods, described where relevant above; we state
+    processing-specific principles rather than a single invented period that
+    covers everything.
+  </p>
+
+  <h2>11. Rights</h2>
+  <p>Under the GDPR, you have the right to:</p>
+  <ul>
+    <li>access the personal data we hold about you,</li>
+    <li>request rectification of inaccurate data,</li>
+    <li>request erasure,</li>
+    <li>request restriction of processing,</li>
+    <li>data portability, where applicable,</li>
+    <li>object to processing based on legitimate interests,</li>
+    <li>withdraw consent prospectively, where consent is the legal basis, and</li>
+    <li>lodge a complaint with a supervisory authority.</li>
+  </ul>
+  <p>
+    The competent supervisory authority for us is the{" "}
+    <a href={berlinAuthorityUrl} target="_blank" rel="noopener noreferrer">
+      Berlin Commissioner for Data Protection and Freedom of Information
+    </a>{" "}
+    (<em>Berliner Beauftragte für Datenschutz und Informationsfreiheit</em>).
+  </p>
+  <p>
+    Requests can be sent to <a href={`mailto:${op.legalEmail}`}>{op.legalEmail}</a>.
+  </p>
+
+  <h2>12. Obligation to provide data</h2>
+  <p>
+    You are not generally required to provide personal data merely to browse
+    this website. Required form fields are necessary to process the
+    enquiry you submit — without them, we may be unable to respond or
+    arrange early access.
+  </p>
+
+  <h2>13. Automated decision-making</h2>
+  <p>
+    Website enquiry data is not used for automated decision-making producing
+    legal or similarly significant effects.
+  </p>
+
+  <h2>14. Security</h2>
+  <p>
+    We use appropriate technical and organizational safeguards, including
+    encrypted HTTPS transport, restricted administrative access, and the
+    security controls of our service providers. No method of transmission
+    or storage is completely secure, and we do not promise absolute
+    security.
+  </p>
+
+  <h2>15. Changes</h2>
+  <p>
+    We may update this privacy notice when the website, our providers, or
+    applicable legal requirements change. The date above reflects the latest
+    update.
+  </p>
+</LegalLayout>

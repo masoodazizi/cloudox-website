@@ -1,0 +1,116 @@
+---
+import LegalLayout from "@layouts/LegalLayout.astro";
+import { LEGAL_OPERATOR, LEGAL_LAST_UPDATED } from "@/config/legal";
+import { SITE } from "@/config/site";
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
+    { "@type": "ListItem", position: 2, name: "Terms", item: `${SITE.url}/terms/` },
+  ],
+};
+
+const op = LEGAL_OPERATOR;
+---
+
+<LegalLayout
+  title="Website Terms of Use"
+  eyebrow="LEGAL"
+  description="Terms governing use of the public CloudoX website and its early-access enquiry process. Not the future CloudoX SaaS subscription terms."
+  lastUpdated={LEGAL_LAST_UPDATED.terms}
+  jsonLd={[breadcrumb]}
+>
+  <p class="text-sm muted">
+    These terms govern use of the public website and its early-access
+    enquiry process. They are <strong>not</strong> the future CloudoX SaaS
+    subscription terms.
+  </p>
+
+  <h2>1. Operator and scope</h2>
+  <p>
+    The website is operated by {op.operatorName}, trading as {op.tradingName}.
+  </p>
+  <p>
+    The website provides information about {op.tradingName} and allows
+    visitors to express early-access interest, contact the operator, and
+    request meetings.
+  </p>
+
+  <h2>2. No binding product offer</h2>
+  <p>
+    Website descriptions, roadmap statements, early-access references,
+    demonstrations, and planned capabilities are informational and may
+    change.
+  </p>
+  <p>Submitting a form, joining an early-access list, or scheduling a meeting does not:</p>
+  <ul>
+    <li>create a subscription,</li>
+    <li>guarantee admission to a pilot,</li>
+    <li>reserve capacity,</li>
+    <li>establish a partnership,</li>
+    <li>create a service-level commitment, or</li>
+    <li>require {op.tradingName} to release a stated feature.</li>
+  </ul>
+  <p>A binding commercial relationship arises only through a separate written agreement.</p>
+
+  <h2>3. Permitted use</h2>
+  <p>Visitors may use the website for legitimate informational and business-enquiry purposes.</p>
+  <p>They must not:</p>
+  <ul>
+    <li>interfere with the website or its security,</li>
+    <li>submit unlawful, deceptive, or malicious content,</li>
+    <li>attempt unauthorized access,</li>
+    <li>abuse forms or automated interfaces,</li>
+    <li>scrape or reproduce substantial website content contrary to applicable law, or</li>
+    <li>misrepresent affiliation with {op.tradingName}.</li>
+  </ul>
+
+  <h2>4. Intellectual property</h2>
+  <p>
+    {op.tradingName} branding, text, graphics, product concepts,
+    demonstrations, and other materials remain protected by applicable
+    intellectual-property laws.
+  </p>
+  <p>
+    No licence to {op.tradingName} software, source code, knowledge models,
+    or proprietary product functionality is granted through use of the
+    website.
+  </p>
+
+  <h2>5. External services and links</h2>
+  <p>
+    Third-party services and websites linked from this site — including
+    Zeeg for scheduling — are governed by their own terms and privacy
+    practices, not ours.
+  </p>
+
+  <h2>6. Availability and changes</h2>
+  <p>The website may be changed, suspended, or withdrawn. No uninterrupted availability is guaranteed.</p>
+
+  <h2>7. Information and liability</h2>
+  <p>Website information is provided with reasonable care but may be incomplete, preliminary, or outdated.</p>
+  <p>
+    Nothing in these terms excludes liability for intent, gross negligence,
+    injury to life, body, or health, or any other liability that cannot be
+    limited or excluded under German law.
+  </p>
+  <p>
+    For ordinary negligence, liability is limited to the breach of an
+    essential contractual obligation (<em>wesentliche Vertragspflicht</em>)
+    and to foreseeable, typical damage.
+  </p>
+
+  <h2>8. Governing law</h2>
+  <p>German law applies to the extent legally permissible.</p>
+  <p>Mandatory consumer protections and statutory places of jurisdiction remain unaffected.</p>
+
+  <h2>9. Consumer dispute resolution</h2>
+  <p>
+    We are neither willing nor obliged to participate in dispute-resolution
+    proceedings before a consumer arbitration board. The European
+    Commission's former Online Dispute Resolution platform has been
+    discontinued and is not referenced here.
+  </p>
+</LegalLayout>

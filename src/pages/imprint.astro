@@ -1,0 +1,113 @@
+---
+import LegalLayout from "@layouts/LegalLayout.astro";
+import {
+  LEGAL_OPERATOR,
+  LEGAL_DESCRIPTION_DE,
+  LEGAL_LAST_UPDATED,
+  hasValue,
+} from "@/config/legal";
+import { SITE } from "@/config/site";
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: SITE.url },
+    { "@type": "ListItem", position: 2, name: "Imprint", item: `${SITE.url}/imprint/` },
+  ],
+};
+
+const op = LEGAL_OPERATOR;
+---
+
+<LegalLayout
+  title="Imprint"
+  eyebrow="LEGAL"
+  description="Information pursuant to Section 5 of the German Digital Services Act (Digitale-Dienste-Gesetz – DDG) for the CloudoX website."
+  lastUpdated={LEGAL_LAST_UPDATED.imprint}
+  jsonLd={[breadcrumb]}
+>
+  <p class="text-sm muted">
+    Information pursuant to Section 5 of the German Digital Services Act
+    (<em>Digitale-Dienste-Gesetz – DDG</em>).
+  </p>
+
+  <p class="mt-8">
+    <strong>{op.operatorName}</strong><br />
+    trading as <strong>{op.tradingName}</strong><br />
+    {op.streetAddress}<br />
+    {op.postalCode} {op.city}<br />
+    {op.country}
+  </p>
+
+  {hasValue(op.legalForm) && <p class="text-sm muted">{op.legalForm}</p>}
+  {hasValue(op.registerCourt) && hasValue(op.registerNumber) && (
+    <p class="text-sm muted">
+      {op.registerCourt}, {op.registerNumber}
+    </p>
+  )}
+  {hasValue(op.vatId) && <p class="text-sm muted">VAT ID: {op.vatId}</p>}
+  {hasValue(op.phone) && <p class="text-sm muted">Phone: {op.phone}</p>}
+
+  <p class="text-xs muted mt-4 max-w-xl">
+    {op.tradingName} is currently operated by {op.operatorName} as an
+    individual; it is not a registered company, and no commercial-register
+    entry or VAT identification number currently exists.
+  </p>
+
+  <h2>Contact</h2>
+  <p>
+    Email: <a href={`mailto:${op.legalEmail}`}>{op.legalEmail}</a>
+  </p>
+
+  <h2>Responsible for editorial content</h2>
+  <p>
+    {op.responsibleEditorName ?? op.operatorName}<br />
+    {op.streetAddress}<br />
+    {op.postalCode} {op.city}<br />
+    {op.country}
+  </p>
+
+  <h2>Consumer dispute resolution</h2>
+  <p>
+    The European Commission's former Online Dispute Resolution platform has
+    been discontinued and is not referenced here.
+  </p>
+  <p>
+    We are neither willing nor obliged to participate in dispute-resolution
+    proceedings before a consumer arbitration board (
+    <em>Verbraucherschlichtungsstelle</em>).
+  </p>
+
+  <h2>Liability for content</h2>
+  <p>
+    The content of this website has been prepared with reasonable care.
+    However, no guarantee is given that the information is complete,
+    accurate, or continuously current. Product descriptions, planned
+    capabilities, and early-access information may change.
+  </p>
+
+  <h2>Liability for external links</h2>
+  <p>
+    This website may contain links to external websites operated by third
+    parties. {op.tradingName} has no control over their content and cannot
+    accept responsibility for it. The respective provider or operator of the
+    linked pages is responsible for their content.
+  </p>
+
+  <h2>Copyright</h2>
+  <p>
+    Unless otherwise indicated, the content and materials on this website
+    are protected by applicable copyright law. Reproduction, adaptation,
+    distribution, or other use beyond statutory permissions requires prior
+    written consent.
+  </p>
+
+  <hr class="my-10" />
+
+  <p class="text-xs muted">
+    German-language legal description:
+    <em>{LEGAL_DESCRIPTION_DE}</em>, {op.streetAddress}, {op.postalCode}{" "}
+    {op.city}, {op.country}.
+  </p>
+</LegalLayout>

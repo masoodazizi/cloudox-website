@@ -25,9 +25,24 @@ One evidence-grounded foundation is interpreted once and read many ways. The kno
 
 - Knowledge-first: the product is the knowledge graph and its interpretation, not any single report
 - Evidence-grounded: every important statement cites AWS-native evidence or is labelled as inferred, with a confidence level (Verified / Likely / Assumed / Unknown)
+- Deterministic and reproducible: relationships are derived from provider evidence, not inferred by a model from names and adjacency, so the same environment yields the same answer twice — which is what makes run-to-run comparison meaningful
 - Multi-account, multi-region by design
 - Stakeholder-specific understanding through Knowledge Views — different lenses, never different truths
 - AI-assisted, not AI-invented: deterministic analysis decides the facts and meaning; the model only narrates
+
+## Access, privacy, and the data boundary
+
+- Read-only by construction: CloudoX calls only describe and list operations. Required permissions are declared in one place in the codebase, and an automated test fails the build if any collector calls anything that creates, modifies, or deletes
+- The IAM access requested is generated from the collector source and can be printed before anything is granted; it is split into a required discovery grant plus two optional grants (broader inventory sweep, aggregated cost context) that default to off
+- No data-plane reads: object contents, secret values, parameter values, table items, log events, and decryption are excluded — as are EC2 user data and Lambda environment variables, which broad AWS-managed audit policies would grant
+- Collected: resource configuration, network topology, exposure configuration, IAM structure, tags, and account/region structure. Not collected: file, secret, database, log, or application data
+- The model never receives raw cloud data — only a bounded, citeable summary of already-interpreted knowledge. Narration can be disabled entirely (a full report is produced deterministically) or run through the customer's own Amazon Bedrock account
+- CloudoX can run entirely inside the customer's own boundary as a command-line tool, with no CloudoX account and no cross-account role. Hosted use is one read-only IAM role the customer deploys and can revoke; no cloud credentials are ever stored
+- Early-access honesty: no third-party audit, SOC 2 report, or independent penetration test yet
+
+## Build-vs-buy
+
+A script plus an LLM produces a convincing first version quickly. The differences that matter: relationships derived from evidence rather than guessed from names; deterministic, reproducible analysis that makes run-to-run change detection possible; grounding that rejects statements citing anything outside the given evidence; report validation and per-audience usefulness scoring; and the ongoing cost of keeping collectors correct across dozens of services as provider APIs drift. The realistic comparison is against what an environment handover costs in senior engineering time, not against a weekend project.
 
 ## Who it is for
 
@@ -52,6 +67,9 @@ One evidence-grounded foundation is interpreted once and read many ways. The kno
 - Knowledge Views: https://cloudox.io/product/#knowledge-views
 - How it works: https://cloudox.io/how-it-works/
 - Use cases: https://cloudox.io/use-cases/
+- Security and the data boundary: https://cloudox.io/security/
+- Privacy: https://cloudox.io/privacy/
+- Terms: https://cloudox.io/terms/
 - Documentation: https://cloudox.io/docs/
 - Blog: https://cloudox.io/blog/
 - Early access / contact: https://cloudox.io/contact/

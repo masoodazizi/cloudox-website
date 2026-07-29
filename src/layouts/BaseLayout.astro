@@ -1,5 +1,13 @@
 ---
 import "../styles/global.css";
+// Self-hosted via @fontsource — no request to fonts.googleapis.com /
+// fonts.gstatic.com on any page load. See docs/legal-privacy-implementation-audit.md.
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/jetbrains-mono/400.css";
+import "@fontsource/jetbrains-mono/500.css";
 import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import { SITE } from "@/config/site";
@@ -61,6 +69,7 @@ const baseSchemas = [
       { "@type": "SiteNavigationElement", name: "Product",      url: `${SITE.url}/product/` },
       { "@type": "SiteNavigationElement", name: "How It Works", url: `${SITE.url}/how-it-works/` },
       { "@type": "SiteNavigationElement", name: "Use Cases",    url: `${SITE.url}/use-cases/` },
+      { "@type": "SiteNavigationElement", name: "Security",     url: `${SITE.url}/security/` },
       { "@type": "SiteNavigationElement", name: "Docs",         url: `${SITE.url}/docs/` },
       { "@type": "SiteNavigationElement", name: "Blog",         url: `${SITE.url}/blog/` },
       { "@type": "SiteNavigationElement", name: "Early Access", url: `${SITE.url}/contact/` },
@@ -103,13 +112,6 @@ const allSchemas = [...baseSchemas, ...jsonLd];
 
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} blog`} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-    />
 
     {allSchemas.map((schema) => (
       <script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />

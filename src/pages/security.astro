@@ -1,0 +1,348 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import Section from "@components/Section.astro";
+import CodeBlock from "@components/CodeBlock.astro";
+import CTA from "@components/CTA.astro";
+import { SITE } from "@/config/site";
+import { LEGAL_OPERATOR } from "@/config/legal";
+
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home",     item: SITE.url },
+    { "@type": "ListItem", position: 2, name: "Security", item: `${SITE.url}/security/` },
+  ],
+};
+
+const faq = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "Can CloudoX change anything in my AWS account?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. CloudoX only calls describe and list APIs. The permissions it needs are declared in one place in the codebase, and an automated test fails the build if any collector calls an API that creates, modifies, or deletes anything. Read-only is enforced by the build, not promised in a document.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can CloudoX read my data — objects, secrets, database rows, or logs?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "No. The access CloudoX requests deliberately excludes data-plane reads: S3 object contents, Secrets Manager secret values, SSM parameter values, DynamoDB items, log events, and KMS decryption. It also excludes EC2 user data and Lambda environment variables, which commonly carry secrets and which broad AWS-managed audit policies would have granted.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Does my infrastructure data get sent to an LLM?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Only a bounded, reduced projection of already-interpreted knowledge, and only if you want narration at all. The analysis stage makes no model calls. You can produce a complete report with no model call whatsoever, and if you do want narration you can run it through your own Amazon Bedrock account.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I run CloudoX without granting CloudoX access to my account?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. CloudoX runs as a command-line tool inside your own boundary, using your own credentials, writing to your own storage. No CloudoX account and no cross-account role is required.",
+      },
+    },
+  ],
+};
+
+const guarantees = [
+  {
+    title: "It cannot change anything",
+    body:
+      "CloudoX calls describe and list APIs only. Every permission it needs is declared in one place in the codebase, and an automated test walks every collector's call sites on each commit — failing the build if a collector calls anything that creates, modifies, or deletes. Read-only is a property the build re-verifies, not an intention we state.",
+  },
+  {
+    title: "It cannot read your data",
+    body:
+      "The access we ask for excludes data-plane reads entirely: object contents, secret values, parameter values, table items, log events, decryption. A test fails if any of them is ever added to the grant.",
+  },
+  {
+    title: "The grant matches the code",
+    body:
+      "The same test also fails if the declared permissions drift wider than the code — if an action is no longer called by any collector, it must be removed. The access request can never quietly grow beyond what the product actually does.",
+  },
+  {
+    title: "Nothing is created in your account",
+    body:
+      "Hosted onboarding is one read-only IAM role you deploy yourself from a template you can read first. No agents, no collectors installed in your environment, no infrastructure for you to operate.",
+  },
+];
+
+const excluded = [
+  { action: "s3:GetObject", note: "object contents" },
+  { action: "secretsmanager:GetSecretValue", note: "secret values" },
+  { action: "ssm:GetParameter*", note: "parameter values" },
+  { action: "dynamodb:GetItem / Query / Scan", note: "table contents" },
+  { action: "logs:GetLogEvents", note: "log contents" },
+  { action: "kms:Decrypt", note: "decryption" },
+  { action: "ec2:DescribeInstanceAttribute", note: "EC2 user data — often holds bootstrap secrets" },
+  { action: "lambda:GetFunctionConfiguration", note: "Lambda environment variables" },
+];
+
+const policyCommands = `# See the scope of access, grouped by capability
+cloudox iam-policy --scope all
+
+# Emit the exact IAM policy for the required grant
+cloudox iam-policy --scope core
+
+# Or just the plain list of actions
+cloudox iam-policy --scope core --list`;
+---
+
+<BaseLayout
+  title="Security — Read-Only by Construction"
+  description="CloudoX only describes and lists. The IAM access it requests is generated from its own collector code, excludes all data-plane reads, and is verified on every commit. You can also run it entirely inside your own boundary, with no model call at all."
+  jsonLd={[breadcrumb, faq]}
+>
+  <Hero
+    eyebrow="SECURITY"
+    title="Read-only by construction — not by promise."
+    subtitle="Granting a third party access to your cloud account deserves more than a reassuring sentence. This page explains exactly what CloudoX can do in an AWS account, what it deliberately cannot do, what a model ever sees, and how to run the whole thing without granting us anything."
+    primaryCta={{ label: "Talk to us about a security review", href: "/contact" }}
+    secondaryCta={{ label: "How it works", href: "/how-it-works" }}
+  />
+
+  <Section eyebrow="THE FOUR QUESTIONS" title="Four questions, four separate answers.">
+    <p class="text-sm muted max-w-2xl leading-relaxed mb-10">
+      "I don't want to give a tool access to my account" is usually four
+      questions at once, and answering them as one — "don't worry, it's
+      read-only" — answers none of them. So here they are separately.
+    </p>
+    <div class="grid gap-5 md:grid-cols-2">
+      {guarantees.map((g) => (
+        <div class="surface p-6">
+          <h3 class="text-base font-semibold mb-2">{g.title}</h3>
+          <p class="text-sm muted leading-relaxed">{g.body}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section
+    eyebrow="THE ACCESS WE ASK FOR"
+    title="Generated from the code, so you can check it yourself."
+    subtitle="The access CloudoX requests is not written by hand in a document. It is generated from the collector source, which means the page you are reading cannot drift from the software."
+    muted
+  >
+    <div class="grid gap-8 lg:grid-cols-2 lg:items-start">
+      <div class="space-y-4">
+        <p class="text-sm muted leading-relaxed">
+          Ask us for the policy and you get it straight from the tool. Nothing is
+          summarised or softened for a slide:
+        </p>
+        <CodeBlock language="bash" title="the exact grant, from the tool" code={policyCommands} />
+        <p class="text-sm muted leading-relaxed">
+          Access is split into three grants, and <strong>only the first is
+          required</strong>. Discovery works without the other two; each is a
+          separate opt-in that defaults to off in the onboarding template.
+        </p>
+        <ul class="space-y-3">
+          <li class="surface p-4">
+            <p class="text-sm font-semibold">Discovery <span class="muted font-normal">— required</span></p>
+            <p class="text-xs muted leading-relaxed mt-1">
+              Describe and list calls across the services CloudoX types, plus
+              identity and Organizations structure.
+            </p>
+          </li>
+          <li class="surface p-4">
+            <p class="text-sm font-semibold">Broader inventory sweep <span class="muted font-normal">— optional</span></p>
+            <p class="text-xs muted leading-relaxed mt-1">
+              A handful of read actions that widen coverage beyond the typed
+              services, for teams who want the long tail of their account
+              catalogued.
+            </p>
+          </li>
+          <li class="surface p-4">
+            <p class="text-sm font-semibold">Cost context <span class="muted font-normal">— optional</span></p>
+            <p class="text-xs muted leading-relaxed mt-1">
+              One aggregated Cost Explorer read, so spend can be explained in
+              architectural context. Nothing per-resource, no billing records.
+            </p>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-base font-semibold mb-2">Deliberately not granted</h3>
+        <p class="text-sm muted leading-relaxed mb-4">
+          CloudoX maps how an environment is built. It has no reason to read what
+          runs inside it, so it does not ask to. These are excluded, and an
+          automated test fails if any of them is ever added:
+        </p>
+        <ul class="surface divide-y" style="border-color: var(--border);">
+          {excluded.map((e) => (
+            <li class="px-4 py-3" style="border-color: var(--border);">
+              <p class="font-mono text-xs" style="color: var(--fg);">{e.action}</p>
+              <p class="text-xs muted mt-0.5">{e.note}</p>
+            </li>
+          ))}
+        </ul>
+        <p class="text-xs muted leading-relaxed mt-4">
+          The last two are worth naming. Both are granted by the broad AWS-managed
+          audit policies that tools like this commonly attach, and both routinely
+          contain credentials. CloudoX excludes them by name.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <Section
+    eyebrow="WHAT IS COLLECTED"
+    title="Configuration metadata — and we'll be specific about it."
+  >
+    <div class="grid gap-8 md:grid-cols-2 max-w-4xl">
+      <div>
+        <h3 class="text-sm font-semibold mb-3">Collected</h3>
+        <ul class="space-y-2 text-sm muted leading-relaxed">
+          <li>Resource configuration as the provider reports it</li>
+          <li>Network topology and routing</li>
+          <li>Security group and exposure configuration</li>
+          <li>IAM roles, policies, and trust structure</li>
+          <li>Resource tags</li>
+          <li>Organizations, account, and region structure</li>
+        </ul>
+      </div>
+      <div>
+        <h3 class="text-sm font-semibold mb-3">Not collected</h3>
+        <ul class="space-y-2 text-sm muted leading-relaxed">
+          <li>Object, file, or database contents</li>
+          <li>Secrets, parameter values, or environment variables</li>
+          <li>Application or access logs</li>
+          <li>Application traffic or customer data</li>
+          <li>Anything that requires decryption</li>
+        </ul>
+      </div>
+    </div>
+    <p class="text-sm muted leading-relaxed max-w-2xl mt-8">
+      Being precise cuts both ways, so: configuration metadata is not the same as
+      "nothing sensitive". Tags can carry owner names and project codenames, and
+      policy documents name principals and accounts. We would rather say that
+      than have your security reviewer discover it. For anything you want to
+      share more widely, CloudoX can produce a consistently sanitised copy with
+      identifiers replaced — that is how our public example report is made.
+    </p>
+  </Section>
+
+  <Section
+    eyebrow="AI"
+    title="The model never sees your cloud data."
+    subtitle="Discovery and analysis are deterministic and involve no model at all. AI is a narration layer on top of already-computed structure — and it is optional."
+    muted
+  >
+    <div class="max-w-2xl space-y-4 text-sm muted leading-relaxed">
+      <p>
+        Facts are established before any model is involved. The knowledge graph
+        holds what exists, deterministic interpretation decides what it means,
+        and only then is a bounded, citeable summary handed to a model to put
+        into words. Raw provider payloads, the full graph, billing records, and
+        historical snapshots never reach it.
+      </p>
+      <p>
+        Anything the model cites must already be in the context it was given.
+        Citations outside that closed set are rejected before they reach the
+        page — which is also why it cannot invent a resource that does not exist
+        in your environment.
+      </p>
+      <p>
+        <strong>You can turn narration off entirely.</strong> CloudoX will
+        produce a complete report deterministically, with zero model calls. If
+        you want narration but not our vendor path, it can run through Amazon
+        Bedrock in your own AWS account, inside your own model boundary.
+      </p>
+    </div>
+  </Section>
+
+  <Section eyebrow="DEPLOYMENT" title="Two ways to run it. One requires nothing from you.">
+    <div class="grid gap-5 md:grid-cols-2 max-w-4xl">
+      <div class="surface p-6">
+        <p class="eyebrow mb-3">SELF-RUN</p>
+        <h3 class="text-base font-semibold mb-2">Inside your own boundary</h3>
+        <p class="text-sm muted leading-relaxed">
+          CloudoX is a command-line tool. It runs with your own credentials and
+          writes to your own storage. No CloudoX account, no cross-account role,
+          nothing leaving your perimeter — and with narration disabled, no
+          external call at all beyond the AWS APIs you already use.
+        </p>
+        <p class="text-sm muted leading-relaxed mt-3">
+          This is the honest answer to "I don't want to grant a vendor access":
+          then don't. Run it yourself and decide afterwards.
+        </p>
+      </div>
+      <div class="surface p-6">
+        <p class="eyebrow mb-3">HOSTED</p>
+        <h3 class="text-base font-semibold mb-2">One read-only role, no credentials</h3>
+        <p class="text-sm muted leading-relaxed">
+          For the hosted platform you deploy one read-only IAM role from a
+          template you can read first. CloudoX never stores access keys — only
+          the role ARN and a unique external ID that prevents anyone else from
+          using it. You can delete the role at any time and access ends
+          immediately.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <Section eyebrow="HONESTY" title="What we don't have yet." muted>
+    <div class="max-w-2xl space-y-4 text-sm muted leading-relaxed">
+      <p>
+        A security page that lists only strengths is not a security page. CloudoX
+        is in early access, and there are things we cannot claim:
+      </p>
+      <ul class="space-y-2">
+        <li>
+          No third-party audit, SOC 2 report, or independent penetration test
+          yet. We would rather say that than imply otherwise.
+        </li>
+        <li>
+          In the hosted platform, generated artifacts are stored in
+          CloudoX-managed storage, isolated per customer by access control
+          rather than by a dedicated encryption key per customer. That is a
+          deliberate, cost-driven choice we are happy to walk through.
+        </li>
+        <li>
+          There is no per-field collection opt-out today. If a specific
+          configuration field is a problem for you, tell us — that is exactly
+          the feedback early access is for.
+        </li>
+      </ul>
+      <p>
+        If you have a security questionnaire, send it. We would rather answer it
+        directly than have you guess from a web page.
+      </p>
+    </div>
+  </Section>
+
+  <Section eyebrow="RESPONSIBLE DISCLOSURE" title="Found a security issue? Tell us directly.">
+    <div class="max-w-2xl space-y-3 text-sm muted leading-relaxed">
+      <p>
+        Report suspected vulnerabilities in the CloudoX product or this
+        website to{" "}
+        <a href={`mailto:${LEGAL_OPERATOR.securityEmail}`} class="underline" style="color: var(--accent);">
+          {LEGAL_OPERATOR.securityEmail}
+        </a>. Please include enough detail to reproduce the issue; we will
+        acknowledge reports and follow up directly rather than through a public
+        bug bounty program, which we do not currently run.
+      </p>
+      <p class="text-xs">
+        See also <a href="/.well-known/security.txt" class="underline">/.well-known/security.txt</a>.
+      </p>
+    </div>
+  </Section>
+
+  <CTA
+    title="Have your security team look at it."
+    subtitle="We'll walk through the exact permission set, the data boundary, and how to run it with no model involved at all."
+    primary={{ label: "Get in touch", href: "/contact" }}
+    secondary={{ label: "Book a call", href: SITE.bookingUrl }}
+  />
+</BaseLayout>

@@ -7,7 +7,35 @@ order: 1
 
 ## Does CloudoX modify anything in my AWS environment?
 
-No. CloudoX uses **read-only** access. It doesn't create, modify, or delete anything in customer environments.
+No, and it can't. CloudoX only calls describe and list operations. The permissions it needs are declared in one place in the codebase, and an automated test walks every collector on each commit — failing the build if anything creates, modifies, or deletes. Read-only is enforced by the build rather than promised in a document. See [security](/security).
+
+## What exactly can CloudoX read in my account?
+
+Configuration metadata: how resources are set up, how the network is put together, how access is structured, resource tags, and account and region structure. Not the contents of your systems — no objects or files, no secrets or environment variables, no database rows, no logs.
+
+The access it asks for is generated from its own collector code, so you can print the exact permission set and hand it to your security team before granting anything. It deliberately excludes data-plane reads, and also excludes EC2 user data and Lambda environment variables — two things broad AWS-managed audit policies would grant and that commonly carry credentials. The [security page](/security) lists the exclusions.
+
+## Do I have to grant CloudoX access to my account at all?
+
+No. CloudoX runs as a command-line tool inside your own environment, with your own credentials, writing to your own storage — no CloudoX account and no cross-account role. If you would rather evaluate it without granting a vendor anything, that is the supported way to do it.
+
+## Does my infrastructure data get sent to an LLM?
+
+Only a bounded summary of already-interpreted knowledge, and only if you want narration. Discovery and analysis are deterministic and involve no model at all; raw provider data, the full knowledge graph, and billing records never reach one.
+
+You can also turn narration off completely and still get a full report, or run narration through Amazon Bedrock in your own AWS account so it stays inside your own model boundary.
+
+## Can't we just build this ourselves with an LLM and a script?
+
+You can build the first version in an afternoon, and it will look convincing. The gap shows up in three places.
+
+**Where relationships come from.** A model reading raw API output infers connections from names and adjacency. It will assert links that don't exist and miss ones that do, and neither is visible in the output. CloudoX derives relationships deterministically from provider evidence, and every one carries the evidence it came from. The model describes those relationships; it never decides them.
+
+**Whether you get the same answer twice.** Prompt-driven analysis isn't reproducible. Every layer of CloudoX's analysis is deterministic and content-hashed, which is also what makes comparing two discovery runs meaningful — you can't diff runs whose differences might just be model variance.
+
+**How you know nothing was invented.** CloudoX rejects any statement citing something outside the evidence it was given, validates the finished report, and scores whether each audience view actually answered its audience's questions. A script has a person reading the output and hoping.
+
+Then there's the part nobody budgets for: keeping collectors correct across dozens of services as provider APIs drift, and doing it forever. The realistic comparison isn't tooling cost against a weekend project — it's against what an environment handover currently costs you in senior engineering time.
 
 ## Does CloudoX support AWS Organizations and multiple accounts?
 

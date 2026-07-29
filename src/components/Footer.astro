@@ -1,6 +1,6 @@
 ---
 import Logo from "./Logo.astro";
-import { FOOTER_NAV, SITE } from "@/config/site";
+import { FOOTER_NAV, LEGAL_NAV, SITE } from "@/config/site";
 const year = new Date().getFullYear();
 ---
 
@@ -51,6 +51,22 @@ const year = new Date().getFullYear();
           <span>Made in Germany</span>
         </p>
       </div>
+    </div>
+  </div>
+
+  <div class="border-t" style="border-color: var(--border);">
+    <div class="container-page py-4">
+      <nav aria-label="Legal" class="flex flex-wrap gap-x-5 gap-y-2 text-xs">
+        {LEGAL_NAV.map((item) => (
+          <a
+            href={item.href}
+            class="muted hover:underline"
+            style="text-underline-offset: 2px;"
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
     </div>
   </div>
 </footer>

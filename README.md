@@ -14,6 +14,8 @@ This repository is **public**. It does not contain any internal CloudoX implemen
 - Markdown / MDX content collections (blog and docs)
 - `@astrojs/sitemap` for sitemap generation
 - `@astrojs/rss` for the blog RSS feed
+- `@fontsource/inter` + `@fontsource/jetbrains-mono` — self-hosted fonts (no
+  request to Google Fonts on any page)
 - Optimized for **Cloudflare Pages** static deployment
 
 ---
@@ -28,16 +30,22 @@ cloudox-website/
 ├── package.json
 ├── public/
 │   ├── _headers               # Cloudflare Pages headers
+│   ├── .well-known/security.txt # RFC 9116 security contact
 │   ├── favicon.png            # Browser tab icon (v4 "CdX" mark)
 │   ├── robots.txt
 │   ├── llms.txt               # LLM-readable site summary
 │   ├── brand/logo/v4/         # Official v4 brand pack (wordmark, icon, favicons)
 │   └── og/cloudox-og.svg      # Default OG/social image
+├── docs/
+│   ├── legal-privacy-implementation-audit.md # internal: what the site actually does
+│   └── legal-compliance-checklist.md         # internal: Masood's DPA/account follow-ups
 └── src/
     ├── env.d.ts               # ImportMetaEnv types for env vars
     ├── styles/global.css      # Tailwind v4 entry + theme tokens
     ├── config/site.ts         # Site name, nav, metadata
+    ├── config/legal.ts        # Central operator identity + processor list (validated at build time)
     ├── layouts/BaseLayout.astro
+    ├── layouts/LegalLayout.astro # Shared shell for imprint/privacy/terms
     ├── components/            # Header, Footer, Hero, CTA, Section,
     │                          # FeatureCard, FeatureGrid, CodeBlock, Logo
     ├── content.config.ts      # docs + blog content collections
@@ -50,6 +58,10 @@ cloudox-website/
         ├── use-cases.astro
         ├── how-it-works.astro
         ├── contact.astro      # Early-access form (Web3Forms)
+        ├── security.astro     # Product + website security/trust page
+        ├── imprint.astro      # German DDG §5 imprint
+        ├── privacy.astro      # Privacy notice (GDPR)
+        ├── terms.astro        # Website Terms of Use
         ├── 404.astro
         ├── docs/              # /docs index + dynamic [...slug]
         ├── blog/              # /blog index + dynamic [...slug]
@@ -82,6 +94,8 @@ Then open [http://localhost:4321](http://localhost:4321).
 | `npm run build`   | Build the production site to `./dist/`             |
 | `npm run preview` | Preview the production build locally               |
 | `npm run check`   | Run `astro check` for TypeScript / template checks |
+| `npm test`        | Build the site, then run the `node:test` suite against the build output (`tests/`) |
+| `npm run test:unit` | Fast unit tests for `src/config/legal.ts` only, no build required |
 
 ---
 
@@ -148,6 +162,53 @@ Docs are listed at `/docs` and served at `/docs/<file-slug>`.
 - Blog has an RSS feed at `/rss.xml`.
 
 ---
+
+## Legal pages
+
+`/imprint`, `/privacy`, `/terms`, and `/security` are generated from one
+central, typed source: `src/config/legal.ts` (`LEGAL_OPERATOR`,
+`WEBSITE_PROCESSORS`, `LEGAL_LAST_UPDATED`). Update the operator identity or
+processor list there — every page derives from it, so the facts cannot drift
+between pages. Importing that module fails the build (`assertLegalConfigValid`)
+if the operator name, address, or either contact email is ever left empty.
+
+Optional identity fields (`phone`, `legalForm`, `registerCourt`,
+`registerNumber`, `vatId`) are typed as optional and rendered conditionally —
+leave them unset rather than filling in a placeholder; see the comments in
+`src/config/legal.ts` before adding any of them.
+
+Every public page links to all four routes from a dedicated footer bar
+(`LEGAL_NAV` in `src/config/site.ts`, rendered by `src/components/Footer.astro`)
+that is always visible without opening a menu.
+
+The factual basis for `/privacy` and `/security` — what the deployed
+implementation actually does — is recorded in
+`docs/legal-privacy-implementation-audit.md`. Outstanding account-level
+actions (provider DPAs, dashboard settings that can't be verified from this
+repo) are tracked in `docs/legal-compliance-checklist.md`. Re-run the audit
+whenever a new third-party script, form field, or hosting feature is added.
+
+## Testing
+
+`npm test` builds the site and runs the Node.js built-in test runner
+(`node --experimental-strip-types --test`, no extra test framework
+dependency) against the build output in `tests/`:
+
+- `tests/legal-config.test.ts` — unit tests for `src/config/legal.ts`
+  (`assertLegalConfigValid` failure modes, processor list, nav wiring).
+- `tests/site-build.test.ts` — assertions against the generated `dist/`
+  HTML: the four legal routes build and are indexable, the footer legal bar
+  appears on every generated page, the Imprint contains the required
+  identity and omits anything invented (phone, VAT ID, register entry, "UG"/
+  "GmbH", corporate-officer titles), the Privacy Notice names every verified
+  processor and never claims all data stays in Germany, the contact form
+  shows its privacy acknowledgement before the submit control, no page loads
+  an analytics/tracking script or renders a cookie-consent banner, and
+  `/.well-known/security.txt` is present with the required fields.
+
+`npm test` sets a placeholder `PUBLIC_WEB3FORMS_KEY` for the build so the
+real contact form (not its "not configured yet" fallback) is what gets
+tested; it never touches your local `.env`.
 
 ## Deployment — Cloudflare Pages
 
@@ -279,6 +340,12 @@ When adding or editing site content, please follow these rules:
 - **Do not** call CloudoX a CMDB or a security scanner.
 - **Prefer** evidence-based, concise messaging over generic marketing
   copy. The site should reflect the same standards as the product.
+- **Do not** add absolute privacy/security claims ("100% secure", "fully
+  GDPR compliant", "we never store your data", "your data never leaves
+  Germany", "zero access", "no third parties"). If you add a new
+  third-party script, form field, embed, or hosting feature, update
+  `docs/legal-privacy-implementation-audit.md` and `/privacy` in the same
+  change, and re-run `npm test`.
 
 ---
 
