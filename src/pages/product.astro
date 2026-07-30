@@ -4,7 +4,9 @@ import Hero from "@components/Hero.astro";
 import Section from "@components/Section.astro";
 import FeatureGrid from "@components/FeatureGrid.astro";
 import CTA from "@components/CTA.astro";
+import EnvironmentSnapshot from "@components/EnvironmentSnapshot.astro";
 import { SITE } from "@/config/site";
+import { EXAMPLE } from "@/config/example";
 
 const breadcrumb = {
   "@context": "https://schema.org",
@@ -15,51 +17,57 @@ const breadcrumb = {
   ],
 };
 
-// The platform — one foundation, interpreted once, consumed many ways.
-const layers = [
+/**
+ * What a run actually hands you. Each artifact is paired with something the
+ * published example demonstrates, so the claim can be checked rather than
+ * taken on trust. Platform vocabulary comes later on the page — a reader
+ * deciding whether to care needs the outputs first.
+ */
+const artifacts = [
   {
-    title: "Multi-account, multi-region discovery",
-    description:
-      "Discover an entire AWS Organization in one pass — the org tree, accounts, regions, and shared services. Deep collectors cover the architecture-critical services; a broader sweep keeps the long tail visible, and the output names what it did and didn't see.",
+    title: "An environment model",
+    body:
+      "Accounts, regions, workloads, and the relationships between them — each derived from a provider field, with the raw identifier kept beside the human name.",
+    example:
+      "In the example: 6 of 7 known accounts, 2 regions, 4 significant workloads, and the seventh account named as out of scope.",
   },
   {
-    title: "Typed knowledge graph",
-    description:
-      "Accounts, environments, workloads, systems, resources, and their typed, evidence-bearing relationships — the canonical source of truth for what exists and how it connects.",
+    title: "Six audience views",
+    body:
+      "The same facts framed for an executive, an architect, an operator, a security reviewer, a FinOps reader, or anyone technical — one page each, understanding before inventory.",
+    example:
+      "In the example: the Executive view opens on three areas needing attention; the Security view opens on what is exposed and what is unproven.",
   },
   {
-    title: "Canonical interpretation",
-    description:
-      "Deterministic logic classifies environments, groups workloads, and detects exposure — then captures the meaning once, per domain, so every channel reads the same interpretation instead of re-deriving it.",
+    title: "Evidence and confidence on every claim",
+    body:
+      "Findings carry a Verified / Likely / Assumed / Unknown label and resolve to the resource and relationship they came from. Anything unproven says so.",
+    example:
+      "In the example: internet exposure is Verified from a security-group rule; workload classification is Likely because 94% of it rests on inference, not tags.",
   },
   {
-    title: "Knowledge Intelligence",
-    description:
-      "Ranked, evidence-grounded findings, risks, and opportunities — generated once across architecture, operations, security, cost, and change, then prioritized by significance for each audience.",
+    title: "Reference tables for engineers",
+    body:
+      "Routing, connectivity, ingress, identity and trust, service dependencies, DNS zones, encryption, and tagging coverage — deterministic, and explicit about what each table does not prove.",
+    example:
+      "In the example: connectivity separates a configured VPC peering from a security-group-permitted path, which is reachability, not a confirmed data flow.",
   },
   {
-    title: "AI-narrated understanding",
-    description:
-      "Each Knowledge View is narrated in plain language from a closed, citeable context. The model explains interpreted knowledge — it never invents facts, ownership, or architecture.",
+    title: "What changed since last time",
+    body:
+      "Two runs, diffed on provider identifiers: resources, relationships, scope, and exposure added or removed. Stated as observed change, with no invented cause.",
+    example:
+      "In the example: one security group became internet-reachable and a different one stopped — both reported, neither explained away.",
   },
   {
-    title: "Knowledge Quality",
-    description:
-      "Every view is scored on usefulness — coverage, signal-to-noise, actionability, prioritization — with an optional AI quality review that never changes the facts.",
-  },
-  {
-    title: "Environment Evolution",
-    description:
-      "Compare a discovery against the previous one and read what actually changed — new regions and services, a workload that grew, an exposure that opened. Available today as a first version.",
-  },
-  {
-    title: "Cost Intelligence",
-    description:
-      "Explain spend in the context of the architecture CloudoX already understands — the patterns behind the bill, not a replacement for Cost Explorer or FinOps tooling. Available today as a first version.",
+    title: "A quality score on the output itself",
+    body:
+      "Each view is scored deterministically on persona coverage, hollow sections, redundancy, signal-to-noise, actionability, prioritization, and intelligence coverage.",
+    example: "In the example: 92.06 / 100, grade A, scored by the platform rather than asserted by us.",
   },
 ];
 
-// Knowledge Views — audience lenses over one interpreted foundation.
+/** Knowledge Views — audience lenses over one interpreted foundation. */
 const views = [
   {
     name: "Executive",
@@ -93,29 +101,62 @@ const views = [
   },
 ];
 
+/** The layers that make the artifacts above reproducible rather than one-off. */
+const layers = [
+  {
+    title: "Multi-account, multi-region discovery",
+    description:
+      "One pass over an AWS Organization: org tree, accounts, regions, shared services — and the output names what it did and did not see.",
+  },
+  {
+    title: "Typed knowledge graph",
+    description:
+      "The canonical source of truth for what exists and how it connects — accounts, workloads, systems, and their evidence-bearing relationships.",
+  },
+  {
+    title: "Canonical interpretation",
+    description:
+      "Meaning is derived once per domain, deterministically, so every audience view reads the same interpretation instead of re-deriving it.",
+  },
+  {
+    title: "Knowledge Intelligence",
+    description:
+      "One significance-ranked set of findings and risks across architecture, security, and cost — generated once, prioritized per audience.",
+  },
+  {
+    title: "AI narration, bounded",
+    description:
+      "Each view is narrated from a closed, citeable context. A citation outside it is rejected — the model can only change how facts read.",
+  },
+  {
+    title: "Cost in architectural context",
+    description:
+      "Spend associated to accounts and regions as billing fact, plus a cost-pressure ranking over workloads — never a fabricated dollar figure.",
+  },
+];
+
 const channels = [
   {
     title: "CloudoX Dashboard",
     description:
-      "Browse the knowledge in a hosted, read-only dashboard with navigation, search, and theming. A public preview is live today.",
+      "A hosted, read-only dashboard with navigation, search, and theming. A public preview is live today.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="9" y1="14" x2="15" y2="14"/></svg>`,
-    href: "https://preview.cloudox.io",
+    href: EXAMPLE.previewUrl,
     badge: "Live preview",
     ctaLabel: "Open dashboard",
   },
   {
     title: "Git repository",
     description:
-      "The output is plain Markdown. Commit it to a repo and diff, review, and version your cloud understanding like code.",
+      "Plain Markdown you can commit, diff, and review — version your cloud understanding like code.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="19" r="2.5"/><path d="M6 8.5v3a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-3"/><line x1="12" y1="14.5" x2="12" y2="16.5"/></svg>`,
-    href: "https://github.com/cloudox-ai/cloudox-public-examples",
+    href: EXAMPLE.repoUrl,
     badge: "Live example",
     ctaLabel: "View example on GitHub",
   },
   {
     title: "Confluence & Notion",
-    description:
-      "Publish into the documentation tool your team already uses, organised by account and environment. On the roadmap.",
+    description: "Publish into the docs tool your team already uses. On the roadmap.",
     icon: `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16a4 4 0 0 0 4 4h3l3-4-3-4H7a4 4 0 0 0-4 4z"/><path d="M21 8a4 4 0 0 0-4-4h-3l-3 4 3 4h3a4 4 0 0 0 4-4z"/></svg>`,
     badge: "Planned",
     badgeVariant: "muted" as const,
@@ -124,31 +165,49 @@ const channels = [
 ---
 
 <BaseLayout
-  title="Intelligent Cloud Knowledge Platform"
-  description="CloudoX is an intelligent cloud knowledge platform — evidence-grounded, multi-account, multi-region AWS discovery that builds a typed knowledge graph, interprets it, and projects audience-specific Knowledge Views narrated in plain language."
+  title="Product — What a CloudoX run gives you"
+  description="What a CloudoX run produces: an evidence-backed environment model, six audience views, confidence on every claim, engineer-grade reference tables, a run-to-run change diff, and a quality score on the output itself."
   jsonLd={[breadcrumb]}
 >
   <Hero
     eyebrow="PRODUCT"
-    title="A knowledge platform for the people who run cloud."
-    subtitle="CloudoX collects AWS-native data, builds a typed knowledge graph, interprets it once, and projects audience-specific understanding — Knowledge Views, intelligence, and AI-narrated reports built on one evidence-grounded foundation."
-    primaryCta={{ label: "Request Early Access", href: "/contact" }}
-    secondaryCta={{ label: "Explore Knowledge Views", href: "#knowledge-views" }}
-  />
-
-  <Section
-    eyebrow="THE PLATFORM"
-    title="One foundation, interpreted once, consumed many ways."
-    subtitle="CloudoX is layered so a single evidence-grounded knowledge foundation feeds every audience and channel. Each layer has one job, so the output stays trustworthy."
+    title="What you get from one read-only run."
+    subtitle="Six artifacts, all generated from the same evidence, all published in the example so you can check them before talking to us."
+    primaryCta={{ label: "Explore the real example", href: EXAMPLE.previewUrl }}
+    secondaryCta={{ label: "Request early access", href: "/contact" }}
+    trustLine={`Every example below is quoted from the published run of ${EXAMPLE.generatedAtLabel} — one environment's figures, not product statistics.`}
   >
-    <FeatureGrid features={layers} cols={3} />
+    <EnvironmentSnapshot slot="aside" />
+  </Hero>
+
+  <Section eyebrow="WHAT YOU RECEIVE" title="Six artifacts, not a data dump.">
+    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      {artifacts.map((a) => (
+        <article class="surface flex flex-col p-6">
+          <h3 class="text-base font-semibold">{a.title}</h3>
+          <p class="mt-2 text-sm muted leading-relaxed">{a.body}</p>
+          <p
+            class="mt-4 pt-4 text-xs muted leading-relaxed"
+            style="border-top: 1px solid var(--border);"
+          >
+            {a.example}
+          </p>
+        </article>
+      ))}
+    </div>
+    <p class="mt-8 text-sm muted max-w-2xl leading-relaxed">
+      One run of a real multi-account environment produced all six, from a
+      <a href="/security" class="font-medium" style="color: var(--accent);">read-only role</a> that
+      never touches data-plane contents.
+      <a href={EXAMPLE.previewUrl} target="_blank" rel="noopener noreferrer" class="font-medium" style="color: var(--accent);">Read it end to end →</a>
+    </p>
   </Section>
 
   <Section
     id="knowledge-views"
     eyebrow="KNOWLEDGE VIEWS"
     title="One environment. Every audience."
-    subtitle="Different stakeholders ask different questions of the same cloud. CloudoX projects the interpreted knowledge into audience lenses — different explanations and priorities, never different truths. A view curates and frames; it never re-derives the facts."
+    subtitle="Different stakeholders ask different questions of the same cloud — a view frames, never re-derives, so no two audiences get different truths."
     muted
   >
     <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
@@ -160,53 +219,54 @@ const channels = [
         </article>
       ))}
     </div>
+
+    <figure class="mt-10">
+      <a href={`${EXAMPLE.previewUrl}/views/operations/operational-overview`} target="_blank" rel="noopener noreferrer">
+        <img
+          src="/screenshots/operations-view.png"
+          alt="The Operations view in the CloudoX dashboard, showing the operational overview for the published example: 833 resources across 6 of 7 known accounts, and the account table with friendly names."
+          width="1600"
+          height="875"
+          loading="lazy"
+          class="w-full rounded-lg"
+          style="border: 1px solid var(--border);"
+        />
+      </a>
+      <figcaption class="mt-3 text-xs muted leading-relaxed">
+        The Operations view, exactly as it renders in the dashboard.{" "}
+        <a href={EXAMPLE.previewUrl} target="_blank" rel="noopener noreferrer" class="font-medium" style="color: var(--accent);">
+          Open it live →
+        </a>
+      </figcaption>
+    </figure>
+  </Section>
+
+  <Section
+    eyebrow="WHY IT HOLDS UP"
+    title="The layers that make those artifacts repeatable."
+    subtitle="Each layer has exactly one job. Everything below narration is AI-free, so the same environment always produces the same interpretation."
+  >
+    <FeatureGrid features={layers} cols={3} />
     <p class="mt-8 text-sm muted max-w-2xl leading-relaxed">
-      Views lean on friendly names and a plain confidence label (Verified /
-      Likely / Assumed / Unknown) so prose reads in human terms, while every
-      reference still traces back to its raw identifier. Read more in the
-      <a href="/docs/knowledge-views" class="font-medium" style="color: var(--accent);">Knowledge Views docs</a>.
+      <a href="/how-it-works" class="font-medium" style="color: var(--accent);">See what each stage does when the evidence is missing →</a>
     </p>
   </Section>
 
   <Section
     eyebrow="WHERE UNDERSTANDING LIVES"
     title="Read it where your team already works."
-    subtitle="The understanding CloudoX produces is plain Markdown, so it lives in a hosted dashboard, your Git repository, or the documentation tool your team already uses. Several destinations are live today; more are on the roadmap."
-  >
-    <FeatureGrid features={channels} cols={3} />
-  </Section>
-
-  <Section
-    eyebrow="WHAT CLOUDOX IS NOT"
-    title="A focused platform — clear about its boundaries."
+    subtitle="Plain Markdown, so it lives wherever your team already works. Some destinations are live today; more are on the roadmap."
     muted
   >
-    <div class="grid md:grid-cols-3 gap-5">
-      <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Not a CMDB</h3>
-        <p class="text-sm muted">
-          Not a system of record for every IT asset. CloudoX builds evidence-grounded
-          understanding of how an environment actually works.
-        </p>
-      </div>
-      <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Not a security scanner</h3>
-        <p class="text-sm muted">
-          Security intelligence covers architectural exposure and obvious gaps — not vulnerability or compliance scanning.
-        </p>
-      </div>
-      <div class="surface p-6">
-        <h3 class="text-base font-semibold mb-2">Not a FinOps platform</h3>
-        <p class="text-sm muted">
-          CloudoX explains cost in architectural context. It complements Cost Explorer, the CUR, and FinOps tools — it doesn't replace them.
-        </p>
-      </div>
-    </div>
+    <FeatureGrid features={channels} cols={3} />
+    <p class="mt-8 text-sm muted max-w-2xl leading-relaxed">
+      <a href="/use-cases#boundaries" class="font-medium" style="color: var(--accent);">Four things CloudoX deliberately is not →</a>
+    </p>
   </Section>
 
   <CTA
-    title="See CloudoX on a real environment."
-    primary={{ label: "Request Early Access", href: "/contact" }}
+    title="See CloudoX on your own environment."
+    primary={{ label: "Request early access", href: "/contact" }}
     secondary={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 </BaseLayout>

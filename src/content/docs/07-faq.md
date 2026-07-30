@@ -7,7 +7,7 @@ order: 1
 
 ## Does CloudoX modify anything in my AWS environment?
 
-No, and it can't. CloudoX only calls describe and list operations. The permissions it needs are declared in one place in the codebase, and an automated test walks every collector on each commit — failing the build if anything creates, modifies, or deletes. Read-only is enforced by the build rather than promised in a document. See [security](/security).
+No, and it can't. CloudoX only calls describe and list operations. The permissions it needs are declared in one place in the codebase, and an automated test walks every collector's call sites — failing if anything creates, modifies, or deletes. Read-only is enforced by the test suite rather than promised in a document. See [security](/security).
 
 ## What exactly can CloudoX read in my account?
 
@@ -15,15 +15,9 @@ Configuration metadata: how resources are set up, how the network is put togethe
 
 The access it asks for is generated from its own collector code, so you can print the exact permission set and hand it to your security team before granting anything. It deliberately excludes data-plane reads, and also excludes EC2 user data and Lambda environment variables — two things broad AWS-managed audit policies would grant and that commonly carry credentials. The [security page](/security) lists the exclusions.
 
-## Do I have to grant CloudoX access to my account at all?
-
-No. CloudoX runs as a command-line tool inside your own environment, with your own credentials, writing to your own storage — no CloudoX account and no cross-account role. If you would rather evaluate it without granting a vendor anything, that is the supported way to do it.
-
 ## Does my infrastructure data get sent to an LLM?
 
-Only a bounded summary of already-interpreted knowledge, and only if you want narration. Discovery and analysis are deterministic and involve no model at all; raw provider data, the full knowledge graph, and billing records never reach one.
-
-You can also turn narration off completely and still get a full report, or run narration through Amazon Bedrock in your own AWS account so it stays inside your own model boundary.
+Only a bounded summary of already-interpreted knowledge, and only if you want narration. Discovery and analysis are deterministic and involve no model at all; raw provider data, the full knowledge graph, and billing records never reach one. You can also turn narration off completely and still get a full report.
 
 ## Can't we just build this ourselves with an LLM and a script?
 

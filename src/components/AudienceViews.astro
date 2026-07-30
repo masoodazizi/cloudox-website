@@ -1,0 +1,121 @@
+---
+/**
+ * The audience switcher: one environment, read six ways.
+ *
+ * Each panel quotes what that view actually leads with in the published
+ * example, with the view's own confidence label — so the section demonstrates
+ * the product rather than describing it.
+ *
+ * Progressive enhancement: rendered as in-page anchors to always-visible
+ * panels, which works with JavaScript disabled. The script then upgrades it to
+ * a real ARIA tab group (roles, selection state, arrow-key navigation).
+ */
+import ConfidenceBadge from "./ConfidenceBadge.astro";
+import { EXAMPLE_VIEWS } from "@/config/example";
+---
+
+<div data-audience-views>
+  <div
+    class="flex flex-wrap gap-1.5 mb-6"
+    data-view-list
+    aria-label="Knowledge Views"
+  >
+    {EXAMPLE_VIEWS.map((view, i) => (
+      <a
+        href={`#view-${view.key}`}
+        data-view-link={view.key}
+        data-view-default={i === 0 ? "true" : undefined}
+        class="rounded-md px-3 py-2 text-sm font-medium transition"
+        style="border: 1px solid var(--border); color: var(--fg-muted);"
+      >
+        {view.name}
+      </a>
+    ))}
+  </div>
+
+  <div class="space-y-4">
+    {EXAMPLE_VIEWS.map((view) => (
+      <section
+        id={`view-${view.key}`}
+        data-view-panel={view.key}
+        class="surface p-6 md:p-7"
+      >
+        <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
+          <div>
+            <p class="eyebrow mb-1.5">{view.audience}</p>
+            <h3 class="text-lg md:text-xl font-semibold tracking-tight">
+              {view.question}
+            </h3>
+          </div>
+          <ConfidenceBadge level={view.confidence} prefix="Confidence:" />
+        </div>
+        <p class="text-sm md:text-base muted leading-relaxed max-w-2xl">
+          {view.answer}
+        </p>
+      </section>
+    ))}
+  </div>
+</div>
+
+<script>
+  const container = document.querySelector<HTMLElement>("[data-audience-views]");
+  const list = container?.querySelector<HTMLElement>("[data-view-list]");
+  const links = Array.from(
+    container?.querySelectorAll<HTMLAnchorElement>("[data-view-link]") ?? [],
+  );
+  const panels = Array.from(
+    container?.querySelectorAll<HTMLElement>("[data-view-panel]") ?? [],
+  );
+
+  if (list && links.length > 0 && links.length === panels.length) {
+    list.setAttribute("role", "tablist");
+
+    const select = (index: number, { focus = false } = {}) => {
+      links.forEach((link, i) => {
+        const active = i === index;
+        link.setAttribute("aria-selected", active ? "true" : "false");
+        link.tabIndex = active ? 0 : -1;
+        link.style.color = active ? "var(--accent-fg)" : "var(--fg-muted)";
+        link.style.background = active ? "var(--accent)" : "transparent";
+        link.style.borderColor = active ? "var(--accent)" : "var(--border)";
+        panels[i].hidden = !active;
+      });
+      if (focus) links[index].focus();
+    };
+
+    links.forEach((link, i) => {
+      const panel = panels[i];
+      link.setAttribute("role", "tab");
+      link.setAttribute("aria-controls", panel.id);
+      link.id = `${panel.id}-tab`;
+      panel.setAttribute("role", "tabpanel");
+      panel.setAttribute("aria-labelledby", link.id);
+      panel.tabIndex = 0;
+
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        select(i);
+      });
+
+      link.addEventListener("keydown", (event) => {
+        const step =
+          event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+        if (step !== 0) {
+          event.preventDefault();
+          select((i + step + links.length) % links.length, { focus: true });
+          return;
+        }
+        if (event.key === "Home" || event.key === "End") {
+          event.preventDefault();
+          select(event.key === "Home" ? 0 : links.length - 1, { focus: true });
+        }
+      });
+    });
+
+    // Honour a deep link to a specific view, otherwise open the first.
+    const requested = links.findIndex(
+      (link) => link.getAttribute("href") === window.location.hash,
+    );
+    select(requested >= 0 ? requested : 0);
+  }
+</script>

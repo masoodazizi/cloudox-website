@@ -4,6 +4,7 @@ import Hero from "@components/Hero.astro";
 import Section from "@components/Section.astro";
 import CTA from "@components/CTA.astro";
 import { SITE } from "@/config/site";
+import { EXAMPLE } from "@/config/example";
 
 const breadcrumb = {
   "@context": "https://schema.org",
@@ -14,120 +15,151 @@ const breadcrumb = {
   ],
 };
 
-const useCases = [
+/**
+ * Decision moments, not personas. The audience lenses are shown on the home
+ * page; repeating them here said the same thing twice. Each entry names a
+ * moment someone actually has to decide something, what they do about it
+ * today, and which shipped artifact replaces that work.
+ */
+const moments = [
   {
-    persona: "Consultants & solutions architects",
-    view: "Architect & Executive views",
-    title: "Walk into an engagement already understanding the environment.",
-    bullets: [
-      "Run CloudoX against a customer's AWS Organization with read-only access.",
-      "Open the Architect view for workloads and design risks; hand the Executive view to leadership.",
-      "Validate findings during the workshop — not chase console screenshots.",
-    ],
-  },
-  {
-    persona: "Cloud architects & engineers",
+    moment: "Taking over an environment you did not build",
+    today:
+      "Days of console tabs and tribal knowledge, ending in a diagram nobody trusts a month later.",
+    instead:
+      "A workload-level model of accounts, regions, exposure, and dependencies, with the raw identifier behind every name.",
+    decision: "Where to start, and what not to touch yet.",
     view: "Architect view",
-    title: "Get oriented in an unfamiliar environment in 30 minutes.",
-    bullets: [
-      "Identify production workloads, dependencies, and design risks fast.",
-      "See how environments and accounts are organized across regions.",
-      "Start from interpreted architecture, not a flat resource list.",
-    ],
   },
   {
-    persona: "Platform & DevOps engineers",
-    view: "Operations view",
-    title: "Operational documentation that writes itself.",
-    bullets: [
-      "Map connectivity, routing, and shared services across accounts.",
-      "Spot missing observability, backup gaps, and recovery risks.",
-      "Keep a current operational picture as the environment changes.",
-    ],
+    moment: "Preparing an architecture review",
+    today:
+      "Someone hand-assembles slides from screenshots, and the review argues about the picture instead of the design.",
+    instead:
+      "Deterministic reference tables — routing, connectivity, ingress, trust, dependencies — beside the interpreted architecture.",
+    decision: "Which design risks are real and worth review time.",
+    view: "Architect + Operations views",
   },
   {
-    persona: "Security teams",
+    moment: "Answering “what is exposed?” credibly",
+    today:
+      "A scanner's finding list, with no way to separate proven exposure from a plausible guess.",
+    instead:
+      "Ingress paths backed by the security-group rule and resource that produced them, each carrying a confidence label — and an explicit list of what evidence could not answer.",
+    decision: "What to fix now versus what to go verify first.",
     view: "Security view",
-    title: "See what's exposed — and what you can't yet prove.",
-    bullets: [
-      "Surface internet exposure and identity boundaries with evidence.",
-      "Find governance gaps and the places evidence is missing.",
-      "Every finding is labelled by confidence, never an aggressive guess.",
-    ],
   },
   {
-    persona: "FinOps & finance",
+    moment: "Explaining a bill nobody can attribute",
+    today:
+      "Cost Explorer says which services cost money; nobody can say which workloads caused it.",
+    instead:
+      "Spend associated to accounts and regions as billing fact, and a cost-pressure ranking that says which workloads deserve investigation first — never a fabricated per-workload dollar figure.",
+    decision: "Which workload to investigate first.",
     view: "FinOps view",
-    title: "Understand the spend behind the architecture.",
-    bullets: [
-      "See cost drivers connected to the workloads that cause them.",
-      "Get optimization opportunities worth validating, in context.",
-      "Complements Cost Explorer and FinOps tooling — it doesn't replace it.",
-    ],
   },
   {
-    persona: "Engineering leadership",
+    moment: "Reviewing what changed since last time",
+    today:
+      "Change is reconstructed from memory, CloudTrail, and whoever happens to remember the migration.",
+    instead:
+      "A diff of two discovery runs: resources, relationships, scope, and internet exposure added or removed, stated as observed change.",
+    decision: "Whether a change was intentional.",
+    view: "Change tracking",
+  },
+  {
+    moment: "Briefing leadership without an inventory dump",
+    today:
+      "A technical deck gets summarised upward, and the caveats fall off on the way.",
+    instead:
+      "The decisions that need attention, in plain language, with the same confidence labels the engineers saw — including where coverage was incomplete.",
+    decision: "What leadership actually has to decide.",
     view: "Executive view",
-    title: "Risk and decisions without the inventory.",
-    bullets: [
-      "Read the highest risks and what needs leadership attention.",
-      "Understand cost and change at a glance, in plain language.",
-      "Make decisions from evidence-grounded understanding, not raw data.",
-    ],
+  },
+];
+
+/** Being explicit about the boundary is what makes the rest credible. */
+const notFor = [
+  {
+    title: "Not a CMDB",
+    body: "CloudoX explains an environment; it is not the authoritative asset register you reconcile against finance.",
+  },
+  {
+    title: "Not a security scanner",
+    body: "It reports exposure it can prove from configuration. It does not scan for vulnerabilities, test payloads, or rank CVEs.",
+  },
+  {
+    title: "Not a FinOps platform",
+    body: "It puts spend in architectural context. Cost Explorer, CUR analysis, forecasting, and budgets stay where they are.",
+  },
+  {
+    title: "Not a monitoring tool",
+    body: "It reads configuration, not runtime telemetry — so utilization-based recommendations are out of scope, and it says so.",
   },
 ];
 ---
 
 <BaseLayout
-  title="Use Cases — Executives, Architects, Operations, Security & FinOps"
-  description="How executives, architects, platform and DevOps engineers, security teams, FinOps, and consultants use CloudoX and its Knowledge Views to understand AWS environments fast."
+  title="Use Cases — The decisions CloudoX helps you make"
+  description="Six moments where CloudoX replaces guesswork: taking over an unfamiliar AWS environment, architecture review, exposure questions, unattributable cost, change review, and briefing leadership."
   jsonLd={[breadcrumb]}
 >
   <Hero
     eyebrow="USE CASES"
-    title="One environment, understood by everyone who needs to."
-    subtitle="CloudoX builds a shared knowledge foundation, then frames it for each audience. The same discovery serves the architect, the operator, the security lead, finance, and the CTO."
-    primaryCta={{ label: "Request Early Access", href: "/contact" }}
-    secondaryCta={{ label: "Explore Knowledge Views", href: "/product#knowledge-views" }}
+    title="Six moments where guessing is expensive."
+    subtitle="CloudoX is worth using when a decision depends on understanding an AWS environment you cannot fully see. Each moment below names what that costs today and which artifact replaces it."
+    primaryCta={{ label: "Explore the real example", href: EXAMPLE.previewUrl }}
+    secondaryCta={{ label: "Request early access", href: "/contact" }}
   />
 
   <Section>
-    <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-      {useCases.map((u) => (
+    <div class="grid gap-5 lg:grid-cols-2">
+      {moments.map((m) => (
         <article class="surface flex flex-col p-6">
-          <p class="eyebrow mb-2">{u.persona}</p>
-          <h3 class="text-base font-semibold mb-3">{u.title}</h3>
-          <ul class="space-y-2 text-sm muted mb-4">
-            {u.bullets.map((b) => (
-              <li class="flex gap-2">
-                <span aria-hidden="true" style="color: var(--accent);">›</span>
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
-          <p class="mt-auto text-xs font-medium" style="color: var(--accent);">{u.view}</p>
+          <h2 class="text-base font-semibold">{m.moment}</h2>
+          <dl class="mt-4 space-y-3 text-sm">
+            <div>
+              <dt class="text-xs uppercase tracking-wide muted">Today</dt>
+              <dd class="mt-1 muted leading-relaxed">{m.today}</dd>
+            </div>
+            <div>
+              <dt class="text-xs uppercase tracking-wide muted">With CloudoX</dt>
+              <dd class="mt-1 leading-relaxed">{m.instead}</dd>
+            </div>
+          </dl>
+          <p class="mt-4 pt-4 text-sm" style="border-top: 1px solid var(--border);">
+            <span class="font-medium" style="color: var(--accent);">Decision it supports:</span>{" "}
+            <span class="muted">{m.decision}</span>
+          </p>
+          <p class="mt-2 text-xs muted">{m.view}</p>
         </article>
       ))}
     </div>
   </Section>
 
   <Section
-    eyebrow="ONE FOUNDATION, MANY READERS"
-    title="The same truth, told the way each audience needs it."
-    subtitle="Because CloudoX builds a shared knowledge graph and interprets it once, every audience reads the same facts — framed for their questions, never re-derived into a different story."
+    id="boundaries"
+    eyebrow="WHERE IT IS NOT THE RIGHT TOOL"
+    title="Four things CloudoX deliberately is not."
+    subtitle="A tool that claims every job is a tool you cannot check. These boundaries are the same ones the product enforces in its own output."
     muted
   >
-    <p class="text-sm muted max-w-2xl leading-relaxed">
-      Consultants, architects, and engineers remain the audience CloudoX is built
-      for first. But the moment the knowledge foundation exists, it can serve
-      security, operations, finance, and leadership from the same source of truth —
-      which is exactly what Knowledge Views do today.
+    <div class="grid gap-5 md:grid-cols-2">
+      {notFor.map((n) => (
+        <div class="surface p-6">
+          <h3 class="text-sm font-semibold">{n.title}</h3>
+          <p class="mt-2 text-sm muted leading-relaxed">{n.body}</p>
+        </div>
+      ))}
+    </div>
+    <p class="mt-8 text-sm muted max-w-2xl leading-relaxed">
+      <a href="/security" class="font-medium" style="color: var(--accent);">What CloudoX can and cannot access, exactly →</a>
     </p>
   </Section>
 
   <CTA
-    title="Ready to try CloudoX on a real environment?"
-    primary={{ label: "Request Early Access", href: "/contact" }}
-    secondary={{ label: "Book a call", href: SITE.bookingUrl }}
+    title="See these artifacts on a real environment."
+    primary={{ label: "Explore the real example", href: EXAMPLE.previewUrl }}
+    secondary={{ label: "Request early access", href: "/contact" }}
   />
 </BaseLayout>

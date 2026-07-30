@@ -1,5 +1,6 @@
 ---
 import Logo from "./Logo.astro";
+import ThemeToggle from "./ThemeToggle.astro";
 import { PRIMARY_NAV } from "@/config/site";
 
 const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
@@ -13,7 +14,7 @@ const isActive = (href: string) => {
   class="sticky top-0 z-40 backdrop-blur-md"
   style="background-color: color-mix(in oklab, var(--bg) 85%, transparent); border-bottom: 1px solid var(--border);"
 >
-  <div class="container-page flex h-16 items-center justify-between gap-6">
+  <div class="container-page flex h-16 items-center justify-between gap-4">
     <Logo />
 
     <nav class="hidden md:flex items-center gap-1" aria-label="Primary">
@@ -30,13 +31,21 @@ const isActive = (href: string) => {
     </nav>
 
     <div class="flex items-center gap-2">
-      <a href="/contact" class="btn btn-primary text-sm">
-        Request Early Access
+      <div class="hidden md:block">
+        <ThemeToggle />
+      </div>
+      {/* The full label would wrap beside the logo and menu button at 320-390 px,
+          so small screens get the short form and the drawer carries the full one. */}
+      <a href="/contact" class="btn btn-primary text-sm whitespace-nowrap">
+        <span class="sm:hidden">Get access</span>
+        <span class="hidden sm:inline">Request Early Access</span>
       </a>
       <button
         type="button"
         class="md:hidden btn btn-secondary px-2.5 py-2"
-        aria-label="Toggle navigation"
+        aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="mobile-nav"
         data-mobile-nav-toggle
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -48,17 +57,33 @@ const isActive = (href: string) => {
     </div>
   </div>
 
-  <div class="md:hidden hidden border-t" style="border-color: var(--border);" data-mobile-nav>
+  <div
+    id="mobile-nav"
+    class="md:hidden hidden border-t"
+    style="border-color: var(--border);"
+    data-mobile-nav
+  >
     <nav class="container-page py-3 flex flex-col" aria-label="Mobile">
       {PRIMARY_NAV.map((item) => (
         <a
           href={item.href}
           class="py-2 text-sm"
           style={`color: ${isActive(item.href) ? "var(--fg)" : "var(--fg-muted)"};`}
+          aria-current={isActive(item.href) ? "page" : undefined}
         >
           {item.label}
         </a>
       ))}
+      <a
+        href="/contact"
+        class="py-2 text-sm font-medium"
+        style="color: var(--accent);"
+      >
+        Request Early Access
+      </a>
+      <div class="pt-3 mt-1" style="border-top: 1px solid var(--border);">
+        <ThemeToggle />
+      </div>
     </nav>
   </div>
 </header>
@@ -66,9 +91,34 @@ const isActive = (href: string) => {
 <script>
   const toggle = document.querySelector<HTMLButtonElement>("[data-mobile-nav-toggle]");
   const panel = document.querySelector<HTMLElement>("[data-mobile-nav]");
+
   if (toggle && panel) {
-    toggle.addEventListener("click", () => {
-      panel.classList.toggle("hidden");
+    const setOpen = (open: boolean) => {
+      panel.classList.toggle("hidden", !open);
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+    const isOpen = () => toggle.getAttribute("aria-expanded") === "true";
+
+    toggle.addEventListener("click", () => setOpen(!isOpen()));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && isOpen()) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target as Node | null;
+      if (!isOpen() || !target) return;
+      if (panel.contains(target) || toggle.contains(target)) return;
+      setOpen(false);
+    });
+
+    // A viewport that grows past the mobile breakpoint reveals the desktop nav;
+    // leaving the drawer open would show both.
+    window.matchMedia("(min-width: 768px)").addEventListener("change", (event) => {
+      if (event.matches) setOpen(false);
     });
   }
 </script>

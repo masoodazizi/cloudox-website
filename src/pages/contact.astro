@@ -8,6 +8,11 @@ import { SITE } from "@/config/site";
 // destination email is never exposed in the page source. The access key
 // itself is intentionally a public identifier (like a form ID) and is safe
 // to ship to the client.
+//
+// The form carries a real `method`/`action`, so it still submits with
+// JavaScript disabled or broken: the browser posts normally and the processor
+// redirects to /thanks. With JavaScript the submit handler intercepts and posts
+// in place instead, keeping the visitor on the page.
 const WEB3FORMS_KEY = import.meta.env.PUBLIC_WEB3FORMS_KEY ?? "";
 const formConfigured = WEB3FORMS_KEY.length > 0;
 
@@ -29,8 +34,7 @@ const breadcrumb = {
   <Hero
     eyebrow="EARLY ACCESS"
     title="Get early access to CloudoX."
-    subtitle="We work with a small group of cloud consultants, architects, and engineers to shape CloudoX against real environments. Tell us a bit about your work — or book a 30-minute call to explore it together."
-    secondaryCta={{ label: "Book a 30-min call", href: SITE.bookingUrl }}
+    subtitle="We work with a small group of cloud consultants, architects, and engineers to shape CloudoX against real environments. Tell us about your work below — a person reads every message and replies, usually within two working days."
   />
 
   <Section>
@@ -40,11 +44,13 @@ const breadcrumb = {
           <form
             id="contact-form"
             class="surface p-6 md:p-8 space-y-5"
-            data-access-key={WEB3FORMS_KEY}
-            novalidate
+            method="POST"
+            action="https://api.web3forms.com/submit"
           >
+            <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
             <input type="hidden" name="subject" value={`${SITE.name} — Early access request`} />
             <input type="hidden" name="from_name" value={`${SITE.name} website`} />
+            <input type="hidden" name="redirect" value={`${SITE.url}/thanks`} />
             {/* Honeypot — bots fill it, humans don't. */}
             <input
               type="checkbox"
@@ -223,7 +229,6 @@ const breadcrumb = {
 <script>
   const form = document.getElementById("contact-form") as HTMLFormElement | null;
   if (form) {
-    const accessKey = form.dataset.accessKey ?? "";
     const status = form.querySelector<HTMLParagraphElement>("[data-form-status]");
     const submit = form.querySelector<HTMLButtonElement>("[data-submit]");
     const label = form.querySelector<HTMLSpanElement>("[data-submit-label]");
@@ -244,15 +249,12 @@ const breadcrumb = {
     };
 
     form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      if (!accessKey) {
-        setStatus("error", "The contact form is not configured.");
-        return;
-      }
       if (!form.checkValidity()) {
         form.reportValidity();
+        e.preventDefault();
         return;
       }
+      e.preventDefault();
 
       submit?.setAttribute("disabled", "true");
       label?.classList.add("opacity-70");
@@ -260,7 +262,9 @@ const breadcrumb = {
       setStatus("info", "Sending…");
 
       const formData = new FormData(form);
-      formData.append("access_key", accessKey);
+      // `redirect` is only meaningful for a full-page POST; sending it with the
+      // in-page request would ask the API for a redirect response instead of JSON.
+      formData.delete("redirect");
       const payload = Object.fromEntries(formData.entries());
 
       try {

@@ -1,11 +1,6 @@
 ---
 import LegalLayout from "@layouts/LegalLayout.astro";
-import {
-  LEGAL_OPERATOR,
-  LEGAL_DESCRIPTION_DE,
-  LEGAL_LAST_UPDATED,
-  hasValue,
-} from "@/config/legal";
+import { LEGAL_OPERATOR, LEGAL_LAST_UPDATED, hasValue } from "@/config/legal";
 import { SITE } from "@/config/site";
 
 const breadcrumb = {
@@ -50,12 +45,6 @@ const op = LEGAL_OPERATOR;
   {hasValue(op.vatId) && <p class="text-sm muted">VAT ID: {op.vatId}</p>}
   {hasValue(op.phone) && <p class="text-sm muted">Phone: {op.phone}</p>}
 
-  <p class="text-xs muted mt-4 max-w-xl">
-    {op.tradingName} is currently operated by {op.operatorName} as an
-    individual; it is not a registered company, and no commercial-register
-    entry or VAT identification number currently exists.
-  </p>
-
   <h2>Contact</h2>
   <p>
     Email: <a href={`mailto:${op.legalEmail}`}>{op.legalEmail}</a>
@@ -71,10 +60,6 @@ const op = LEGAL_OPERATOR;
   </p>
 
   <h2>Consumer dispute resolution</h2>
-  <p>
-    The European Commission's former Online Dispute Resolution platform has
-    been discontinued and is not referenced here.
-  </p>
   <p>
     We are neither willing nor obliged to participate in dispute-resolution
     proceedings before a consumer arbitration board (
@@ -103,12 +88,5 @@ const op = LEGAL_OPERATOR;
     are protected by applicable copyright law. Reproduction, adaptation,
     distribution, or other use beyond statutory permissions requires prior
     written consent.
-  </p>
-
-  <hr class="my-10" />
-
-  <p class="text-xs muted">
-    German-language legal description:
-    <em>{LEGAL_DESCRIPTION_DE}</em>, {hasValue(op.careOf) ? `${op.careOf}, ` : ""}{op.streetAddress}, {op.postalCode} {op.city}, {op.country}.
   </p>
 </LegalLayout>

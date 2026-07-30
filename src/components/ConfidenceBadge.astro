@@ -1,0 +1,30 @@
+---
+/**
+ * The product's user-facing confidence label (Verified / Likely / Assumed /
+ * Unknown) rendered exactly as the product renders it.
+ *
+ * The written label is always present, so the meaning never depends on the
+ * colour alone.
+ */
+import type { ConfidenceLabel } from "@/config/example";
+
+interface Props {
+  level: ConfidenceLabel;
+  /** Prefix the label, e.g. "Confidence: Likely". */
+  prefix?: string;
+  class?: string;
+}
+
+const { level, prefix, class: className = "" } = Astro.props as Props;
+
+const CLASS_BY_LEVEL: Record<ConfidenceLabel, string> = {
+  Verified: "conf-verified",
+  Likely: "conf-likely",
+  Assumed: "conf-assumed",
+  Unknown: "conf-unknown",
+};
+---
+
+<span class={`conf ${CLASS_BY_LEVEL[level]} ${className}`}>
+  {prefix ? `${prefix} ${level}` : level}
+</span>

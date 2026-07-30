@@ -1,0 +1,9 @@
+# Cloudflare Pages redirects.
+#
+# The site's canonical host is the apex domain, and every canonical tag,
+# sitemap entry, and internal link points there. Without this rule the www
+# host also serves the site, so the same page is reachable at two addresses —
+# a split-signal problem for search engines and an inconsistent address to
+# share. 301 preserves path and query via the splat.
+https://www.cloudox.io/* https://cloudox.io/:splat 301
+http://www.cloudox.io/* https://cloudox.io/:splat 301

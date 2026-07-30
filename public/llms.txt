@@ -63,6 +63,8 @@ A script plus an LLM produces a convincing first version quickly. The difference
 ## Key pages
 
 - Homepage: https://cloudox.io/
+- Live sanitized example report (one real AWS environment, identifiers replaced): https://preview.cloudox.io
+- The same example as Markdown: https://github.com/cloudox-ai/cloudox-public-examples
 - Product overview: https://cloudox.io/product/
 - Knowledge Views: https://cloudox.io/product/#knowledge-views
 - How it works: https://cloudox.io/how-it-works/

@@ -28,9 +28,16 @@ const wordCount = (post.body ?? "").split(/\s+/).filter(Boolean).length;
 const readingMinutes = Math.max(1, Math.round(wordCount / 200));
 
 const postUrl = `${SITE.url}/blog/${post.id}/`;
-const coverUrl = post.data.cover
-  ? new URL(post.data.cover, SITE.url).toString()
-  : undefined;
+
+/**
+ * Covers are authored as SVG for the page, but social preview consumers do not
+ * render SVG — so the card points at the PNG sibling emitted by
+ * `scripts/generate-raster-assets.mjs`.
+ */
+const socialCard = post.data.cover
+  ? post.data.cover.replace(/\.svg$/, ".png")
+  : SITE.ogImage;
+const coverUrl = new URL(socialCard, SITE.url).toString();
 
 const blogPostSchema = {
   "@context": "https://schema.org",
@@ -48,7 +55,7 @@ const blogPostSchema = {
     name: post.data.author ?? SITE.name,
   },
   publisher: { "@id": `${SITE.url}/#organization` },
-  ...(coverUrl ? { image: coverUrl } : {}),
+  image: coverUrl,
   url: postUrl,
   isPartOf: { "@id": `${SITE.url}/#website` },
   keywords: post.data.tags.join(", "),
@@ -58,11 +65,12 @@ const blogPostSchema = {
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
-  image={post.data.cover ?? SITE.ogImage}
+  image={socialCard}
+  imageAlt={post.data.coverAlt ?? post.data.title}
+  ogType="article"
   jsonLd={[blogPostSchema]}
 >
   <Fragment slot="head">
-    <meta property="og:type" content="article" />
     <meta
       property="article:published_time"
       content={post.data.pubDate.toISOString()}

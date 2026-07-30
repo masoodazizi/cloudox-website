@@ -16,8 +16,15 @@ export interface Props {
   title?: string;
   description?: string;
   image?: string;
+  /** Alternative text for the social card image. */
+  imageAlt?: string;
   canonical?: string;
   noindex?: boolean;
+  /**
+   * Open Graph type. Exactly one `og:type` is emitted per page, from here —
+   * pages must not add their own, or consumers see conflicting values.
+   */
+  ogType?: "website" | "article";
   /** JSON-LD blocks to inject in addition to the base Organization/WebSite schemas. */
   jsonLd?: object[];
 }
@@ -26,8 +33,10 @@ const {
   title,
   description = SITE.description,
   image = SITE.ogImage,
+  imageAlt = `${SITE.name} — ${SITE.tagline}`,
   canonical,
   noindex = false,
+  ogType = "website",
   jsonLd = [],
 } = Astro.props as Props;
 
@@ -85,6 +94,28 @@ const allSchemas = [...baseSchemas, ...jsonLd];
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    {/* Runs before first paint so an explicit theme choice (stored by the
+        header's toggle) never flashes the system-default theme first. With
+        no stored choice, this leaves `data-theme` unset and the plain-CSS
+        `prefers-color-scheme` rules in global.css keep driving the theme. */}
+    <script is:inline>
+      (function () {
+        var stored = null;
+        try {
+          stored = localStorage.getItem("theme");
+        } catch (e) {
+          /* ignore */
+        }
+        var isDark =
+          stored === "dark" ||
+          (stored !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        if (stored === "light" || stored === "dark") {
+          document.documentElement.setAttribute("data-theme", stored);
+        }
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", isDark ? "#0a0d12" : "#ffffff");
+      })();
+    </script>
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/png" href="/favicon.png?v=4" />
     <link rel="icon" type="image/png" sizes="512x512" href="/brand/logo/v4/logo4-favicon-bb512.png?v=4" />
@@ -95,20 +126,23 @@ const allSchemas = [...baseSchemas, ...jsonLd];
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta property="og:url" content={canonicalURL} />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageURL} />
+    <meta name="twitter:image:alt" content={imageAlt} />
 
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0d12" />
+    <meta name="theme-color" content="#ffffff" />
 
     <link rel="alternate" type="application/rss+xml" title={`${SITE.name} blog`} href="/rss.xml" />
     <link rel="sitemap" href="/sitemap-index.xml" />

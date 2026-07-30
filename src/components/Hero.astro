@@ -12,6 +12,8 @@ interface Props {
   subtitle?: string;
   primaryCta?: CtaProps;
   secondaryCta?: CtaProps;
+  /** A short evidence line rendered under the actions. */
+  trustLine?: string;
 }
 
 const {
@@ -20,10 +22,18 @@ const {
   subtitle,
   primaryCta,
   secondaryCta,
+  trustLine,
 } = Astro.props as Props;
 
 const isExternal = (cta: CtaProps) =>
   cta.external ?? /^https?:\/\//i.test(cta.href);
+
+/**
+ * With an `aside` slot the hero becomes a split composition: copy on the left,
+ * a product-proof surface on the right. Copy still comes first in the document,
+ * so the reading order stays correct on mobile and for assistive technology.
+ */
+const hasAside = Astro.slots.has("aside");
 ---
 
 <section class="relative overflow-hidden">
@@ -36,47 +46,65 @@ const isExternal = (cta: CtaProps) =>
   >
   </div>
 
-  <div class="container-page relative pt-20 pb-16 md:pt-28 md:pb-24">
-    {eyebrow && <p class="eyebrow mb-5">{eyebrow}</p>}
-    <h1 class="text-4xl md:text-6xl font-semibold tracking-tight max-w-4xl">
-      {title}
-    </h1>
-    {subtitle && (
-      <p class="mt-6 text-lg md:text-xl muted max-w-2xl leading-relaxed">
-        {subtitle}
-      </p>
-    )}
-
-    {(primaryCta || secondaryCta) && (
-      <div class="mt-9 flex flex-wrap gap-3">
-        {primaryCta && (
-          <a
-            href={primaryCta.href}
-            class="btn btn-primary"
-            {...(isExternal(primaryCta)
-              ? { target: "_blank", rel: "noopener noreferrer" }
-              : {})}
-          >
-            {primaryCta.label}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-              <polyline points="12 5 19 12 12 19"></polyline>
-            </svg>
-          </a>
+  <div
+    class={`container-page relative ${hasAside ? "pt-14 pb-14 md:pt-16 md:pb-20" : "pt-20 pb-16 md:pt-28 md:pb-24"}`}
+  >
+    <div class={hasAside ? "grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-14" : ""}>
+      <div>
+        {eyebrow && <p class="eyebrow mb-5">{eyebrow}</p>}
+        <h1
+          class={`text-4xl font-semibold tracking-tight ${hasAside ? "md:text-5xl" : "md:text-6xl max-w-4xl"}`}
+        >
+          {title}
+        </h1>
+        {subtitle && (
+          <p class={`mt-6 text-lg muted leading-relaxed ${hasAside ? "" : "md:text-xl max-w-2xl"}`}>
+            {subtitle}
+          </p>
         )}
-        {secondaryCta && (
-          <a
-            href={secondaryCta.href}
-            class="btn btn-secondary"
-            {...(isExternal(secondaryCta)
-              ? { target: "_blank", rel: "noopener noreferrer" }
-              : {})}
-          >
-            {secondaryCta.label}
-          </a>
+
+        {(primaryCta || secondaryCta) && (
+          <div class="mt-9 flex flex-wrap gap-3">
+            {primaryCta && (
+              <a
+                href={primaryCta.href}
+                class="btn btn-primary"
+                {...(isExternal(primaryCta)
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
+                {primaryCta.label}
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            )}
+            {secondaryCta && (
+              <a
+                href={secondaryCta.href}
+                class="btn btn-secondary"
+                {...(isExternal(secondaryCta)
+                  ? { target: "_blank", rel: "noopener noreferrer" }
+                  : {})}
+              >
+                {secondaryCta.label}
+              </a>
+            )}
+          </div>
+        )}
+
+        {trustLine && (
+          <p class="mt-6 text-sm muted">{trustLine}</p>
         )}
       </div>
-    )}
+
+      {hasAside && (
+        <div class="lg:pl-2">
+          <slot name="aside" />
+        </div>
+      )}
+    </div>
 
     <slot />
   </div>

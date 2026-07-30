@@ -4,7 +4,12 @@ export const SITE = {
   description:
     "CloudoX is the intelligent cloud knowledge platform. It turns AWS-native evidence into a knowledge graph, interprets it, and projects audience-specific understanding for executives, architects, operations, security, and FinOps. Understand any cloud environment in under 30 minutes — AWS-first today, multi-cloud tomorrow.",
   url: "https://cloudox.io",
-  ogImage: "/og/cloudox-og.svg",
+  /**
+   * Social cards must be raster: X, LinkedIn, Slack, Facebook, and iMessage do
+   * not render SVG `og:image`, so an SVG-only card shows as no card at all.
+   * The PNG is generated from the SVG by `scripts/generate-raster-assets.mjs`.
+   */
+  ogImage: "/og/cloudox-og.png",
   twitter: "",
   github: "",
   /**
@@ -25,7 +30,6 @@ export const PRIMARY_NAV: NavItem[] = [
   { label: "Product", href: "/product" },
   { label: "How It Works", href: "/how-it-works" },
   { label: "Use Cases", href: "/use-cases" },
-  { label: "Security", href: "/security" },
   { label: "Docs", href: "/docs" },
   { label: "Blog", href: "/blog" },
 ];
@@ -55,6 +59,7 @@ export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
   {
     title: "Company",
     items: [
+      { label: "Security", href: "/security" },
       { label: "Early Access", href: "/contact" },
       { label: "Book a call", href: "https://zeeg.me/cloudox", external: true },
     ],
@@ -62,14 +67,15 @@ export const FOOTER_NAV: { title: string; items: NavItem[] }[] = [
 ];
 
 /**
- * The four legal/trust routes every public page links to directly from the
+ * The three purely-legal routes every public page links to directly from the
  * footer's bottom bar (never nested inside a collapsible menu), per German
- * Digital Services Act (DDG) §5 accessibility expectations and the site's
- * own trust commitments.
+ * Digital Services Act (DDG) §5 accessibility expectations. Security is a
+ * trust/product page rather than a statutory notice, so it lives in the
+ * "Company" column above instead of this bar — it still appears on every
+ * page, just with more visual weight than a legal footnote.
  */
 export const LEGAL_NAV: NavItem[] = [
   { label: "Imprint", href: "/imprint" },
   { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
-  { label: "Security", href: "/security" },
 ];

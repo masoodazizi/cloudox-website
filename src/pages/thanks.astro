@@ -1,0 +1,27 @@
+---
+/**
+ * Confirmation page for the contact form's no-JavaScript path.
+ *
+ * With JavaScript the form submits in place and shows an inline status, so this
+ * page is only reached when the browser performs a normal form POST and the
+ * form processor redirects here. Not indexed — it has no standalone value and
+ * would be a confusing search result.
+ */
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import { SITE } from "@/config/site";
+---
+
+<BaseLayout
+  title="Request received"
+  description="Your early-access request has been received."
+  noindex
+>
+  <Hero
+    eyebrow="EARLY ACCESS"
+    title="Request received."
+    subtitle="Thanks — we have your message and will reply from a real address, usually within two working days. If it's urgent, book a call and pick a slot directly."
+    primaryCta={{ label: "Book a 30-min call", href: SITE.bookingUrl }}
+    secondaryCta={{ label: "Back to the site", href: "/" }}
+  />
+</BaseLayout>

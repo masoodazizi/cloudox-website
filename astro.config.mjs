@@ -14,7 +14,9 @@ export default defineConfig({
   integrations: [
     mdx(),
     sitemap({
-      filter: (page) => !page.includes("/404"),
+      // Keep noindex routes out of the sitemap — submitting a page that asks
+      // not to be indexed is a contradictory signal.
+      filter: (page) => !page.includes("/404") && !page.includes("/thanks"),
     }),
   ],
   vite: {

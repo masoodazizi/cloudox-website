@@ -77,10 +77,6 @@ export const LEGAL_OPERATOR: LegalOperator = {
   // these in without an actual registration, and do not add a phone number.
 };
 
-/** German-language legal description, used on /imprint alongside the English form. */
-export const LEGAL_DESCRIPTION_DE = `${LEGAL_OPERATOR.operatorName}, handelnd unter der Geschäftsbezeichnung ${LEGAL_OPERATOR.tradingName}`;
-export const LEGAL_DESCRIPTION_EN = `${LEGAL_OPERATOR.operatorName}, trading as ${LEGAL_OPERATOR.tradingName}`;
-
 /**
  * ISO dates (YYYY-MM-DD). Bump the relevant entry whenever that page's
  * substantive content changes — not on every unrelated site edit.

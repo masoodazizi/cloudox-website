@@ -135,13 +135,18 @@ describe("WEBSITE_PROCESSORS", () => {
 });
 
 describe("LEGAL_NAV", () => {
-  test("lists exactly the four required legal/trust routes", () => {
+  test("lists exactly the three statutory-notice routes", () => {
     const hrefs = LEGAL_NAV.map((item) => item.href).sort();
-    assert.deepEqual(hrefs, ["/imprint", "/privacy", "/security", "/terms"]);
+    assert.deepEqual(hrefs, ["/imprint", "/privacy", "/terms"]);
   });
 });
 
 describe("FOOTER_NAV", () => {
+  test("carries /security instead of the dedicated legal bar", () => {
+    const allHrefs = FOOTER_NAV.flatMap((column) => column.items.map((item) => item.href));
+    assert.ok(allHrefs.includes("/security"), "/security should be reachable from the main footer");
+  });
+
   test("no longer duplicates the legal routes already covered by LEGAL_NAV", () => {
     const allHrefs = FOOTER_NAV.flatMap((column) => column.items.map((item) => item.href));
     for (const legalHref of ["/imprint", "/privacy", "/terms"]) {

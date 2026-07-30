@@ -4,6 +4,7 @@ import Hero from "@components/Hero.astro";
 import Section from "@components/Section.astro";
 import CTA from "@components/CTA.astro";
 import { SITE } from "@/config/site";
+import { EXAMPLE } from "@/config/example";
 
 const breadcrumb = {
   "@context": "https://schema.org",
@@ -14,42 +15,58 @@ const breadcrumb = {
   ],
 };
 
+/**
+ * Each stage states what goes in, what comes out, and what happens when the
+ * evidence is incomplete — because the third one is where tools normally
+ * start guessing, and it is the part a reader needs to be able to check.
+ */
 const flow = [
   {
     step: "01",
     title: "Connect",
-    description:
-      "Read-only access to an AWS Organization, account set, or single account. Nothing is created or modified.",
+    input: "A read-only IAM role in an AWS Organization, an account set, or one account.",
+    output: "A verified connection scoped to describe/list permissions.",
+    gap: "An account that cannot be assumed is reported as failed, not skipped silently.",
   },
   {
     step: "02",
     title: "Discover",
-    description:
-      "Modular collectors fan out across accounts and regions, gathering metadata from AWS-native sources — Config, Organizations, Resource Explorer, service APIs, and tags.",
+    input: "AWS-native sources only — Organizations, Config, Resource Explorer, service APIs, tags.",
+    output: "Raw provider responses, persisted per account and region.",
+    gap: "A collector that is denied or unavailable is recorded, and the counts it feeds are published as lower bounds.",
   },
   {
     step: "03",
-    title: "Build the knowledge graph",
-    description:
-      "Raw data is normalized into a typed knowledge graph: accounts, regions, environments, workloads, systems, resources, and explicit, evidence-bearing relationships.",
+    title: "Model",
+    input: "Those raw responses.",
+    output:
+      "A typed knowledge graph: accounts, regions, resources, and explicit relationships, each carrying the field it was derived from.",
+    gap: "A relationship with no supporting field is not created. There is no inferred edge without evidence.",
   },
   {
     step: "04",
     title: "Interpret",
-    description:
-      "Deterministic logic classifies environments, groups workloads, and detects exposure, then captures the meaning once per domain — the reusable interpretation every channel reads.",
+    input: "The graph, and nothing else.",
+    output:
+      "Deterministic meaning — environment classification, workload grouping, internet exposure — written once per domain and reused everywhere.",
+    gap: "Weak signal produces a lower confidence label, or `Unknown`. It never produces a confident guess.",
   },
   {
     step: "05",
-    title: "Generate intelligence",
-    description:
-      "Ranked, evidence-grounded findings, risks, and opportunities are derived across architecture, operations, security, cost, and change — once, for every audience to draw from.",
+    title: "Rank",
+    input: "The interpreted domains.",
+    output:
+      "One significance-ranked set of findings, risks, opportunities, and open questions — generated once, not per audience.",
+    gap: "Missing evidence becomes a first-class item of its own, so a gap is surfaced instead of absorbed.",
   },
   {
     step: "06",
     title: "Project & narrate",
-    description:
-      "The understanding is projected into audience-specific Knowledge Views and narrated in plain language — grounded in a closed, citeable context, never invented.",
+    input: "The ranked set, projected into each audience lens.",
+    output:
+      "Audience views in plain language, with diagrams built deterministically from the graph.",
+    gap:
+      "Narration is checked against the citeable context it was given; anything outside it is rejected and the deterministic text is published instead.",
   },
 ];
 
@@ -65,9 +82,14 @@ const outputs = [
       "Account structure, workload architecture, and network topology, generated deterministically from the knowledge graph and embedded where they help.",
   },
   {
-    title: "Quality you can check",
+    title: "Reference tables",
     description:
-      "Every view is scored on usefulness — coverage, signal-to-noise, actionability, prioritization — so you know where it's strong before you share it.",
+      "Routing, connectivity, ingress, identity and trust, dependencies, encryption, and tagging coverage — each row citing the resource it came from.",
+  },
+  {
+    title: "A quality score on itself",
+    description:
+      "Every view is scored deterministically on coverage, signal-to-noise, actionability, and prioritization, so you can see where the output is weak before you share it.",
   },
 ];
 ---
@@ -79,49 +101,79 @@ const outputs = [
 >
   <Hero
     eyebrow="HOW IT WORKS"
-    title="From AWS APIs to understanding — without inventing anything."
-    subtitle="A strict pipeline: discover, model, interpret, generate intelligence, project, and narrate. Deterministic analysis decides the facts and the meaning. AI only narrates — it never fabricates."
-    primaryCta={{ label: "Request Early Access", href: "/contact" }}
-    secondaryCta={{ label: "See the docs", href: "/docs" }}
+    title="Six stages. Only the last one involves a model."
+    subtitle="Facts are collected from AWS-native sources and meaning is derived deterministically, before any narration happens. This page shows what each stage produces — and what it does when the evidence is not there."
+    primaryCta={{ label: "Request early access", href: "/contact" }}
+    secondaryCta={{ label: "Read the docs", href: "/docs" }}
   />
 
-  <Section eyebrow="WORKFLOW" title="The pipeline.">
-    <ol class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  <Section
+    eyebrow="THE PIPELINE"
+    title="Six stages, and what each one refuses to do."
+    subtitle="Stages 01 to 05 contain no AI at all. The same graph produces the same interpretation every time it is run."
+  >
+    <ol class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {flow.map((s) => (
-        <li class="surface p-5">
-          <span
-            class="inline-flex h-8 w-8 items-center justify-center rounded-md font-mono text-xs mb-3"
-            style="background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);"
-          >
-            {s.step}
-          </span>
-          <h3 class="text-sm font-semibold mb-2">{s.title}</h3>
-          <p class="text-xs muted leading-relaxed">{s.description}</p>
+        <li class="surface flex flex-col p-5">
+          <div class="flex items-center gap-3">
+            <span
+              class="inline-flex h-8 w-8 items-center justify-center rounded-md font-mono text-xs"
+              style="background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);"
+            >
+              {s.step}
+            </span>
+            <h3 class="text-sm font-semibold">{s.title}</h3>
+          </div>
+          <dl class="mt-4 space-y-2.5 text-xs leading-relaxed">
+            <div>
+              <dt class="uppercase tracking-wide muted">In</dt>
+              <dd class="mt-0.5 muted">{s.input}</dd>
+            </div>
+            <div>
+              <dt class="uppercase tracking-wide muted">Out</dt>
+              <dd class="mt-0.5">{s.output}</dd>
+            </div>
+            <div class="pt-2.5" style="border-top: 1px solid var(--border);">
+              <dt class="uppercase tracking-wide" style="color: var(--accent);">
+                If evidence is missing
+              </dt>
+              <dd class="mt-0.5 muted">{s.gap}</dd>
+            </div>
+          </dl>
         </li>
       ))}
     </ol>
   </Section>
 
   <Section
-    eyebrow="WHY THE DISCIPLINE MATTERS"
-    title="The model never sees raw cloud data."
-    subtitle="Every AI-assisted experience follows the same rule: deterministic analysis, then interpretation, then projection, and only then narration. No capability sends raw infrastructure data straight to a model."
+    eyebrow="THE AI BOUNDARY"
+    title="Stage 06 is the only stage a model touches."
+    subtitle="It receives the interpreted, bounded context for one section — summaries, ranked items, entity names, evidence references. Not the graph, not raw provider responses, not your account data."
     muted
   >
-    <p class="text-sm muted max-w-2xl leading-relaxed">
-      The knowledge graph holds the facts. The interpretation layer holds the
-      meaning. AI is given a closed, citeable context and asked to explain it —
-      anything outside that context is rejected before it reaches the page. That's
-      what keeps the output something a consultant can sign their name to.
-    </p>
+    <div class="max-w-2xl">
+      <p class="text-sm muted leading-relaxed">
+        Because the context is a closed set, every citation can be checked
+        against it. A narration that references something outside that set is
+        rejected and the deterministic text is published in its place — so the
+        worst case is plainer prose, not a confident invention. The facts and
+        their meaning are already fixed by then; the model changes how they read,
+        never what they say.
+      </p>
+      <p class="mt-4 text-sm">
+        <a href="/security" class="font-medium" style="color: var(--accent);">
+          How access, data handling, and the AI boundary work →
+        </a>
+      </p>
+    </div>
   </Section>
 
   <Section
     eyebrow="OUTPUT"
-    title="What you get."
-    subtitle="Not a fixed eight-file report — audience-specific understanding you can read, share, and trust."
+    title="What a run leaves behind."
+    subtitle="Readable pages, not a data export you still have to interpret. Everything below is generated from the same graph, so the numbers agree across them."
   >
-    <div class="grid gap-5 md:grid-cols-3">
+    <div class="grid gap-5 md:grid-cols-2">
       {outputs.map((o) => (
         <div class="surface p-6">
           <h3 class="text-base font-semibold mb-2">{o.title}</h3>
@@ -131,33 +183,34 @@ const outputs = [
     </div>
     <div class="mt-10 max-w-2xl">
       <p class="text-sm muted leading-relaxed">
-        A sanitised example is published publicly so you can read the exact
-        structure, tone, and level of detail CloudoX produces.
+        The output of a real run is published, sanitized, so you can read the
+        exact structure, tone, and level of detail — including where it says it
+        could not tell.
       </p>
       <div class="mt-4 flex flex-wrap gap-3">
         <a
-          href="https://preview.cloudox.io"
+          href={EXAMPLE.previewUrl}
           target="_blank"
           rel="noopener noreferrer"
           class="btn btn-primary"
         >
-          Open dashboard preview
+          Explore the real example
         </a>
         <a
-          href="https://github.com/cloudox-ai/cloudox-public-examples"
+          href={EXAMPLE.repoUrl}
           target="_blank"
           rel="noopener noreferrer"
           class="btn btn-secondary"
         >
-          View example on GitHub
+          Read it as Markdown on GitHub
         </a>
       </div>
     </div>
   </Section>
 
   <CTA
-    title="Ready to see CloudoX in action?"
-    primary={{ label: "Request Early Access", href: "/contact" }}
+    title="Run this pipeline against your own environment."
+    primary={{ label: "Request early access", href: "/contact" }}
     secondary={{ label: "Book a call", href: SITE.bookingUrl }}
   />
 </BaseLayout>

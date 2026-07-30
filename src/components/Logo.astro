@@ -4,9 +4,13 @@
  *
  * Uses the official v4 PNG brand pack from `public/brand/logo/v4/`. The
  * `*-bright-bg` assets are drawn for light backgrounds (dark glyphs); the
- * `*-dark-bg` assets are drawn for dark backgrounds (light glyphs). We swap
- * between them via `prefers-color-scheme` inside a <picture> element so the
- * right asset loads automatically.
+ * `*-dark-bg` assets are drawn for dark backgrounds (light glyphs). Both
+ * render as siblings and CSS shows exactly one (see `.logo-img-*` in
+ * global.css) — driven by `prefers-color-scheme` by default, and by the
+ * header's manual theme toggle when it has set an explicit `data-theme`.
+ * A `<picture><source media="...">` pair can't see that override (it only
+ * ever reads the OS-level media feature), which is why this isn't a
+ * `<picture>` element.
  *
  * Variants:
  *   - wordmark  (full "CloudoX" lockup)
@@ -37,16 +41,24 @@ const {
 } = Astro.props as Props;
 
 // Natural pixel dimensions used for aspect-ratio attributes (prevents CLS).
+//
+// `variants` are the display-sized PNGs emitted by
+// `scripts/generate-raster-assets.mjs`. The master assets are ~670 KB at
+// 2454x448; serving them for a 26 px-tall header wordmark downloads that on
+// every page. Variants keep the same artwork at a fraction of the bytes, and
+// the master stays the fallback for any size a variant cannot serve crisply.
 const ASSETS = {
   wordmark: {
     bright: "/brand/logo/v4/logo-v4-bright-bg.png",
     dark: "/brand/logo/v4/logo-v4-dark-bg.png",
     intrinsic: { width: 2454, height: 448 },
+    variants: [32, 64],
   },
   icon: {
     bright: "/brand/logo/v4/logo-v4-icon-bright-bg.png",
     dark: "/brand/logo/v4/logo-v4-icon-dark-bg.png",
     intrinsic: { width: 935, height: 445 },
+    variants: [],
   },
 } as const;
 
@@ -61,6 +73,39 @@ const asset = ASSETS[variant];
 const height = HEIGHT_BY_SIZE[variant][size];
 const width = Math.round((asset.intrinsic.width / asset.intrinsic.height) * height);
 
+const variantPath = (base: string, variantHeight: number) =>
+  base.replace(/\.png$/, `-h${variantHeight}.png`);
+
+/**
+ * Variants at or above the rendered height, so the browser never upscales.
+ * With none available (the icon variant today) the master asset is served.
+ */
+const usableVariants: readonly number[] = (asset.variants as readonly number[]).filter(
+  (variantHeight) => variantHeight >= height,
+);
+
+/**
+ * A density-descriptor srcset, e.g. a 26 px-tall wordmark with 32 px and 64 px
+ * variants becomes "…-h32.png 1.23x, …-h64.png 2.46x". `src` must also point at
+ * a variant: with density descriptors the browser treats `src` as the 1x
+ * candidate, so leaving the master there would still download it on 1x screens.
+ */
+const sourceFor = (base: string) => {
+  if (usableVariants.length === 0) return { src: base, srcset: undefined };
+  return {
+    src: variantPath(base, usableVariants[0]),
+    srcset: usableVariants
+      .map(
+        (variantHeight) =>
+          `${variantPath(base, variantHeight)} ${(variantHeight / height).toFixed(2)}x`,
+      )
+      .join(", "),
+  };
+};
+
+const bright = sourceFor(asset.bright);
+const dark = sourceFor(asset.dark);
+
 const Tag = href === false ? "span" : "a";
 const linkProps = href === false ? {} : { href };
 ---
@@ -70,17 +115,31 @@ const linkProps = href === false ? {} : { href };
   class={`inline-flex items-center ${className}`}
   aria-label="CloudoX home"
 >
-  <picture>
-    <source srcset={asset.dark} media="(prefers-color-scheme: dark)" />
-    <img
-      src={asset.bright}
-      alt="CloudoX"
-      width={width}
-      height={height}
-      style={`height: ${height}px; width: auto;`}
-      loading={loading}
-      decoding="async"
-      draggable="false"
-    />
-  </picture>
+  {/* The link already carries the accessible name via aria-label above, so
+      both images are decorative — otherwise a screen reader could announce
+      "CloudoX" twice while both happen to be in the DOM. */}
+  <img
+    class="logo-img-light"
+    src={bright.src}
+    srcset={bright.srcset}
+    alt=""
+    width={width}
+    height={height}
+    style={`height: ${height}px; width: auto;`}
+    loading={loading}
+    decoding="async"
+    draggable="false"
+  />
+  <img
+    class="logo-img-dark"
+    src={dark.src}
+    srcset={dark.srcset}
+    alt=""
+    width={width}
+    height={height}
+    style={`height: ${height}px; width: auto;`}
+    loading={loading}
+    decoding="async"
+    draggable="false"
+  />
 </Tag>

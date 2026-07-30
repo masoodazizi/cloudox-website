@@ -1,0 +1,92 @@
+---
+/**
+ * Manual light/dark override on top of the system preference. With no
+ * stored choice, the page still follows `prefers-color-scheme` via plain
+ * CSS (see global.css) — this button only ever writes an explicit choice
+ * to localStorage once clicked. Safe with JavaScript disabled: it renders
+ * as an inert button and the system preference keeps driving the theme.
+ */
+---
+
+<button
+  type="button"
+  class="btn btn-secondary px-2.5 py-2"
+  aria-label="Switch to dark theme"
+  data-theme-toggle
+>
+  <svg data-icon="sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+  </svg>
+  <svg data-icon="moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="hidden">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+</button>
+<script is:inline>
+  (function () {
+    var btn = document.currentScript.previousElementSibling;
+    if (!btn) return;
+    var stored = null;
+    try {
+      stored = localStorage.getItem("theme");
+    } catch (e) {
+      /* ignore */
+    }
+    var isDark =
+      stored === "dark" ||
+      (stored !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    var sun = btn.querySelector('[data-icon="sun"]');
+    var moon = btn.querySelector('[data-icon="moon"]');
+    if (sun) sun.classList.toggle("hidden", isDark);
+    if (moon) moon.classList.toggle("hidden", !isDark);
+    btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+  })();
+</script>
+
+<script>
+  function getStoredTheme(): "light" | "dark" | null {
+    try {
+      const value = localStorage.getItem("theme");
+      return value === "light" || value === "dark" ? value : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function setStoredTheme(theme: "light" | "dark") {
+    try {
+      localStorage.setItem("theme", theme);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  function systemPrefersDark(): boolean {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  }
+
+  function resolvedTheme(): "light" | "dark" {
+    return getStoredTheme() ?? (systemPrefersDark() ? "dark" : "light");
+  }
+
+  function applyTheme(theme: "light" | "dark") {
+    document.documentElement.setAttribute("data-theme", theme);
+    const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
+    if (meta) meta.content = theme === "dark" ? "#0a0d12" : "#ffffff";
+
+    document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]").forEach((btn) => {
+      const isDark = theme === "dark";
+      btn.querySelector('[data-icon="sun"]')?.classList.toggle("hidden", isDark);
+      btn.querySelector('[data-icon="moon"]')?.classList.toggle("hidden", !isDark);
+      btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+    });
+  }
+
+  document.querySelectorAll<HTMLButtonElement>("[data-theme-toggle]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const next = resolvedTheme() === "dark" ? "light" : "dark";
+      setStoredTheme(next);
+      applyTheme(next);
+    });
+  });
+</script>
