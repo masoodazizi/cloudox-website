@@ -14,6 +14,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { LEGAL_NAV } from "../src/config/site.ts";
 import { WEBSITE_PROCESSORS, LEGAL_OPERATOR } from "../src/config/legal.ts";
+import redirectWorker from "../workers/redirect-www.js";
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const DIST = join(ROOT, "dist");
@@ -352,9 +353,41 @@ describe("Social and canonical metadata", () => {
     assert.deepEqual(missing, []);
   });
 
-  test("the www host permanently redirects to the canonical apex host", () => {
-    const redirects = readDist("_redirects");
-    assert.match(redirects, /https:\/\/www\.cloudox\.io\/\*\s+https:\/\/cloudox\.io\/:splat\s+301/);
+});
+
+describe("The deployed Worker redirects www to the canonical apex host", () => {
+  // Cloudflare Workers Static Assets rejects an absolute-URL `_redirects`
+  // rule ("Only relative URLs are allowed", error 100324), so this host
+  // redirect lives in workers/redirect-www.js instead — see wrangler.jsonc.
+  test("redirects https://www to the apex, preserving path and query", async () => {
+    const res = await redirectWorker.fetch(
+      new Request("https://www.cloudox.io/product?ref=test"),
+      {},
+    );
+    assert.equal(res.status, 301);
+    assert.equal(res.headers.get("location"), "https://cloudox.io/product?ref=test");
+  });
+
+  test("also redirects the http scheme to https on the apex", async () => {
+    const res = await redirectWorker.fetch(new Request("http://www.cloudox.io/"), {});
+    assert.equal(res.status, 301);
+    assert.equal(res.headers.get("location"), "https://cloudox.io/");
+  });
+
+  test("passes apex requests straight through to static assets", async () => {
+    let calledWith: Request | null = null;
+    const env = {
+      ASSETS: {
+        fetch: async (request: Request) => {
+          calledWith = request;
+          return new Response("ok");
+        },
+      },
+    };
+    const request = new Request("https://cloudox.io/product");
+    const res = await redirectWorker.fetch(request, env);
+    assert.equal(calledWith, request, "expected the apex request to reach env.ASSETS.fetch unmodified");
+    assert.equal(await res.text(), "ok");
   });
 });
 

@@ -1,0 +1,31 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // The site itself is fully static (`astro build`, output "static") — this
+  // config exists only so the CI "wrangler deploy" step has a committed
+  // config to use instead of running its interactive first-time setup (which
+  // would otherwise auto-add the `@astrojs/cloudflare` SSR adapter, a KV
+  // session binding, and switch the build to server mode — none of which
+  // this site needs). `main` is a thin Worker that only handles the
+  // www → apex redirect (see workers/redirect-www.js) and otherwise passes
+  // every request straight through to the static assets.
+  "name": "cloudox",
+  "compatibility_date": "2026-07-29",
+  "main": "workers/redirect-www.js",
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "dist",
+    // The build is a set of static pages, not a single-page app, so an
+    // unmatched route should render the generated 404 page rather than
+    // falling back to index.html.
+    "not_found_handling": "404-page",
+    // Without this, Workers Static Assets serves a matching file directly
+    // and only falls back to `main` when nothing matches — so a request for
+    // an existing page on the www host would never reach the redirect in
+    // workers/redirect-www.js. This forces every request through the Worker
+    // first; it always defers to env.ASSETS.fetch() once the host is right.
+    "run_worker_first": true
+  },
+  "observability": {
+    "enabled": true
+  }
+}
