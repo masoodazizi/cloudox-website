@@ -35,6 +35,7 @@ const op = LEGAL_OPERATOR;
   <p class="mt-8">
     <strong>{op.operatorName}</strong><br />
     trading as <strong>{op.tradingName}</strong><br />
+    {hasValue(op.careOf) && <>{op.careOf}<br /></>}
     {op.streetAddress}<br />
     {op.postalCode} {op.city}<br />
     {op.country}
@@ -63,6 +64,7 @@ const op = LEGAL_OPERATOR;
   <h2>Responsible for editorial content</h2>
   <p>
     {op.responsibleEditorName ?? op.operatorName}<br />
+    {hasValue(op.careOf) && <>{op.careOf}<br /></>}
     {op.streetAddress}<br />
     {op.postalCode} {op.city}<br />
     {op.country}
@@ -107,7 +109,6 @@ const op = LEGAL_OPERATOR;
 
   <p class="text-xs muted">
     German-language legal description:
-    <em>{LEGAL_DESCRIPTION_DE}</em>, {op.streetAddress}, {op.postalCode}{" "}
-    {op.city}, {op.country}.
+    <em>{LEGAL_DESCRIPTION_DE}</em>, {hasValue(op.careOf) ? `${op.careOf}, ` : ""}{op.streetAddress}, {op.postalCode} {op.city}, {op.country}.
   </p>
 </LegalLayout>

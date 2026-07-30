@@ -21,6 +21,13 @@ export interface LegalOperator {
   operatorName: string;
   /** Public trading name shown alongside the operator name. */
   tradingName: string;
+  /**
+   * Optional "care of" / mail-forwarding line rendered directly above the
+   * street address (e.g. a commercial mailbox provider used specifically so
+   * a sole trader's home address is not the one published). Omit once a
+   * different address is used.
+   */
+  careOf?: string;
   streetAddress: string;
   postalCode: string;
   city: string;
@@ -51,9 +58,16 @@ export interface LegalOperator {
 export const LEGAL_OPERATOR: LegalOperator = {
   operatorName: "Masood Azizi",
   tradingName: "CloudoX",
-  streetAddress: "Innsbrucker Str. 18",
-  postalCode: "10825",
-  city: "Berlin",
+  // This is a registered mail-forwarding address used solely as the
+  // legally required point of service for the imprint/privacy notice. The
+  // operator continues to live and work from Berlin, which is why the
+  // supervisory authority named on /privacy stays the Berlin Commissioner
+  // for Data Protection (`berlinAuthorityUrl` in privacy.astro) — do not
+  // change that authority reference based on this address alone.
+  careOf: "c/o Autorenglück #33770",
+  streetAddress: "Albert-Einstein-Str. 47",
+  postalCode: "02977",
+  city: "Hoyerswerda",
   country: "Germany",
   legalEmail: "legal@cloudox.io",
   securityEmail: "security@cloudox.io",

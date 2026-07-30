@@ -85,13 +85,18 @@ describe("Imprint content", () => {
     for (const required of [
       "Masood Azizi",
       "CloudoX",
-      "Innsbrucker Str. 18",
-      "10825",
-      "Berlin",
+      "c/o Autorenglück #33770",
+      "Albert-Einstein-Str. 47",
+      "02977",
+      "Hoyerswerda",
       "legal@cloudox.io",
     ]) {
       assert.ok(html.includes(required), `imprint page is missing "${required}"`);
     }
+  });
+
+  test("does not publish the previous home address", () => {
+    assert.doesNotMatch(html, /Innsbrucker/);
   });
 
   test("does not contain a phone number placeholder", () => {

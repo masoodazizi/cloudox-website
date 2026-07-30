@@ -1,6 +1,6 @@
 ---
 import LegalLayout from "@layouts/LegalLayout.astro";
-import { LEGAL_OPERATOR, LEGAL_LAST_UPDATED, WEBSITE_PROCESSORS } from "@/config/legal";
+import { LEGAL_OPERATOR, LEGAL_LAST_UPDATED, WEBSITE_PROCESSORS, hasValue } from "@/config/legal";
 import { SITE } from "@/config/site";
 
 const breadcrumb = {
@@ -28,6 +28,7 @@ const berlinAuthorityUrl = "https://www.datenschutz-berlin.de/";
   <p>
     {op.operatorName}<br />
     trading as {op.tradingName}<br />
+    {hasValue(op.careOf) && <>{op.careOf}<br /></>}
     {op.streetAddress}<br />
     {op.postalCode} {op.city}<br />
     {op.country}
