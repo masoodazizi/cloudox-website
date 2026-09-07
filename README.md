@@ -452,7 +452,7 @@ content, and trademarks belong to the CloudoX project.
 ## Website refresh and Classic v1
 
 The September 2026 refresh retains Astro static output, the existing content and
-Cloudflare deployment. The dark homepage hero demonstrates one published finding
+Cloudflare deployment. The theme-aware homepage hero demonstrates one published finding
 through `EvidenceExplorer.astro`; all three panels remain readable without
 JavaScript and are progressively enhanced to keyboard-accessible tabs. Its SVG
 shows only the ingress relationship supported by `EXAMPLE_EVIDENCE`, not an
@@ -463,3 +463,10 @@ external scripts, model calls, tracking, or data collection were introduced.
 Classic source is preserved at `archive/website-classic-v1`. See
 [restoration instructions](docs/website-classic-restore.md) for the release,
 Cloudflare build evidence, and source/deployment rollback procedures.
+
+The header uses a full-width surface and a single subtle divider. Hero and evidence
+palettes follow the same system or explicit theme as the header. The borderless
+theme control shows the destination icon and tooltip, synchronizes desktop/mobile
+controls, responds to system changes until explicitly selected, and remains usable
+when local storage is blocked. Its space is reserved before initialization to avoid
+shifting the header; without JavaScript the system theme still works.
