@@ -1,0 +1,78 @@
+---
+import { EXAMPLE, EXAMPLE_EVIDENCE } from '@/config/example';
+import ConfidenceBadge from './ConfidenceBadge.astro';
+const steps = [
+  { key: 'finding', label: 'The finding', eyebrow: 'WHAT CHANGED', title: 'A new exposure to investigate.', body: EXAMPLE_EVIDENCE.finding },
+  { key: 'evidence', label: 'The evidence', eyebrow: 'WHY WE SAY IT', title: 'Follow the supporting record.', body: EXAMPLE_EVIDENCE.trail[1].detail },
+  { key: 'change', label: 'The context', eyebrow: 'THE OTHER SIDE OF THE CHANGE', title: 'Keep the whole picture.', body: EXAMPLE_EVIDENCE.counterpart },
+];
+---
+<figure class="evidence-explorer" data-evidence-explorer aria-label="Explore a finding from the sanitized example">
+  <div class="explorer-top"><span class="font-mono">{EXAMPLE.workspace}</span><span class="example-label">Sanitized example</span></div>
+  <div class="evidence-map" aria-label="Evidence relationship: the security group allows ingress from the internet">
+    <svg viewBox="0 0 520 190" role="img" aria-labelledby="evidence-map-title">
+      <title id="evidence-map-title">Internet, 0.0.0.0/0, connected by an allows-ingress relationship to a security group</title>
+      <defs><pattern id="evidence-grid" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#253a55" /></pattern></defs>
+      <rect width="520" height="190" fill="url(#evidence-grid)" />
+      <path class="evidence-wire" d="M162 91 H355" fill="none" stroke="#62a9ff" stroke-width="2" />
+      <path d="M347 86 L355 91 L347 96" fill="none" stroke="#62a9ff" stroke-width="2" />
+      <rect x="30" y="58" width="132" height="66" rx="12" fill="#12243a" stroke="#345375" />
+      <text x="96" y="84" text-anchor="middle" fill="#eef5ff" font-size="15">Internet</text>
+      <text x="96" y="106" text-anchor="middle" fill="#b4c5dc" font-size="13" font-family="monospace">0.0.0.0/0</text>
+      <rect x="355" y="58" width="137" height="66" rx="12" fill="#152b47" stroke="#62a9ff" />
+      <text x="423" y="85" text-anchor="middle" fill="#eef5ff" font-size="15">Security group</text>
+      <text x="423" y="107" text-anchor="middle" fill="#b4c5dc" font-size="13">Ingress rule</text>
+      <rect x="185" y="115" width="147" height="26" rx="13" fill="#12243a" />
+      <text x="258" y="133" text-anchor="middle" fill="#b4c5dc" font-size="13">allows ingress</text>
+    </svg>
+    <div class="evidence-map-mobile" aria-hidden="true"><span>Internet <code>0.0.0.0/0</code></span><span class="mobile-edge">↓ allows ingress</span><span>Security group · ingress rule</span></div>
+    <p>One relationship from the published example</p>
+  </div>
+  <div class="explorer-tabs" aria-label="Explore the finding">
+    {steps.map((step, i) => <a href={`#evidence-${step.key}`} data-evidence-link class={i === 0 ? 'is-selected' : ''}><span aria-hidden="true">0{i + 1}</span>{step.label}</a>)}
+  </div>
+  <div class="explorer-panels">
+    {steps.map(step => <section id={`evidence-${step.key}`} data-evidence-panel>
+      <p class="explorer-eyebrow">{step.eyebrow}</p>
+      <h3>{step.title}</h3>
+      <p class="explorer-answer">{step.body}</p>
+      {step.key === 'finding' && <ConfidenceBadge level={EXAMPLE_EVIDENCE.confidence} />}
+      {step.key === 'evidence' && <code class="evidence-resource">{EXAMPLE_EVIDENCE.trail[2].detail}</code>}
+      {step.key === 'change' && <p class="explorer-note">Observed change. Whether it was intentional still needs validation.</p>}
+    </section>)}
+  </div>
+  <figcaption class="explorer-footer"><span>Prepared example · no live scan</span><a href={EXAMPLE.previewUrl} target="_blank" rel="noopener noreferrer">Inspect the example <span aria-hidden="true">↗</span></a></figcaption>
+</figure>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-evidence-explorer]').forEach(root => {
+    const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('[data-evidence-link]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-evidence-panel]'));
+    const list = root.querySelector('.explorer-tabs');
+    if (!list || links.length !== panels.length) return;
+    list.setAttribute('role', 'tablist');
+    const select = (index: number, focus = false) => {
+      links.forEach((link, i) => {
+        link.setAttribute('aria-selected', String(i === index));
+        link.classList.toggle('is-selected', i === index);
+        link.tabIndex = i === index ? 0 : -1;
+        panels[i].hidden = i !== index;
+      });
+      if (focus) links[index].focus();
+    };
+    links.forEach((link, i) => {
+      link.id = `${panels[i].id}-tab`;
+      link.setAttribute('role', 'tab');
+      link.setAttribute('aria-controls', panels[i].id);
+      panels[i].setAttribute('role', 'tabpanel');
+      panels[i].setAttribute('aria-labelledby', link.id);
+      panels[i].tabIndex = 0;
+      link.addEventListener('click', event => { event.preventDefault(); select(i); });
+      link.addEventListener('keydown', event => {
+        const next = event.key === 'ArrowRight' ? (i + 1) % links.length : event.key === 'ArrowLeft' ? (i + links.length - 1) % links.length : event.key === 'Home' ? 0 : event.key === 'End' ? links.length - 1 : -1;
+        if (next >= 0) { event.preventDefault(); select(next, true); }
+      });
+    });
+    const requested = links.findIndex(link => link.hash === location.hash);
+    select(requested >= 0 ? requested : 0);
+  });
+</script>

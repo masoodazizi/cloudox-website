@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import Hero from "@components/Hero.astro";
+import EvidenceExplorer from "@components/EvidenceExplorer.astro";
 import Section from "@components/Section.astro";
 import CTA from "@components/CTA.astro";
 import AudienceViews from "@components/AudienceViews.astro";
@@ -59,23 +59,34 @@ const boundary = [
 <BaseLayout
   description="CloudoX turns AWS evidence into an explainable model of workloads, exposure, cost drivers, and change — one focused view per stakeholder, every statement traceable to the resource it came from. Understand any cloud environment in under 30 minutes."
 >
-  <Hero
-    eyebrow="INTELLIGENT CLOUD KNOWLEDGE PLATFORM"
-    title="Understand any cloud environment in under 30 minutes."
-    subtitle="CloudoX turns AWS evidence into an explainable map of workloads, exposure, cost drivers, and change — with one focused view for each stakeholder."
-    primaryCta={{ label: "Explore the real example", href: EXAMPLE.previewUrl }}
-    secondaryCta={{ label: "Request early access", href: "/contact" }}
-    trustLine="Read-only access. Every finding traced to a resource. Deterministic analysis."
-  />
+  <section class="home-hero">
+    <div class="hero-orbit" aria-hidden="true"></div>
+    <div class="container-page hero-composition">
+      <div class="hero-copy">
+        <p class="hero-eyebrow">INTELLIGENT CLOUD KNOWLEDGE PLATFORM</p>
+        <h1>Understand any cloud environment <span>in under 30 minutes.</span></h1>
+        <p class="hero-description">CloudoX turns AWS evidence into an explainable map of workloads, exposure, cost drivers, and change — with one focused view for each stakeholder.</p>
+        <div class="hero-actions">
+          <a href={EXAMPLE.previewUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">Explore the real example <span aria-hidden="true">↗</span></a>
+          <a href="/contact" class="btn btn-secondary">Request early access</a>
+        </div>
+        <p class="hero-trust">Read-only access. Deterministic analysis.<br />Every finding traced to its evidence.</p>
+      </div>
+      <EvidenceExplorer />
+    </div>
+    <div class="container-page hero-baseline"><span>AWS-first today</span><span>Evidence → understanding → decisions</span><a href="#outcomes">See what you can learn <span aria-hidden="true">↓</span></a></div>
+  </section>
 
   <Section
+    id="outcomes"
+    class="outcomes-section"
     eyebrow="WHAT YOU DO WITH IT"
     title="Orient, explain, track."
     subtitle="Three things a team actually needs from an unfamiliar cloud environment — and what the published example shows for each."
   >
     <div class="grid gap-5 md:grid-cols-3">
       {outcomes.map((outcome, i) => (
-        <article class="surface flex flex-col p-6">
+        <article class="surface outcome-card flex flex-col p-6">
           <span
             class="inline-flex h-8 w-8 items-center justify-center rounded-md font-mono text-sm mb-4"
             style="background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);"
@@ -84,9 +95,9 @@ const boundary = [
             {String(i + 1).padStart(2, "0")}
           </span>
           <h3 class="text-lg font-semibold mb-2.5">{outcome.title}</h3>
-          <p class="text-sm muted leading-relaxed">{outcome.description}</p>
+          <p class="text-base muted leading-relaxed">{outcome.description}</p>
           <p
-            class="mt-4 pt-4 text-xs muted leading-relaxed"
+            class="mt-4 pt-4 text-sm muted leading-relaxed"
             style="border-top: 1px solid var(--border);"
           >
             {outcome.proof}
@@ -104,6 +115,7 @@ const boundary = [
   </Section>
 
   <Section
+    class="views-section"
     eyebrow="KNOWLEDGE VIEWS"
     title="One environment. Six ways to read it."
     subtitle="An executive, an architect, and a security reviewer need different explanations of the same cloud — never different truths. Below is what each view leads with in the published example."
@@ -125,10 +137,10 @@ const boundary = [
     </div>
   </Section>
 
-  <Section eyebrow="THE BOUNDARY" title="What CloudoX can and cannot touch." muted>
+  <Section class="boundary-section" eyebrow="BUILT ON TRUST" title="Understanding starts with clear boundaries.">
     <div class="grid gap-5 sm:grid-cols-2">
       {boundary.map((item) => (
-        <div class="surface p-6">
+        <div class="surface boundary-card p-6">
           <h3 class="text-base font-semibold mb-2">{item.title}</h3>
           <p class="text-sm muted leading-relaxed">{item.description}</p>
         </div>
