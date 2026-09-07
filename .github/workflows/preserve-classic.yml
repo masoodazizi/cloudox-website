@@ -1,0 +1,54 @@
+name: Preserve Classic v1
+on:
+  push:
+    branches: [archive/website-classic-package]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preserve:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: 8bb60746d20d5982ea9165e07a270633cb3a425d
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.20.0'
+      - name: Install and verify the preserved source
+        run: |
+          npm install --no-audit --no-fund
+          npm run check
+          npm test
+      - name: Build the archive with the public form configuration
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, re, urllib.request
+          html = urllib.request.urlopen('https://cloudox.io/contact').read().decode()
+          match = re.search(r'name="access_key"\s+value="([^"]+)"', html)
+          if not match:
+              raise SystemExit('Public form key not found; refusing to archive a broken contact form')
+          with open(os.environ['GITHUB_ENV'], 'a') as f:
+              f.write('PUBLIC_WEB3FORMS_KEY=' + match.group(1) + '\n')
+          PY
+          node --version > CLASSIC-BUILD.txt
+          npm --version >> CLASSIC-BUILD.txt
+          npm ls --depth=0 >> CLASSIC-BUILD.txt
+          printf '\nSource: 8bb60746d20d5982ea9165e07a270633cb3a425d\nRebuilt archive, not a byte-for-byte export of the former Cloudflare deployment.\n' >> CLASSIC-BUILD.txt
+      - name: Package tested static site and build inputs
+        run: |
+          npm run build
+          tar -czf website-classic-v1-built.tar.gz dist workers wrangler.jsonc package.json package-lock.json CLASSIC-BUILD.txt
+          sha256sum website-classic-v1-built.tar.gz > website-classic-v1-built.sha256
+      - name: Publish permanent preservation release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view website-classic-v1 >/dev/null 2>&1; then
+            echo 'Classic release already exists; leaving it unchanged.'
+            exit 0
+          fi
+          gh release create website-classic-v1 website-classic-v1-built.tar.gz website-classic-v1-built.sha256 --target 8bb60746d20d5982ea9165e07a270633cb3a425d --title 'CloudoX Classic v1 — preserved before redesign' --notes 'Original website source at 8bb60746d20d5982ea9165e07a270633cb3a425d. Includes a tested rebuilt static website, resolved dependency lockfile, runtime versions and checksum. Last successful production build recorded in GitHub: Cloudflare version 68de3cf3-f551-413c-9d7e-437491b66dc2. The build archive is a reconstruction from the preserved source, not an export of that deployment. Reuse the design from this tag; retain current content and security fixes when bringing it back later.'
