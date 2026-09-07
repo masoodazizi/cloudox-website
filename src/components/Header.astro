@@ -17,7 +17,7 @@ const isActive = (href: string) => {
   <div class="container-page flex h-16 items-center justify-between gap-4">
     <Logo />
 
-    <nav class="hidden md:flex items-center gap-1" aria-label="Primary">
+    <nav class="hidden lg:flex items-center gap-1" aria-label="Primary">
       {PRIMARY_NAV.map((item) => (
         <a
           href={item.href}
@@ -31,7 +31,7 @@ const isActive = (href: string) => {
     </nav>
 
     <div class="flex items-center gap-2">
-      <div class="hidden md:block">
+      <div class="hidden lg:block">
         <ThemeToggle />
       </div>
       {/* The full label would wrap beside the logo and menu button at 320-390 px,
@@ -42,7 +42,7 @@ const isActive = (href: string) => {
       </a>
       <button
         type="button"
-        class="md:hidden btn btn-secondary px-2.5 py-2"
+        class="lg:hidden btn btn-secondary px-2.5 py-2"
         aria-label="Menu"
         aria-expanded="false"
         aria-controls="mobile-nav"
@@ -59,7 +59,7 @@ const isActive = (href: string) => {
 
   <div
     id="mobile-nav"
-    class="md:hidden hidden border-t"
+    class="lg:hidden hidden border-t"
     style="border-color: var(--border);"
     data-mobile-nav
   >
@@ -117,7 +117,7 @@ const isActive = (href: string) => {
 
     // A viewport that grows past the mobile breakpoint reveals the desktop nav;
     // leaving the drawer open would show both.
-    window.matchMedia("(min-width: 768px)").addEventListener("change", (event) => {
+    window.matchMedia("(min-width: 1024px)").addEventListener("change", (event) => {
       if (event.matches) setOpen(false);
     });
   }
