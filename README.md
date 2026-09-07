@@ -187,9 +187,9 @@ Docs are listed at `/docs` and served at `/docs/<file-slug>`.
 
 The Product page shows real output instead of describing it — the evidence
 canvas (`EnvironmentSnapshot.astro`) and a real screenshot of the dashboard
-sit right beside the artifacts they demonstrate. The Home page stays a light
-orientation page and links out to the same example rather than repeating the
-canvas. Every number, account name, confidence label, and finding on the site
+sit right beside the artifacts they demonstrate. The Home page offers a compact interactive evidence explorer: finding,
+supporting record, and change context. It links to the full example rather than
+duplicating the Product page’s full account-and-statistics canvas. Every number, account name, confidence label, and finding on the site
 comes from one typed module, `src/config/example.ts`, which quotes the
 published sanitized example report (`cloudox-example-report`, mirrored at
 `preview.cloudox.io`).
@@ -265,7 +265,7 @@ dependency) against the build output in `tests/`:
   wiring, right-sized logo assets, the security FAQ being visible wherever
   its `FAQPage` schema is emitted, the contact form posting somewhere real
   without JavaScript, the Product page's example figures plus their caveats
-  and dashboard screenshot, the Home page staying free of a duplicate proof
+  and dashboard screenshot, the Home page preserving a compact evidence explorer without duplicating the full proof
   canvas, and the audience switcher degrading to readable anchored sections.
 
 `npm test` sets a placeholder `PUBLIC_WEB3FORMS_KEY` for the build so the
@@ -448,3 +448,18 @@ When adding or editing site content, please follow these rules:
 
 The website source is provided as-is for the CloudoX project. Brand,
 content, and trademarks belong to the CloudoX project.
+
+## Website refresh and Classic v1
+
+The September 2026 refresh retains Astro static output, the existing content and
+Cloudflare deployment. The dark homepage hero demonstrates one published finding
+through `EvidenceExplorer.astro`; all three panels remain readable without
+JavaScript and are progressively enhanced to keyboard-accessible tabs. Its SVG
+shows only the ingress relationship supported by `EXAMPLE_EVIDENCE`, not an
+invented environment topology. The small-screen layout uses readable stacked
+labels. Motion respects the reduced-motion preference. No new runtime dependencies,
+external scripts, model calls, tracking, or data collection were introduced.
+
+Classic source is preserved at `archive/website-classic-v1`. See
+[restoration instructions](docs/website-classic-restore.md) for the release,
+Cloudflare build evidence, and source/deployment rollback procedures.

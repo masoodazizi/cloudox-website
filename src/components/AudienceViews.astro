@@ -14,7 +14,7 @@ import ConfidenceBadge from "./ConfidenceBadge.astro";
 import { EXAMPLE_VIEWS } from "@/config/example";
 ---
 
-<div data-audience-views>
+<div class="audience-experience" data-audience-views>
   <div
     class="flex flex-wrap gap-1.5 mb-6"
     data-view-list
@@ -38,7 +38,7 @@ import { EXAMPLE_VIEWS } from "@/config/example";
       <section
         id={`view-${view.key}`}
         data-view-panel={view.key}
-        class="surface p-6 md:p-7"
+        class="surface audience-panel p-6 md:p-7"
       >
         <div class="flex flex-wrap items-start justify-between gap-3 mb-4">
           <div>
@@ -49,9 +49,10 @@ import { EXAMPLE_VIEWS } from "@/config/example";
           </div>
           <ConfidenceBadge level={view.confidence} prefix="Confidence:" />
         </div>
-        <p class="text-sm md:text-base muted leading-relaxed max-w-2xl">
+        <p class="text-base md:text-lg muted leading-relaxed max-w-2xl">
           {view.answer}
         </p>
+        <a href={view.href} class="audience-source" target="_blank" rel="noopener noreferrer">Explore the published example <span aria-hidden="true">↗</span></a>
       </section>
     ))}
   </div>
