@@ -470,3 +470,17 @@ theme control shows the destination icon and tooltip, synchronizes desktop/mobil
 controls, responds to system changes until explicitly selected, and remains usable
 when local storage is blocked. Its space is reserved before initialization to avoid
 shifting the header; without JavaScript the system theme still works.
+
+### Animated knowledge hero
+
+The homepage introduces selected workload and security relationships with a finite
+four-second SVG/CSS sequence, started once when the diagram enters the viewport.
+Replay is explicit; reduced-motion visitors and visitors without JavaScript receive
+the completed diagram. Pointer/keyboard interaction, leaving the viewport, and
+hiding the document stop the introduction. No model or network call drives it.
+
+The production API → PostgreSQL dependency comes from the public Architect View
+(`views/architect/dependencies.md`): the workload grouping is Likely, while the
+dependency is Verified. The security-group example stays in a separate lane because
+its workload attachment is not established. Node links open the dependency source
+or focus the existing finding panel. The email-only homepage form is a later item.

@@ -71,6 +71,18 @@ export const EXAMPLE_EVIDENCE = {
 } as const;
 
 /**
+ * Selected dependency from views/architect/dependencies.md in the public example.
+ * The workload grouping is Likely; the dependency itself is Verified. DB account
+ * and region, and the security group's attachment, are not established there.
+ * Do not connect the security group to this workload in the hero diagram.
+ */
+export const EXAMPLE_DEPENDENCY = {
+  workloadLabel: 'Production API',
+  datastoreLabel: 'PostgreSQL',
+  sourceUrl: 'https://github.com/cloudox-ai/cloudox-public-examples/blob/main/views/architect/dependencies.md',
+} as const;
+
+/**
  * What each audience lens leads with in the published example. `answer` is a
  * condensed quote from that view; `confidence` is the view's own overall
  * confidence label as published.

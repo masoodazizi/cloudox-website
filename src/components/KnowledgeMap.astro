@@ -1,0 +1,83 @@
+---
+import { EXAMPLE_DEPENDENCY } from '@/config/example';
+---
+<div class="knowledge-map" data-knowledge-map data-story-stage="complete">
+  <ol class="story-stages" aria-label="From evidence to understanding">
+    <li>Discover</li><li>Connect</li><li>Understand</li>
+  </ol>
+  <div class="knowledge-lane dependency-lane" role="group" aria-label="Verified workload dependency from the published example">
+    <div class="knowledge-nodes">
+      <a class="knowledge-node" style="--entry-x: 18px; --entry-y: 18px" href={EXAMPLE_DEPENDENCY.sourceUrl} target="_blank" rel="noopener noreferrer" aria-label="Read the production API workload dependency evidence">
+        <strong>{EXAMPLE_DEPENDENCY.workloadLabel}</strong>
+        <span>Grouping: Likely</span>
+      </a>
+      <svg class="knowledge-edge" viewBox="0 0 80 32" aria-hidden="true"><path class="edge-line" pathLength="1" d="M0 16H76"/><path class="edge-head" d="m69 9 7 7-7 7"/></svg>
+      <a class="knowledge-node" style="--entry-x: -12px; --entry-y: -12px" href={EXAMPLE_DEPENDENCY.sourceUrl} target="_blank" rel="noopener noreferrer" aria-label="Read the PostgreSQL datastore dependency evidence">
+        <strong>{EXAMPLE_DEPENDENCY.datastoreLabel}</strong>
+        <span>RDS · single AZ</span>
+      </a>
+    </div>
+    <p class="knowledge-relation">Depends on <span>· Verified relationship</span></p>
+  </div>
+  <div class="knowledge-lane exposure-lane" role="group" aria-label="Separate security evidence: a security group allows ingress from the internet. Its workload attachment is not established here.">
+    <div class="knowledge-nodes">
+      <div class="knowledge-node" style="--entry-x: 14px; --entry-y: -12px">
+        <strong>Internet</strong>
+        <span class="font-mono">0.0.0.0/0</span>
+      </div>
+      <svg class="knowledge-edge" viewBox="0 0 80 32" aria-hidden="true"><path class="edge-line" pathLength="1" d="M0 16H76"/><path class="edge-head" d="m69 9 7 7-7 7"/></svg>
+      <a class="knowledge-node finding-node" style="--entry-x: -16px; --entry-y: 12px" href="#evidence-finding" data-evidence-target="finding" aria-label="Inspect the security group exposure finding">
+        <strong>Security group</strong>
+        <span class="node-action">Inspect finding ↗</span>
+      </a>
+    </div>
+    <p class="knowledge-relation">Allows ingress <span>· Separate security evidence</span></p>
+  </div>
+  <div class="knowledge-footer"><p class="knowledge-caption">Selected example relationships.<br />Security group attachment unresolved.</p>
+    <button type="button" class="story-replay" data-story-replay hidden aria-label="Replay the cloud-to-knowledge animation" title="Replay animation">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 10a9 9 0 1 1 2 8M3 4v6h6" /></svg>
+      Replay
+    </button>
+  </div>
+</div>
+
+<script>
+  import { initializeKnowledgeStory } from '../scripts/knowledge-story';
+  document.querySelectorAll<HTMLElement>('[data-knowledge-map]').forEach(initializeKnowledgeStory);
+</script>
+
+<style>
+  .knowledge-map { padding: 1rem 1.25rem; background: radial-gradient(ellipse at top right, var(--hero-glow-low), transparent 70%), var(--explorer-map); }
+  .knowledge-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; min-height: 44px; margin-top: .75rem; }
+  .story-replay { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .5rem; min-height: 44px; color: var(--explorer-link); font-size: .875rem; border-radius: 6px; cursor: pointer; }
+  .story-replay[hidden] { display: none; }
+  .story-replay:hover { background: var(--explorer-hover); }
+  .story-stages { display: flex; gap: .75rem; padding: 0 0 1rem; margin: 0; list-style: none; counter-reset: stages; }
+  .story-stages li { flex: 1; min-width: 0; overflow-wrap: anywhere; border-top: 2px solid var(--explorer-selected-line); padding-top: .6rem; font-size: .875rem; color: var(--explorer-muted); }
+  .story-stages li::before { counter-increment: stages; content: '0' counter(stages) ' '; font-family: var(--font-mono); font-size: .75rem; }
+  .knowledge-lane { padding: .75rem; border: 1px dashed var(--map-border); border-radius: 12px; background: var(--explorer-bg); }
+  .knowledge-lane + .knowledge-lane { margin-top: .75rem; }
+  .knowledge-nodes { display: grid; grid-template-columns: minmax(0, 1fr) minmax(28px, .4fr) minmax(0, 1fr); align-items: center; }
+  .knowledge-node { position: relative; display: flex; flex-direction: column; justify-content: center; gap: .35rem; min-height: 76px; overflow-wrap: anywhere; border: 1px solid var(--map-border); border-radius: 9px; padding: .7rem; background: var(--map-node); color: var(--map-text); }
+  a.knowledge-node:hover { border-color: var(--map-edge); background: var(--map-node-selected); }
+  .knowledge-node strong { font-size: 1rem; font-weight: 600; line-height: 1.3; }
+  .knowledge-node > span { font-size: .75rem; line-height: 1.4; color: var(--hero-metadata); }
+  .knowledge-node .node-action { color: var(--explorer-link); text-decoration: underline; text-underline-offset: 3px; font-size: .875rem; }
+  .finding-node { border-color: var(--map-edge); background: var(--map-node-selected); }
+  .finding-node::after { content: ''; position: absolute; inset: -5px; border: 1px solid var(--map-edge); border-radius: 13px; opacity: .3; pointer-events: none; }
+  .knowledge-edge { width: 100%; fill: none; stroke: var(--map-edge); stroke-width: 1.5; overflow: visible; }
+  .knowledge-relation { margin-top: .6rem; font-size: .875rem; color: var(--map-text); line-height: 1.5; }
+  .knowledge-relation span { color: var(--explorer-muted); }
+  .knowledge-caption { margin: 0; font-size: .75rem; color: var(--explorer-caption); line-height: 1.6; }
+  .is-playing .knowledge-node { animation: assemble 4s both; }
+  .is-playing .edge-line { stroke-dasharray: 1; animation: connect 4s both; }
+  .is-playing .edge-head, .is-playing .knowledge-relation { animation: reveal 4s both; }
+  .is-playing .finding-node::after { animation: highlight 4s both; }
+  [data-story-stage='discover'] .story-stages li:nth-child(n+2), [data-story-stage='connect'] .story-stages li:nth-child(3) { border-top-color: var(--map-border); }
+  @keyframes assemble { 0%, 8% { opacity: .15; transform: translate(var(--entry-x), var(--entry-y)); } 32%, 100% { opacity: 1; transform: translate(0, 0); } }
+  @keyframes connect { 0%, 28% { stroke-dashoffset: 1; opacity: 0; } 55%, 100% { stroke-dashoffset: 0; opacity: 1; } }
+  @keyframes reveal { 0%, 35% { opacity: 0; } 58%, 100% { opacity: 1; } }
+  @keyframes highlight { 0%, 58% { opacity: 0; transform: scale(.97); } 78% { opacity: .8; transform: scale(1.025); } 100% { opacity: .3; transform: scale(1); } }
+  @media (max-width: 639px) { .knowledge-map { padding: 1rem; } .knowledge-lane { padding: .75rem; } .knowledge-node { padding: .6rem; } .knowledge-node strong { font-size: .875rem; } .story-stages { gap: .5rem; } }
+  @media (prefers-reduced-motion: reduce) { .knowledge-map * { animation: none !important; } .story-replay { display: none; } }
+</style>
