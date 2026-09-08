@@ -86,8 +86,8 @@ Audited: 2026-07-29, against `cloudox-website` `main` at commit `26757bb`.
   analytics beacon, tracking pixel, or third-party script fires on load,
   navigation, or scroll.
 
-**On contact-form submission only** (`src/pages/contact.astro`, inline
-`<script>`), never before the visitor clicks submit:
+**On form submission only** (`src/pages/contact.astro`, inline
+`<script>`, and `src/components/EarlyAccessForm.astro` with `src/scripts/early-access.ts`), never before the visitor clicks submit:
 
 - `https://api.web3forms.com/submit` — a single `fetch()` POST containing
   the form payload (exact fields in §5) plus the public Web3Forms access key.
@@ -129,8 +129,22 @@ contains exactly:
 | `message` | textarea | yes (required) | label "What would you use CloudoX for?" |
 | `subject` | hidden input | yes | static string, not user data |
 | `from_name` | hidden input | yes | static string, not user data |
-| `botcheck` | hidden checkbox (honeypot) | yes, always empty for humans | anti-spam; CSS-hidden, `tabindex="-1"`, `aria-hidden` |
-| `access_key` | appended in JS before the request | yes | Web3Forms' public form identifier, not a secret |
+| `botcheck` | hidden checkbox (honeypot) | only if checked; absent for humans | anti-spam; CSS-hidden, `tabindex="-1"`, `aria-hidden` |
+| `access_key` | hidden input | yes | Web3Forms' public form identifier, not a secret |
+
+### Homepage form addition
+
+The compact homepage form sends only one visitor-entered field, `email` (required).
+Hidden fields are `access_key`, `subject` (`CloudoX — Homepage early-access request`),
+`from_name` (`CloudoX website`), and `source` (`homepage-hero`). The checkbox honeypot
+`botcheck` is included only if checked. Both forms include `redirect` (`/thanks` on
+the site origin) for native POST; the enhanced JSON request removes it.
+
+The source label is constant, not a browsing history or URL. No visitor email is
+put in query parameters, local storage, analytics, or third-party calls before
+submission. The same existing Web3Forms key/destination is reused. Requests are
+inbox enquiries, not accounts, newsletter subscriptions, or an automated waitlist.
+The homepage uses the same purposes and retention described in `/privacy` section 4.
 
 **No hidden field carries IP address, browser/user-agent string, or page
 URL** — the client never constructs or sends any of these explicitly. That

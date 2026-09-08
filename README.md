@@ -485,4 +485,16 @@ is Likely, while the dependency is Verified. The security example stays separate
 because its workload attachment is unresolved. All three evidence panels remain
 readable without JavaScript and become keyboard-accessible tabs when enhanced.
 
-The email-only homepage form remains a later item.
+### Homepage early-access form
+
+The hero collects only an email using the existing `PUBLIC_WEB3FORMS_KEY` and
+Web3Forms destination. It uses a distinct subject and fixed `source=homepage-hero`;
+work email is encouraged without blocking personal domains. No account is created,
+no newsletter is enabled, and no email is stored in browser storage or URLs.
+
+Native POST redirects to `/thanks`. JavaScript progressively adds inline feedback,
+a 15-second timeout, duplicate-submit protection, preserved input on errors, and
+optional contact/booking links after submission. Success requires both HTTP success
+and an explicit API `success: true`. Missing configuration falls back to `/contact`.
+The existing detailed contact form is retained. Tests mock provider responses;
+production inbox delivery is not verified by automated tests.
