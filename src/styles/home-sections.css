@@ -1,0 +1,38 @@
+/* A reading surface followed by open trust principles, below the framed showcase. */
+.home-views, .home-boundaries { padding-block: clamp(4rem, 7vw, 7rem); }
+.home-views { background: var(--bg-muted); border-block: 1px solid var(--border); }
+.section-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 5rem; align-items: end; margin-bottom: 3rem; }
+.home-views h2, .home-boundaries h2 { margin-top: 1rem; font-size: clamp(2rem, 3.6vw, 3rem); font-weight: 550; letter-spacing: -.04em; line-height: 1.15; }
+.section-context { max-width: 29rem; justify-self: end; }
+.section-context p, .boundary-intro { color: var(--fg-muted); font-size: 1.0625rem; line-height: 1.75; }
+.section-context a, .boundary-link { display: inline-flex; align-items: center; gap: .65rem; min-height: 44px; margin-top: .75rem; color: var(--accent); font-size: .9375rem; }
+.home-views .audience-experience { display: block; }
+.home-views [data-view-list] { display: flex; flex-direction: row; flex-wrap: wrap; gap: .25rem 1.5rem; border-bottom: 1px solid var(--border); }
+.home-views [data-view-link] { border-radius: 0; border-bottom: 2px solid transparent; color: var(--fg-muted); padding: .85rem .25rem; min-height: 48px; font-size: 1rem; }
+.home-views [data-view-link]:hover { color: var(--fg); }
+.home-views [data-view-link][aria-selected='true'] { border-bottom-color: var(--accent); color: var(--fg); font-weight: 650; }
+.home-views .audience-panel { padding: clamp(1.5rem, 4vw, 3.5rem) 0 0; min-height: 24rem; background: none; border: 0; border-radius: 0; box-shadow: none; }
+.home-views .audience-panel[hidden] { display: none; }
+.home-views .audience-panel h3 { max-width: 35ch; font-size: clamp(1.6rem, 2.7vw, 2.25rem); line-height: 1.25; letter-spacing: -.03em; }
+.home-views .audience-panel > p { max-width: 57ch; font-size: clamp(1.0625rem, 1.7vw, 1.25rem); line-height: 1.8; }
+.home-views .audience-panel .eyebrow { font-size: .875rem; letter-spacing: .07em; }
+.home-views .audience-source { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; font-size: .9375rem; margin-top: 1.25rem; }
+.boundary-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.25fr); gap: clamp(2.5rem, 7vw, 7rem); }
+.boundary-intro { margin-top: 1.5rem; max-width: 33ch; }
+.boundary-link { margin-top: 1.25rem; }
+.boundary-principles li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 1.25rem; padding-block: 1.75rem; border-top: 1px solid var(--border); }
+.boundary-principles li:last-child { border-bottom: 1px solid var(--border); }
+.principle-index { padding-top: .2rem; font: .875rem var(--font-mono); color: var(--accent); }
+.boundary-principles h3 { font-size: 1.125rem; font-weight: 550; line-height: 1.5; }
+.boundary-principles p { margin-top: .5rem; font-size: 1rem; color: var(--fg-muted); line-height: 1.75; max-width: 48ch; }
+.section-context a:hover, .boundary-link:hover { text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 767px) {
+  .section-intro, .boundary-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .section-context { justify-self: start; }
+  .section-intro { margin-bottom: 2rem; }
+  .home-views .audience-panel { min-height: 0; }
+  .home-views [data-view-list] { gap: .25rem 1.1rem; }
+}
+@media (forced-colors: active) {
+  .home-views [data-view-link][aria-selected='true'] { border-bottom-color: Highlight; }
+}

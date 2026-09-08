@@ -4,11 +4,11 @@ import EarlyAccessForm from "@components/EarlyAccessForm.astro";
 import KnowledgeConstellation from "@components/KnowledgeConstellation.astro";
 import ProductShowcase from "@components/ProductShowcase.astro";
 import "@/styles/constellation-hero.css";
+import "@/styles/home-sections.css";
 import Section from "@components/Section.astro";
 import CTA from "@components/CTA.astro";
 import AudienceViews from "@components/AudienceViews.astro";
 import { SITE } from "@/config/site";
-import { EXAMPLE } from "@/config/example";
 
 // The trust boundary, stated compactly. Full detail lives on /security.
 const boundary = [
@@ -58,44 +58,31 @@ const boundary = [
     <ProductShowcase />
   </Section>
 
-  <Section
-    class="views-section"
-    eyebrow="KNOWLEDGE VIEWS"
-    title="One environment. Six ways to read it."
-    subtitle="An executive, an architect, and a security reviewer need different explanations of the same cloud — never different truths. Below is what each view leads with in the published example."
-    muted
-  >
-    <AudienceViews />
-    <div class="mt-8 flex flex-wrap gap-3">
-      <a
-        href={EXAMPLE.previewUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn btn-primary"
-      >
-        Open the example dashboard
-      </a>
-      <a href="/product#knowledge-views" class="btn btn-secondary">
-        How views are built
-      </a>
+  <section class="home-views" aria-labelledby="home-views-title">
+    <div class="container-page">
+      <header class="section-intro">
+        <div><p class="eyebrow">KNOWLEDGE VIEWS</p><h2 id="home-views-title">One environment.<br />Six ways to read it.</h2></div>
+        <div class="section-context"><p>Different questions. The same evidence. Choose a perspective to see what it leads with in the published example.</p><a href="/product#knowledge-views">How views are built <span aria-hidden="true">→</span></a></div>
+      </header>
+      <AudienceViews />
     </div>
-  </Section>
+  </section>
 
-  <Section class="boundary-section" eyebrow="BUILT ON TRUST" title="Understanding starts with clear boundaries.">
-    <div class="grid gap-5 sm:grid-cols-2">
-      {boundary.map((item) => (
-        <div class="surface boundary-card p-6">
-          <h3 class="text-base font-semibold mb-2">{item.title}</h3>
-          <p class="text-sm muted leading-relaxed">{item.description}</p>
-        </div>
-      ))}
+  <section class="home-boundaries" aria-labelledby="home-boundaries-title">
+    <div class="container-page boundary-layout">
+      <header>
+        <p class="eyebrow">BUILT ON TRUST</p>
+        <h2 id="home-boundaries-title">Clear knowledge.<br />Clear boundaries.</h2>
+        <p class="boundary-intro">Understand your environment with a clear account of what CloudoX reads, how it reasons, and where AI fits.</p>
+        <a class="boundary-link" href="/security">Permissions and limitations <span aria-hidden="true">→</span></a>
+      </header>
+      <ol class="boundary-principles">
+        {boundary.map((item, i) => (
+          <li><span class="principle-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><div><h3>{item.title}</h3><p>{item.description}</p></div></li>
+        ))}
+      </ol>
     </div>
-    <div class="mt-8">
-      <a href="/security" class="btn btn-secondary">
-        The exact permissions, and what we can't claim yet
-      </a>
-    </div>
-  </Section>
+  </section>
 
   <CTA
     title="Bring us an environment you don't fully understand."

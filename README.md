@@ -513,3 +513,12 @@ All chapters are visible anchor sections without JavaScript. Progressive
 enhancement adds ARIA tabs, deep-link initialization, arrow/Home/End/Space keyboard
 controls, and a single selected panel. There is no autoplay or extra animation.
 The detailed evidence explorer remains on `/product`.
+
+### Lower-homepage visual rhythm
+
+Knowledge Views use horizontal, wrapping tabs and an open reading surface, with
+the existing six answers, confidence labels and source links retained. The trust
+section uses a split introduction and four numbered principles instead of boxed
+cards. Home-only styles live in `src/styles/home-sections.css`; no dependencies,
+new motion, data fetching, or product claims are introduced. The hero, form,
+constellation and product showcase are unchanged.
