@@ -48,9 +48,9 @@ import { EXAMPLE_DEPENDENCY } from '@/config/example';
 
 <style>
   .knowledge-map { padding: 1rem 1.25rem; background: radial-gradient(ellipse at top right, var(--hero-glow-low), transparent 70%), var(--explorer-map); }
-  .knowledge-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; min-height: 44px; margin-top: .75rem; }
+  .knowledge-footer { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .5rem; min-height: 44px; margin-top: .75rem; }
   .story-replay { display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .5rem; min-height: 44px; color: var(--explorer-link); font-size: .875rem; border-radius: 6px; cursor: pointer; }
-  .story-replay[hidden] { display: none; }
+  .story-replay[hidden] { display: inline-flex; visibility: hidden; }
   .story-replay:hover { background: var(--explorer-hover); }
   .story-stages { display: flex; gap: .75rem; padding: 0 0 1rem; margin: 0; list-style: none; counter-reset: stages; }
   .story-stages li { flex: 1; min-width: 0; overflow-wrap: anywhere; border-top: 2px solid var(--explorer-selected-line); padding-top: .6rem; font-size: .875rem; color: var(--explorer-muted); }
@@ -79,5 +79,5 @@ import { EXAMPLE_DEPENDENCY } from '@/config/example';
   @keyframes reveal { 0%, 35% { opacity: 0; } 58%, 100% { opacity: 1; } }
   @keyframes highlight { 0%, 58% { opacity: 0; transform: scale(.97); } 78% { opacity: .8; transform: scale(1.025); } 100% { opacity: .3; transform: scale(1); } }
   @media (max-width: 639px) { .knowledge-map { padding: 1rem; } .knowledge-lane { padding: .75rem; } .knowledge-node { padding: .6rem; } .knowledge-node strong { font-size: .875rem; } .story-stages { gap: .5rem; } }
-  @media (prefers-reduced-motion: reduce) { .knowledge-map * { animation: none !important; } .story-replay { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .knowledge-map * { animation: none !important; } .story-replay { visibility: hidden; } }
 </style>
