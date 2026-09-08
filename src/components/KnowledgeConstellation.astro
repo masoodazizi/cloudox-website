@@ -1,0 +1,155 @@
+---
+// A conceptual product diagram, deliberately separate from the published demo.
+const resources = [
+  { name: 'Lambda', x: 9, y: 28, dx: '-12px', dy: '18px' },
+  { name: 'API Gateway', x: 25, y: 12, dx: '22px', dy: '-14px' },
+  { name: 'S3', x: 8, y: 56, dx: '-8px', dy: '-20px' },
+  { name: 'DynamoDB', x: 28, y: 70, dx: '-18px', dy: '12px' },
+  { name: 'ECS', x: 43, y: 16, dx: '15px', dy: '-22px' },
+  { name: 'RDS', x: 43, y: 83, dx: '22px', dy: '8px' },
+];
+const outputs = [
+  { name: 'Meaning', detail: 'Interpret once', x: 79, y: 15, kind: 'meaning' },
+  { name: 'Narration', detail: 'Optional AI', x: 88, y: 38, kind: 'narration' },
+  { name: 'Evolution', detail: 'Understand change', x: 84, y: 66, kind: 'evolution' },
+  { name: 'CDX Agent', detail: 'Ask with evidence', x: 66, y: 87, kind: 'agent' },
+];
+const paths = [
+  'M54 157 Q175 140 294 263', 'M150 67 Q244 100 294 263',
+  'M48 314 Q180 365 294 263', 'M168 392 Q252 378 294 263',
+  'M258 90 Q330 150 294 263', 'M258 465 Q330 369 294 263',
+];
+const outputPaths = [
+  'M294 263 Q346 77 474 84', 'M294 263 Q412 177 528 213',
+  'M294 263 Q421 331 504 370', 'M294 263 Q321 451 396 487',
+];
+const phases = [
+  { label: 'Cloud', description: 'Resources discovered. The bigger picture is still taking shape.' },
+  { label: 'Meaning', description: 'Connections become workloads, meaning, and evidence-grounded narration.' },
+  { label: 'Change', description: 'A new resource joins. Understand how the environment evolves.' },
+  { label: 'Ask', description: 'CDX Agent follows connected evidence to explain your environment.' },
+];
+---
+<figure class="knowledge-constellation" data-constellation data-phase="1" data-running="false" aria-label="Illustration of CloudoX turning AWS resource evidence into connected knowledge">
+  <div class="constellation-stage" aria-hidden="true">
+    <svg class="constellation-links" viewBox="0 0 600 560" fill="none" preserveAspectRatio="none">
+      <defs>
+        <radialGradient id="knowledge-halo"><stop stop-color="var(--constellation-blue)" stop-opacity=".17"/><stop offset="1" stop-color="var(--constellation-blue)" stop-opacity="0"/></radialGradient>
+        <linearGradient id="knowledge-spectrum" x1="0" y1="0" x2="1" y2="1"><stop stop-color="var(--constellation-blue)"/><stop offset="1" stop-color="var(--constellation-violet)"/></linearGradient>
+      </defs>
+      <circle cx="294" cy="263" r="150" fill="url(#knowledge-halo)" />
+      <g class="workload-orbits">
+        <ellipse cx="134" cy="177" rx="112" ry="134" />
+        <ellipse cx="220" cy="427" rx="83" ry="71" />
+      </g>
+      <g class="resource-links">{paths.map(d => <><path d={d} class="connection-base"/><path d={d} pathLength="100" class="connection-flow"/></>)}</g>
+      <g class="outcome-links">{outputPaths.map((d, i) => <g class={`outcome-link outcome-${i}`}><path d={d} class="connection-base"/><path d={d} pathLength="100" class="connection-flow"/></g>)}</g>
+      <g class="change-link"><path d="M96 476 Q72 403 168 392" class="connection-base"/><path d="M96 476 Q72 403 168 392" pathLength="100" class="connection-flow"/></g>
+      <circle class="core-orbit" cx="294" cy="263" r="66" stroke="url(#knowledge-spectrum)" stroke-dasharray="2 9" />
+      <circle class="core-ring" cx="294" cy="263" r="86" stroke="url(#knowledge-spectrum)" stroke-dasharray="70 460" />
+    </svg>
+    {resources.map(node => <div class="resource-anchor" style={`--x:${node.x}%;--y:${node.y}%;--scatter-x:${node.dx};--scatter-y:${node.dy}`}>
+      <div class="resource-node"><span class="node-light"></span><span class="resource-label">{node.name}</span></div>
+    </div>)}
+    <span class="workload-label workload-api">API workload</span>
+    <span class="workload-label workload-data">Data workload</span>
+    <div class="knowledge-core"><span class="core-name">Cloudo<span>X</span></span><span class="core-subtitle">KNOWLEDGE</span></div>
+    {outputs.map(node => <div class={`output-node output-${node.kind}`} style={`--x:${node.x}%;--y:${node.y}%`}>
+      <span class="output-light"></span><strong>{node.name}</strong><span class="output-detail">{node.detail}</span>
+    </div>)}
+    <div class="change-node"><span class="node-light"></span><span>+ SQS</span></div>
+    <div class="agent-signal">Question <span aria-hidden="true">↔</span> Evidence</div>
+  </div>
+  <div class="constellation-controls" data-constellation-controls hidden>
+    <div class="phase-buttons" role="group" aria-label="Choose an animation phase">
+      {phases.map((phase, i) => <button type="button" data-phase-button={i} aria-pressed={i === 1 ? 'true' : 'false'}>{phase.label}</button>)}
+    </div>
+    <button type="button" class="motion-control" data-motion-control aria-label="Play animation">Play</button>
+  </div>
+  <figcaption>
+    <p class="sr-only">Conceptual diagram: AWS Lambda, API Gateway, S3, DynamoDB, ECS, and RDS connect through CloudoX knowledge. Workload interpretation supports meaning, optional AI narration, environment evolution, and CDX Agent answers grounded in evidence.</p>
+    <div class="phase-descriptions">{phases.map((phase, i) => <p data-phase-description={i} hidden={i !== 1}>{phase.description}</p>)}</div>
+    <p class="constellation-disclosure">Illustrative knowledge flow · no live AWS connection</p>
+  </figcaption>
+</figure>
+
+<script>
+  import { initializeConstellation } from '../scripts/constellation';
+  document.querySelectorAll<HTMLElement>('[data-constellation]').forEach(initializeConstellation);
+</script>
+
+<style>
+  .knowledge-constellation { min-width: 0; margin: 0; position: relative; --constellation-blue: #2564db; --constellation-violet: #7952c4; --constellation-teal: #087e8b; --constellation-node: var(--bg); color: var(--fg); }
+  .constellation-stage { position: relative; aspect-ratio: 600 / 560; width: 100%; }
+  .constellation-links { width: 100%; height: 100%; position: absolute; inset: 0; overflow: visible; }
+  .constellation-links path, .constellation-links ellipse, .constellation-links circle { vector-effect: non-scaling-stroke; }
+  .connection-base { stroke: var(--constellation-blue); stroke-width: 1; opacity: .2; }
+  .connection-flow { stroke: var(--constellation-blue); stroke-width: 1.7; stroke-linecap: round; stroke-dasharray: 7 93; opacity: 0; }
+  .resource-links, .outcome-links, .workload-orbits, .workload-label { transition: opacity 1.3s ease; }
+  .workload-orbits { stroke: var(--constellation-teal); stroke-width: 1; stroke-dasharray: 3 7; opacity: .4; }
+  .resource-anchor { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -5.5px); }
+  .resource-node { display: flex; flex-direction: column; align-items: center; gap: .55rem; transition: transform 1.8s cubic-bezier(.2,.7,.2,1); }
+  .node-light { width: 11px; height: 11px; border-radius: 50%; background: var(--constellation-blue); border: 2px solid var(--constellation-node); box-shadow: 0 0 0 1px color-mix(in srgb, var(--constellation-blue) 45%, transparent), 0 0 20px color-mix(in srgb, var(--constellation-blue) 30%, transparent); }
+  .resource-label { font: .8125rem var(--font-mono); color: var(--hero-description); white-space: nowrap; }
+  .workload-label { position: absolute; font-size: .75rem; color: var(--constellation-teal); }
+  .workload-api { left: 15%; top: 41%; }
+  .workload-data { left: 26%; top: 94%; }
+  .knowledge-core { position: absolute; left: 49%; top: 47%; transform: translate(-50%, -50%); width: 100px; height: 100px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid color-mix(in srgb, var(--constellation-blue) 45%, transparent); background: radial-gradient(circle at 30% 20%, color-mix(in srgb, var(--constellation-blue) 8%, var(--bg)), var(--bg)); box-shadow: 0 0 50px color-mix(in srgb, var(--constellation-blue) 15%, transparent), inset 0 0 20px color-mix(in srgb, var(--constellation-blue) 8%, transparent); }
+  .core-name { font-size: 1.3rem; font-weight: 650; letter-spacing: -.055em; }
+  .core-name > span { color: var(--constellation-blue); }
+  .core-subtitle { font: .75rem var(--font-mono); letter-spacing: .09em; margin-top: .35rem; color: var(--hero-metadata); }
+  .core-orbit { opacity: .5; transform-origin: 294px 263px; transform-box: view-box; }
+  .core-ring { opacity: .5; transform-origin: 294px 263px; transform-box: view-box; }
+  .output-node { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -7.5px); display: flex; align-items: center; flex-direction: column; gap: .45rem; white-space: nowrap; }
+  .output-light { width: 15px; height: 15px; border-radius: 50%; border: 1.5px solid var(--constellation-violet); background: var(--constellation-node); box-shadow: 0 0 0 5px color-mix(in srgb, var(--constellation-violet) 7%, transparent); transition: background 1s, box-shadow 1s; }
+  .output-node strong { font-size: .9375rem; font-weight: 550; }
+  .output-detail { font-size: .75rem; color: var(--hero-metadata); }
+  .change-node { position: absolute; left: 16%; top: 85%; transform: translate(-50%, -5.5px); display: flex; flex-direction: column; align-items: center; gap: .5rem; font: .8125rem var(--font-mono); color: var(--constellation-teal); opacity: 0; transition: opacity 1s, transform 1s; }
+  .change-node .node-light { background: var(--constellation-teal); }
+  .change-link { opacity: 0; transition: opacity 1s; }
+  .change-link path { stroke: var(--constellation-teal); }
+  .agent-signal { position: absolute; left: 62%; top: 57%; transform: rotate(35deg); font: .75rem var(--font-mono); color: var(--constellation-violet); opacity: 0; transition: opacity 1s; }
+  .constellation-controls { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-top: 1rem; border-bottom: 1px solid var(--hero-divider); }
+  .constellation-controls[hidden] { display: flex; visibility: hidden; }
+  .phase-buttons { display: flex; flex-wrap: wrap; gap: .65rem; }
+  button { min-height: 44px; font-size: .875rem; color: var(--hero-metadata); cursor: pointer; }
+  [data-phase-button] { border-bottom: 2px solid transparent; padding: .5rem .3rem; }
+  [aria-pressed='true'] { border-color: var(--constellation-blue); color: var(--fg); }
+  .motion-control { padding: .5rem .6rem; min-width: 64px; }
+  button:hover { color: var(--constellation-blue); }
+  figcaption { margin-top: 1rem; }
+  .phase-descriptions { display: grid; min-height: 3.5rem; color: var(--hero-description); font-size: .9375rem; line-height: 1.65; }
+  .phase-descriptions [data-phase-description] { grid-area: 1 / 1; }
+  .phase-descriptions [hidden] { display: block; visibility: hidden; }
+  .outcome-links .connection-base, .outcome-links .connection-flow { stroke: var(--constellation-violet); }
+  .constellation-disclosure { color: var(--hero-metadata); font-size: .75rem; margin-top: .5rem; }
+  [data-phase='0'] .resource-node { transform: translate(var(--scatter-x), var(--scatter-y)); }
+  [data-phase='0'] .resource-links, [data-phase='0'] .outcome-links, [data-phase='0'] .workload-orbits, [data-phase='0'] .workload-label { opacity: .08; }
+  [data-phase='1'] .output-meaning .output-light, [data-phase='1'] .output-narration .output-light,
+  [data-phase='2'] .output-evolution .output-light, [data-phase='3'] .output-agent .output-light { background: var(--constellation-violet); box-shadow: 0 0 0 7px color-mix(in srgb, var(--constellation-violet) 12%, transparent), 0 0 26px color-mix(in srgb, var(--constellation-violet) 30%, transparent); }
+  [data-phase='2'] .change-node, [data-phase='2'] .change-link, [data-phase='3'] .agent-signal { opacity: 1; }
+  [data-phase='2'] .change-node { transform: translate(-50%, -5.5px) scale(1.08); }
+  .core-ring { animation: revolve 24s linear infinite paused; }
+  .core-orbit { animation: revolve 36s linear infinite reverse paused; }
+  .connection-flow { animation: traverse 5s linear infinite paused; }
+  [data-running='true'] .core-ring, [data-running='true'] .core-orbit, [data-running='true'] .connection-flow { animation-play-state: running; }
+  [data-phase='1'] .resource-links .connection-flow, [data-phase='1'] .outcome-0 .connection-flow, [data-phase='1'] .outcome-1 .connection-flow,
+  [data-phase='2'] .change-link .connection-flow, [data-phase='2'] .outcome-2 .connection-flow, [data-phase='3'] .outcome-3 .connection-flow { opacity: .8; }
+  [data-phase='3'] .outcome-3 .connection-flow { animation-direction: reverse; stroke: var(--constellation-violet); }
+  @keyframes traverse { to { stroke-dashoffset: -100; } }
+  @keyframes revolve { to { transform: rotate(360deg); } }
+  @media (max-width: 639px) {
+    .constellation-stage { aspect-ratio: 1 / 1.08; }
+    .knowledge-core { width: 76px; height: 76px; }
+    .core-name { font-size: 1.05rem; }
+    .core-subtitle { display: none; }
+    .resource-label { font-size: .75rem; }
+    .output-node strong { font-size: .8125rem; }
+    .output-detail, .agent-signal, .workload-label { display: none; }
+    .phase-buttons { gap: .25rem; }
+    .phase-descriptions { display: grid; min-height: 5rem; }
+  }
+  @media (prefers-color-scheme: dark) { :global(:root:not([data-theme='light'])) .knowledge-constellation { --constellation-blue: #80b8ff; --constellation-violet: #c0a3ff; --constellation-teal: #6cdfd4; } }
+  :global(:root[data-theme='dark']) .knowledge-constellation { --constellation-blue: #80b8ff; --constellation-violet: #c0a3ff; --constellation-teal: #6cdfd4; }
+  @media (prefers-reduced-motion: reduce) { .knowledge-constellation *, .knowledge-constellation *::before { animation: none !important; transition: none !important; } }
+</style>

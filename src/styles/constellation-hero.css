@@ -1,0 +1,62 @@
+/* A continuous graph landscape: quiet behind the headline, luminous at the graph. */
+.home-hero.constellation-hero {
+  --hero-bg: var(--bg);
+  --nebula-blue: #2d7af018;
+  --nebula-violet: #8653ed20;
+  --nebula-cyan: #00a6b51a;
+  background: var(--bg);
+}
+.home-hero.constellation-hero::before {
+  background: radial-gradient(ellipse at 88% 25%, var(--nebula-violet), transparent 43%),
+    radial-gradient(ellipse at 58% 62%, var(--nebula-cyan), transparent 40%),
+    radial-gradient(ellipse at 95% 90%, var(--nebula-blue), transparent 45%);
+}
+.constellation-hero .hero-atmosphere {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(color-mix(in srgb, var(--fg) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--fg) 5%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(90deg, transparent 25%, #000 65%, transparent);
+}
+.constellation-hero .hero-atmosphere::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--fg) 19%, transparent) 1px, transparent 1.5px);
+  background-size: 64px 64px;
+  background-position: 32px 32px;
+}
+.constellation-hero .hero-composition {
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.2fr);
+  gap: clamp(1rem, 3vw, 3rem);
+  padding-top: 3.5rem;
+  padding-bottom: 3.5rem;
+}
+.constellation-hero .hero-copy h1 { font-size: clamp(2.6rem, 4.3vw, 4.1rem); }
+.constellation-hero .hero-copy h1 span {
+  color: var(--hero-highlight);
+  background: linear-gradient(105deg, var(--hero-highlight), var(--hero-accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .home-hero.constellation-hero { --nebula-blue: #2466c529; --nebula-violet: #714bd338; --nebula-cyan: #087e892a; }
+}
+:root[data-theme='dark'] .home-hero.constellation-hero { --nebula-blue: #2466c529; --nebula-violet: #714bd338; --nebula-cyan: #087e892a; }
+@media (max-width: 1023px) {
+  .constellation-hero .hero-composition { grid-template-columns: 1fr; gap: 1.5rem; }
+  .constellation-hero .hero-copy h1 { max-width: 18ch; font-size: clamp(2.6rem, 7vw, 4.1rem); }
+  .constellation-hero .knowledge-constellation { width: 100%; max-width: 42rem; margin-inline: auto; }
+  .constellation-hero .hero-atmosphere { mask-image: linear-gradient(180deg, transparent 15%, #000 70%, transparent); }
+}
+@media (max-width: 639px) {
+  .constellation-hero .hero-composition { padding-top: 2.75rem; padding-bottom: 2.5rem; }
+  .constellation-hero .hero-copy h1 { font-size: clamp(2.35rem, 10vw, 3.5rem); }
+}
+@media (forced-colors: active) {
+  .constellation-hero .hero-copy h1 span { -webkit-text-fill-color: currentColor; background: none; }
+}

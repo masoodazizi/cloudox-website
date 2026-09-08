@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
-import EvidenceExplorer from "@components/EvidenceExplorer.astro";
+import KnowledgeConstellation from "@components/KnowledgeConstellation.astro";
+import "@/styles/constellation-hero.css";
 import Section from "@components/Section.astro";
 import CTA from "@components/CTA.astro";
 import AudienceViews from "@components/AudienceViews.astro";
@@ -59,8 +60,8 @@ const boundary = [
 <BaseLayout
   description="CloudoX turns AWS evidence into an explainable model of workloads, exposure, cost drivers, and change — one focused view per stakeholder, every statement traceable to the resource it came from. Understand any cloud environment in under 30 minutes."
 >
-  <section class="home-hero">
-    <div class="hero-orbit" aria-hidden="true"></div>
+  <section class="home-hero constellation-hero">
+    <div class="hero-atmosphere" aria-hidden="true"></div>
     <div class="container-page hero-composition">
       <div class="hero-copy">
         <p class="hero-eyebrow">INTELLIGENT CLOUD KNOWLEDGE PLATFORM</p>
@@ -72,7 +73,7 @@ const boundary = [
         </div>
         <p class="hero-trust">Read-only access. Deterministic analysis.<br />Every finding traced to its evidence.</p>
       </div>
-      <EvidenceExplorer />
+      <KnowledgeConstellation />
     </div>
     <div class="container-page hero-baseline"><span>AWS-first today</span><span>Evidence → understanding → decisions</span><a href="#outcomes">See what you can learn <span aria-hidden="true">↓</span></a></div>
   </section>
