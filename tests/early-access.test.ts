@@ -22,8 +22,14 @@ function setup(fetcher: Function, valid = true) {
     setAttribute() {}, removeAttribute() {}, reset: () => { reset = true; },
     addEventListener: (_: string, fn: Function) => { submit = fn; },
   };
-  class Data extends Map {
-    constructor() { super([['email', 'architect@gmail.com'], ['access_key', 'test-key'], ['source', 'homepage-hero'], ['redirect', 'https://cloudox.io/thanks']]); }
+  class Data extends Map<string, string> {
+    constructor() {
+      super();
+      this.set('email', 'architect@gmail.com');
+      this.set('access_key', 'test-key');
+      this.set('source', 'homepage-hero');
+      this.set('redirect', 'https://cloudox.io/thanks');
+    }
   }
   runInNewContext(code + '\ninitializeEarlyAccess(form);', { form, FormData: Data, AbortController, fetch: fetcher,
     window: { setTimeout: (fn: Function) => { timeout = fn; return 1; }, clearTimeout: () => { cleared = true; } },
