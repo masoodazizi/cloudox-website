@@ -5,6 +5,7 @@ import Section from "@components/Section.astro";
 import FeatureGrid from "@components/FeatureGrid.astro";
 import CTA from "@components/CTA.astro";
 import EnvironmentSnapshot from "@components/EnvironmentSnapshot.astro";
+import EvidenceExplorer from "@components/EvidenceExplorer.astro";
 import { SITE } from "@/config/site";
 import { EXAMPLE } from "@/config/example";
 
@@ -179,6 +180,17 @@ const channels = [
   >
     <EnvironmentSnapshot slot="aside" />
   </Hero>
+
+  <Section id="evidence-explorer" eyebrow="FOLLOW THE EVIDENCE" title="From a finding to the record behind it.">
+    <div class="grid lg:grid-cols-2 gap-10 items-center">
+      <div class="max-w-lg">
+        <p class="text-lg muted leading-relaxed">Explore selected relationships from the published example. See what changed, inspect the supporting record, and keep the other side of the change in view.</p>
+        <p class="mt-5 text-base muted leading-relaxed">The workload dependency and security finding are separate pieces of evidence. Each retains its own confidence and known limits.</p>
+        <a href={EXAMPLE.previewUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary mt-7">Open the complete example ↗</a>
+      </div>
+      <EvidenceExplorer />
+    </div>
+  </Section>
 
   <Section eyebrow="WHAT YOU RECEIVE" title="Six artifacts, not a data dump.">
     <div class="grid gap-5 md:grid-cols-2 lg:grid-cols-3">

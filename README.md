@@ -187,7 +187,7 @@ Docs are listed at `/docs` and served at `/docs/<file-slug>`.
 
 The Product page shows real output instead of describing it — the evidence
 canvas (`EnvironmentSnapshot.astro`) and a real screenshot of the dashboard
-sit right beside the artifacts they demonstrate. The Home page offers a compact interactive evidence explorer: finding,
+sit right beside the artifacts they demonstrate. The Product page also offers an interactive evidence explorer: finding,
 supporting record, and change context. It links to the full example rather than
 duplicating the Product page’s full account-and-statistics canvas. Every number, account name, confidence label, and finding on the site
 comes from one typed module, `src/config/example.ts`, which quotes the
@@ -265,7 +265,7 @@ dependency) against the build output in `tests/`:
   wiring, right-sized logo assets, the security FAQ being visible wherever
   its `FAQPage` schema is emitted, the contact form posting somewhere real
   without JavaScript, the Product page's example figures plus their caveats
-  and dashboard screenshot, the Home page preserving a compact evidence explorer without duplicating the full proof
+  and dashboard screenshot, the Home page using an illustrative constellation without duplicating the full proof
   canvas, and the audience switcher degrading to readable anchored sections.
 
 `npm test` sets a placeholder `PUBLIC_WEB3FORMS_KEY` for the build so the
@@ -452,13 +452,9 @@ content, and trademarks belong to the CloudoX project.
 ## Website refresh and Classic v1
 
 The September 2026 refresh retains Astro static output, the existing content and
-Cloudflare deployment. The theme-aware homepage hero demonstrates one published finding
-through `EvidenceExplorer.astro`; all three panels remain readable without
-JavaScript and are progressively enhanced to keyboard-accessible tabs. Its SVG
-shows only the ingress relationship supported by `EXAMPLE_EVIDENCE`, not an
-invented environment topology. The small-screen layout uses readable stacked
-labels. Motion respects the reduced-motion preference. No new runtime dependencies,
-external scripts, model calls, tracking, or data collection were introduced.
+Cloudflare deployment. The homepage uses an explicitly illustrative node constellation;
+checkable findings live in the Product page's evidence explorer. No new runtime
+dependencies, external scripts, model calls, tracking, or data collection were introduced.
 
 Classic source is preserved at `archive/website-classic-v1`. See
 [restoration instructions](docs/website-classic-restore.md) for the release,
@@ -471,16 +467,22 @@ controls, responds to system changes until explicitly selected, and remains usab
 when local storage is blocked. Its space is reserved before initialization to avoid
 shifting the header; without JavaScript the system theme still works.
 
-### Animated knowledge hero
+### Homepage constellation and product evidence
 
-The homepage introduces selected workload and security relationships with a finite
-four-second SVG/CSS sequence, started once when the diagram enters the viewport.
-Replay is explicit; reduced-motion visitors and visitors without JavaScript receive
-the completed diagram. Pointer/keyboard interaction, leaving the viewport, and
-hiding the document stop the introduction. No model or network call drives it.
+`KnowledgeConstellation.astro` is a conceptual diagram, not a rendering of the demo
+or a live AWS connection. Labelled service nodes assemble into workload groups, flow
+through CloudoX knowledge, and connect to meaning, optional narration, evolution,
+and CDX Agent. A four-phase loop has Play/Pause and direct phase selection. Manual
+selection pauses the loop; reduced-motion visitors receive a still, selectable
+presentation. Timers and CSS motion pause offscreen and in background tabs.
+Without JavaScript, the complete meaning phase and its description remain visible.
+The hero uses a theme-aware grid with restrained violet/cyan light.
 
-The production API → PostgreSQL dependency comes from the public Architect View
-(`views/architect/dependencies.md`): the workload grouping is Likely, while the
-dependency is Verified. The security-group example stays in a separate lane because
-its workload attachment is not established. Node links open the dependency source
-or focus the existing finding panel. The email-only homepage form is a later item.
+The Product page retains the separate `EvidenceExplorer.astro` and `KnowledgeMap.astro`
+with the finite four-second introduction. The production API → PostgreSQL dependency
+comes from `views/architect/dependencies.md` in the public example: workload grouping
+is Likely, while the dependency is Verified. The security example stays separate
+because its workload attachment is unresolved. All three evidence panels remain
+readable without JavaScript and become keyboard-accessible tabs when enhanced.
+
+The email-only homepage form remains a later item.
