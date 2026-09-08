@@ -2,40 +2,13 @@
 import BaseLayout from "@layouts/BaseLayout.astro";
 import EarlyAccessForm from "@components/EarlyAccessForm.astro";
 import KnowledgeConstellation from "@components/KnowledgeConstellation.astro";
+import ProductShowcase from "@components/ProductShowcase.astro";
 import "@/styles/constellation-hero.css";
 import Section from "@components/Section.astro";
 import CTA from "@components/CTA.astro";
 import AudienceViews from "@components/AudienceViews.astro";
 import { SITE } from "@/config/site";
 import { EXAMPLE } from "@/config/example";
-
-// Three decisions the platform supports, each pointing at something real.
-const outcomes = [
-  {
-    title: "Orient",
-    description:
-      "Accounts, workloads, and how they connect — derived from provider APIs and tags, not a diagram someone drew last year.",
-    proof: "In the example: a landing-zone structure across 7 named accounts, 15 VPCs, 63 subnets.",
-    href: "/product",
-    linkLabel: "What you receive",
-  },
-  {
-    title: "Explain",
-    description:
-      "Every finding names the resource it came from and carries a plain confidence label — thin evidence says so, instead of rounding up to certainty.",
-    proof: "In the example: 781 of 833 resources carry no environment tag — so classification is labelled inferred.",
-    href: "/how-it-works",
-    linkLabel: "How that works",
-  },
-  {
-    title: "Track",
-    description:
-      "Compare two discoveries and read the difference — a region that appeared, an exposure that opened — observed change, kept separate from interpretation.",
-    proof: "In the example: one security group became internet-reachable, another stopped being reachable.",
-    href: "/use-cases",
-    linkLabel: "When this helps",
-  },
-];
 
 // The trust boundary, stated compactly. Full detail lives on /security.
 const boundary = [
@@ -65,55 +38,24 @@ const boundary = [
     <div class="hero-atmosphere" aria-hidden="true"></div>
     <div class="container-page hero-composition">
       <div class="hero-copy">
-        <p class="hero-eyebrow">INTELLIGENT CLOUD KNOWLEDGE PLATFORM</p>
-        <h1>Understand any cloud environment <span>in under 30 minutes.</span></h1>
-        <p class="hero-description">CloudoX turns AWS evidence into an explainable map of workloads, exposure, cost drivers, and change — with one focused view for each stakeholder.</p>
+        <p class="hero-eyebrow">CLOUD KNOWLEDGE, EXPLAINED.</p>
+        <h1>Understand your cloud.<span>In under 30 minutes.</span></h1>
+        <p class="hero-description">See how your AWS workloads connect, what changed, and why it matters. Every finding backed by evidence.</p>
         <EarlyAccessForm />
-        <div class="hero-actions" style="margin-top: 1rem;">
-          <a href={EXAMPLE.previewUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Explore the real example <span aria-hidden="true">↗</span></a>
-        </div>
-        <p class="hero-trust">Read-only access. Deterministic analysis.<br />Every finding traced to its evidence.</p>
       </div>
       <KnowledgeConstellation />
     </div>
-    <div class="container-page hero-baseline"><span>AWS-first today</span><span>Evidence → understanding → decisions</span><a href="#outcomes">See what you can learn <span aria-hidden="true">↓</span></a></div>
+    <div class="container-page hero-baseline"><span>AWS-first · Read-only access</span><span>Deterministic analysis · Optional AI narration</span><a href="#outcomes">Explore a real environment <span aria-hidden="true">↓</span></a></div>
   </section>
 
   <Section
     id="outcomes"
     class="outcomes-section"
-    eyebrow="WHAT YOU DO WITH IT"
-    title="Orient, explain, track."
-    subtitle="Three things a team actually needs from an unfamiliar cloud environment — and what the published example shows for each."
+    eyebrow="INSIDE CLOUDOX"
+    title="From an unfamiliar cloud to a clear picture."
+    subtitle="Explore a real, sanitized AWS environment. See its structure, understand a change, and follow the evidence."
   >
-    <div class="grid gap-5 md:grid-cols-3">
-      {outcomes.map((outcome, i) => (
-        <article class="surface outcome-card flex flex-col p-6">
-          <span
-            class="inline-flex h-8 w-8 items-center justify-center rounded-md font-mono text-sm mb-4"
-            style="background: color-mix(in oklab, var(--accent) 12%, transparent); color: var(--accent);"
-            aria-hidden="true"
-          >
-            {String(i + 1).padStart(2, "0")}
-          </span>
-          <h3 class="text-lg font-semibold mb-2.5">{outcome.title}</h3>
-          <p class="text-base muted leading-relaxed">{outcome.description}</p>
-          <p
-            class="mt-4 pt-4 text-sm muted leading-relaxed"
-            style="border-top: 1px solid var(--border);"
-          >
-            {outcome.proof}
-          </p>
-          <a
-            href={outcome.href}
-            class="mt-4 text-sm font-medium"
-            style="color: var(--accent);"
-          >
-            {outcome.linkLabel} →
-          </a>
-        </article>
-      ))}
-    </div>
+    <ProductShowcase />
   </Section>
 
   <Section

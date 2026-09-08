@@ -1,0 +1,100 @@
+---
+import ConfidenceBadge from './ConfidenceBadge.astro';
+import { EXAMPLE, EXAMPLE_ACCOUNTS, EXAMPLE_EVIDENCE } from '@/config/example';
+const chapters = [
+  { key: 'structure', label: 'Get your bearings', title: 'An environment, not a list of IDs.', description: 'Understand the account structure with human-readable names, original identifiers, and confidence kept together.' },
+  { key: 'change', label: 'Understand change', title: 'See what is different. Not just what exists.', description: 'Compare discoveries to separate a newly observed exposure from a condition that was already there.' },
+  { key: 'evidence', label: 'Follow the evidence', title: 'An explanation you can verify.', description: 'Trace a finding through the relationship that supports it to the exact resource. Keep the observation separate from the decision.' },
+];
+---
+<div class="product-showcase" data-showcase>
+  <nav class="showcase-tabs" data-showcase-tabs aria-label="Explore the example">
+    {chapters.map((chapter, i) => <a href={`#showcase-${chapter.key}`} data-showcase-tab><span class="chapter-number" aria-hidden="true">0{i + 1}</span>{chapter.label}</a>)}
+  </nav>
+  <div class="showcase-surface">
+    <div class="showcase-toolbar"><span>{EXAMPLE.workspace}</span><span>Sanitized example · {EXAMPLE.generatedAtLabel}</span></div>
+    {chapters.map(chapter => (
+      <section id={`showcase-${chapter.key}`} class="showcase-panel" data-showcase-panel aria-label={chapter.label}>
+        <div class="showcase-story">
+          <h3>{chapter.title}</h3>
+          <p>{chapter.description}</p>
+          <a href={chapter.key === 'evidence' ? '/product#evidence-explorer' : '/product'}>Explore the product <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="showcase-detail">
+          {chapter.key === 'structure' && <>
+            <dl class="showcase-metrics">
+              <div><dt>Resources</dt><dd>833</dd><dd class="metric-basis">Lower bound</dd></div>
+              <div><dt>Accounts in scope</dt><dd>6 of 7</dd><dd class="metric-basis">1 excluded</dd></div>
+              <div><dt>Regions observed</dt><dd>2</dd><dd class="metric-basis">Primary + DR</dd></div>
+            </dl>
+            <p class="detail-label">Account names derived from evidence</p>
+            <ul class="showcase-accounts">{EXAMPLE_ACCOUNTS.map(account => <li><span>{account.name}</span><code>{account.id}</code><ConfidenceBadge level={account.confidence} /></li>)}</ul>
+            <p class="showcase-note">Two collectors were unavailable, so 833 is a lower bound—not a complete inventory. The report does not identify which account was excluded.</p>
+          </>}
+          {chapter.key === 'change' && <>
+            <p class="detail-label">Internet reachability · Between discoveries</p>
+            <div class="change-observation"><span class="change-sign" aria-hidden="true">+</span><div><p class="observation-title">New exposure observed</p><p>{EXAMPLE_EVIDENCE.finding}</p><code>sg-0d6a48061beb72eae</code></div></div>
+            <div class="change-observation"><span class="change-sign" aria-hidden="true">−</span><div><p class="observation-title">Exposure no longer observed</p><p>{EXAMPLE_EVIDENCE.counterpart}.</p></div></div>
+            <div class="showcase-verdict"><ConfidenceBadge level={EXAMPLE_EVIDENCE.confidence} /><span>Observed change, not an automatic risk verdict.</span></div>
+            <p class="showcase-note">A security-group rule alone does not establish application reachability. Validate the attachment and intended access before deciding what to change.</p>
+          </>}
+          {chapter.key === 'evidence' && <>
+            <p class="detail-label">Finding → Relationship → Resource</p>
+            <ol class="showcase-trail">{EXAMPLE_EVIDENCE.trail.map((item, i) => <li><span class="trail-index" aria-hidden="true">0{i + 1}</span><div><p class="observation-title">{item.step}</p><p class:list={{ 'resource-id': item.step === 'Resource' }}>{item.detail}</p></div></li>)}</ol>
+            <div class="showcase-verdict"><ConfidenceBadge level={EXAMPLE_EVIDENCE.confidence} /><span>The relationship is supported by collected evidence.</span></div>
+            <p class="showcase-note">Whether this access is intentional remains a question for the owner—not a fact inferred from the rule.</p>
+          </>}
+        </div>
+      </section>
+    ))}
+    <footer class="showcase-footer"><p>Selected report data · Not a live connection</p><a href={EXAMPLE.previewUrl} target="_blank" rel="noopener noreferrer">Open the full example <span aria-hidden="true">↗</span></a></footer>
+  </div>
+</div>
+<script>
+  import { initializeShowcase } from '../scripts/product-showcase';
+  document.querySelectorAll<HTMLElement>('[data-showcase]').forEach(initializeShowcase);
+</script>
+<style>
+  .product-showcase { margin-top: .5rem; }
+  .showcase-tabs { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin-bottom: 1.5rem; }
+  .showcase-tabs a { display: inline-flex; align-items: center; gap: .65rem; min-height: 48px; padding: .65rem .25rem; border-bottom: 2px solid transparent; color: var(--fg-muted); font-size: .9375rem; }
+  .showcase-tabs a[aria-selected='true'] { color: var(--fg); border-color: var(--accent); font-weight: 600; }
+  .chapter-number { font: .875rem var(--font-mono); color: var(--accent); }
+  .showcase-surface { border: 1px solid var(--border); border-radius: 18px; background: var(--bg); box-shadow: 0 24px 70px color-mix(in srgb, var(--accent) 7%, transparent); }
+  .showcase-toolbar, .showcase-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .75rem; padding: 1.2rem 2rem; font-size: .875rem; color: var(--fg-muted); }
+  .showcase-toolbar { border-bottom: 1px solid var(--border); }
+  .showcase-toolbar > :first-child { font-family: var(--font-mono); color: var(--fg); }
+  .showcase-panel { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.5fr); min-height: 38rem; scroll-margin-top: 7rem; }
+  .showcase-panel[hidden] { display: none; }
+  .showcase-panel + .showcase-panel { border-top: 1px solid var(--border); }
+  .product-showcase[data-enhanced] .showcase-panel { border-top: 0; }
+  .showcase-story { padding: clamp(1.5rem, 3vw, 3rem); background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 5%, transparent), transparent); }
+  .showcase-story h3 { font-size: clamp(1.65rem, 2.6vw, 2.25rem); font-weight: 550; letter-spacing: -.035em; line-height: 1.2; text-wrap: balance; }
+  .showcase-story > p { margin-top: 1.25rem; color: var(--fg-muted); line-height: 1.75; font-size: 1rem; }
+  .showcase-story > a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; margin-top: 1.5rem; font-size: .9375rem; color: var(--accent); }
+  .showcase-detail { min-width: 0; padding: clamp(1.5rem, 3vw, 3rem); border-left: 1px solid var(--border); }
+  .showcase-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; padding-bottom: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .showcase-metrics dt, .metric-basis { color: var(--fg-muted); font-size: .875rem; }
+  .showcase-metrics dd:not(.metric-basis) { font-size: clamp(1.75rem, 3vw, 2.5rem); line-height: 1.4; letter-spacing: -.04em; }
+  .detail-label { font-size: .875rem; color: var(--fg-muted); margin-bottom: 1rem; }
+  .showcase-accounts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+  .showcase-accounts li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .25rem .5rem; padding: .7rem .85rem; border: 1px solid var(--border); border-radius: 8px; }
+  .showcase-accounts li > span:first-child { grid-column: 1 / -1; font-size: .9375rem; font-weight: 500; }
+  .showcase-accounts code { font-size: .75rem; color: var(--fg-muted); overflow-wrap: anywhere; }
+  .showcase-note { margin-top: 1.5rem; font-size: .875rem; color: var(--fg-muted); line-height: 1.7; }
+  .change-observation { display: flex; gap: 1rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
+  .change-sign { flex: 0 0 2rem; font-size: 1.75rem; line-height: 1.2; color: var(--accent); }
+  .observation-title { font-weight: 600; margin-bottom: .5rem; }
+  .change-observation p:not(.observation-title), .showcase-trail p:not(.observation-title) { color: var(--fg-muted); font-size: 1rem; line-height: 1.7; }
+  .change-observation code { display: block; margin-top: .75rem; font-size: .875rem; overflow-wrap: anywhere; }
+  .showcase-verdict { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; margin-top: 1.5rem; font-size: .875rem; color: var(--fg-muted); }
+  .showcase-trail { margin-block: 1.5rem; }
+  .showcase-trail li { display: flex; gap: 1.25rem; padding-bottom: 2rem; position: relative; }
+  .showcase-trail li:not(:last-child)::before { content: ''; position: absolute; left: 1rem; top: 2rem; bottom: 0; border-left: 1px solid var(--border); }
+  .trail-index { flex: 0 0 2rem; height: 2rem; display: grid; place-items: center; border: 1px solid var(--border); border-radius: 50%; font: .75rem var(--font-mono); color: var(--accent); }
+  .resource-id { font-family: var(--font-mono); overflow-wrap: anywhere; }
+  .showcase-footer { border-top: 1px solid var(--border); align-items: center; }
+  .showcase-footer a { display: inline-flex; align-items: center; gap: .5rem; min-height: 44px; color: var(--accent); }
+  @media (max-width: 900px) { .showcase-panel { grid-template-columns: 1fr; min-height: 0; } .showcase-detail { border-left: 0; border-top: 1px solid var(--border); } .showcase-story { padding-bottom: 1.5rem; } }
+  @media (max-width: 479px) { .showcase-accounts { grid-template-columns: 1fr; } .showcase-metrics { grid-template-columns: 1fr; gap: 1rem; } .showcase-tabs { gap: .25rem .75rem; } .showcase-toolbar, .showcase-footer { padding-inline: 1.5rem; } }
+</style>

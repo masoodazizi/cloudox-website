@@ -12,13 +12,13 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_KEY?.trim() ?? '';
       <input type="hidden" name="redirect" value={`${SITE.url}/thanks`} />
       <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <fieldset data-access-fields>
-        <label for="early-access-email">Work email</label>
+        <label for="early-access-email">Get early access · Work email</label>
         <div class="early-access-row">
           <input id="early-access-email" type="email" name="email" required maxlength="254" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" placeholder="you@company.com" aria-describedby="early-access-purpose" />
           <button type="submit" class="btn btn-primary" data-access-submit>Request access</button>
         </div>
       </fieldset>
-      <p class="access-purpose" id="early-access-purpose">We'll use your email to respond to your early-access request. No newsletter. <a href="/privacy">Privacy notice</a>.</p>
+      <p class="access-purpose" id="early-access-purpose">Only to reply to your request. No newsletter. <a href="/privacy">Privacy notice</a>.</p>
       <p class="access-status" data-access-status role="status" aria-live="polite" aria-atomic="true"></p>
       <div class="access-followup" data-access-followup hidden>
         <a href="/contact">Share your use case →</a>
@@ -34,7 +34,7 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_KEY?.trim() ?? '';
   document.querySelectorAll<HTMLFormElement>('[data-early-access-form]').forEach(initializeEarlyAccess);
 </script>
 <style>
-  .early-access { margin-top: 2rem; scroll-margin-top: 7rem; }
+  .early-access { margin-top: 1.75rem; max-width: 30rem; scroll-margin-top: 7rem; }
   fieldset { min-width: 0; border: 0; padding: 0; margin: 0; }
   label { display: block; font-size: .875rem; font-weight: 550; margin-bottom: .6rem; color: var(--hero-fg); }
   .early-access-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; }
@@ -43,7 +43,7 @@ const key = import.meta.env.PUBLIC_WEB3FORMS_KEY?.trim() ?? '';
   .early-access-row button { min-height: 48px; padding-inline: 1rem; white-space: nowrap; }
   fieldset:disabled { opacity: .7; }
   fieldset:disabled button { cursor: wait; }
-  .access-purpose { margin-top: .75rem; font-size: .75rem; line-height: 1.65; color: var(--hero-metadata); }
+  .access-purpose { margin-top: .75rem; font-size: .875rem; line-height: 1.6; color: var(--hero-metadata); }
   .access-purpose a { text-decoration: underline; text-underline-offset: 3px; }
   .access-status { font-size: .9375rem; line-height: 1.6; color: var(--hero-fg); }
   .access-status:not(:empty) { margin-top: 1rem; }
