@@ -1,0 +1,54 @@
+---
+import { SITE } from '@/config/site';
+const key = import.meta.env.PUBLIC_WEB3FORMS_KEY?.trim() ?? '';
+---
+<div class="early-access" id="early-access">
+  {key ? (
+    <form data-early-access-form method="POST" action="https://api.web3forms.com/submit" aria-label="Request early access">
+      <input type="hidden" name="access_key" value={key} />
+      <input type="hidden" name="subject" value={`${SITE.name} — Homepage early-access request`} />
+      <input type="hidden" name="from_name" value={`${SITE.name} website`} />
+      <input type="hidden" name="source" value="homepage-hero" />
+      <input type="hidden" name="redirect" value={`${SITE.url}/thanks`} />
+      <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <fieldset data-access-fields>
+        <label for="early-access-email">Work email</label>
+        <div class="early-access-row">
+          <input id="early-access-email" type="email" name="email" required maxlength="254" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" placeholder="you@company.com" aria-describedby="early-access-purpose" />
+          <button type="submit" class="btn btn-primary" data-access-submit>Request access</button>
+        </div>
+      </fieldset>
+      <p class="access-purpose" id="early-access-purpose">We'll use your email to respond to your early-access request. No newsletter. <a href="/privacy">Privacy notice</a>.</p>
+      <p class="access-status" data-access-status role="status" aria-live="polite" aria-atomic="true"></p>
+      <div class="access-followup" data-access-followup hidden>
+        <a href="/contact">Share your use case →</a>
+        <a href={SITE.bookingUrl} target="_blank" rel="noopener noreferrer">Book a walkthrough ↗</a>
+      </div>
+    </form>
+  ) : (
+    <a href="/contact" class="btn btn-primary">Request early access</a>
+  )}
+</div>
+<script>
+  import { initializeEarlyAccess } from '../scripts/early-access';
+  document.querySelectorAll<HTMLFormElement>('[data-early-access-form]').forEach(initializeEarlyAccess);
+</script>
+<style>
+  .early-access { margin-top: 2rem; scroll-margin-top: 7rem; }
+  fieldset { min-width: 0; border: 0; padding: 0; margin: 0; }
+  label { display: block; font-size: .875rem; font-weight: 550; margin-bottom: .6rem; color: var(--hero-fg); }
+  .early-access-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; }
+  input[type='email'] { width: 100%; min-width: 0; min-height: 48px; padding: .75rem .85rem; border: 1px solid var(--hero-secondary-border); border-radius: 9px; background: var(--bg); color: var(--fg); font: inherit; font-size: 1rem; }
+  input::placeholder { color: var(--hero-metadata); opacity: 1; }
+  .early-access-row button { min-height: 48px; padding-inline: 1rem; white-space: nowrap; }
+  fieldset:disabled { opacity: .7; }
+  fieldset:disabled button { cursor: wait; }
+  .access-purpose { margin-top: .75rem; font-size: .75rem; line-height: 1.65; color: var(--hero-metadata); }
+  .access-purpose a { text-decoration: underline; text-underline-offset: 3px; }
+  .access-status { font-size: .9375rem; line-height: 1.6; color: var(--hero-fg); }
+  .access-status:not(:empty) { margin-top: 1rem; }
+  .access-followup { display: flex; flex-wrap: wrap; gap: .75rem 1.25rem; margin-top: .75rem; font-size: .875rem; color: var(--hero-link); }
+  .access-followup[hidden] { display: none; }
+  .access-followup a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: underline; text-underline-offset: 4px; }
+  @media (max-width: 479px) { .early-access-row { grid-template-columns: 1fr; } }
+</style>

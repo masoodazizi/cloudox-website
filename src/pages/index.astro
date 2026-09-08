@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "@layouts/BaseLayout.astro";
+import EarlyAccessForm from "@components/EarlyAccessForm.astro";
 import KnowledgeConstellation from "@components/KnowledgeConstellation.astro";
 import "@/styles/constellation-hero.css";
 import Section from "@components/Section.astro";
@@ -67,9 +68,9 @@ const boundary = [
         <p class="hero-eyebrow">INTELLIGENT CLOUD KNOWLEDGE PLATFORM</p>
         <h1>Understand any cloud environment <span>in under 30 minutes.</span></h1>
         <p class="hero-description">CloudoX turns AWS evidence into an explainable map of workloads, exposure, cost drivers, and change — with one focused view for each stakeholder.</p>
-        <div class="hero-actions">
-          <a href={EXAMPLE.previewUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">Explore the real example <span aria-hidden="true">↗</span></a>
-          <a href="/contact" class="btn btn-secondary">Request early access</a>
+        <EarlyAccessForm />
+        <div class="hero-actions" style="margin-top: 1rem;">
+          <a href={EXAMPLE.previewUrl} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Explore the real example <span aria-hidden="true">↗</span></a>
         </div>
         <p class="hero-trust">Read-only access. Deterministic analysis.<br />Every finding traced to its evidence.</p>
       </div>
