@@ -1,6 +1,7 @@
 ---
 import { EXAMPLE, EXAMPLE_EVIDENCE } from '@/config/example';
 import ConfidenceBadge from './ConfidenceBadge.astro';
+import KnowledgeMap from './KnowledgeMap.astro';
 const steps = [
   { key: 'finding', label: 'The finding', eyebrow: 'WHAT CHANGED', title: 'A new exposure to investigate.', body: EXAMPLE_EVIDENCE.finding },
   { key: 'evidence', label: 'The evidence', eyebrow: 'WHY WE SAY IT', title: 'Follow the supporting record.', body: EXAMPLE_EVIDENCE.trail[1].detail },
@@ -9,25 +10,7 @@ const steps = [
 ---
 <figure class="evidence-explorer" data-evidence-explorer aria-label="Explore a finding from the sanitized example">
   <div class="explorer-top"><span class="font-mono">{EXAMPLE.workspace}</span><span class="example-label">Sanitized example</span></div>
-  <div class="evidence-map" aria-label="Evidence relationship: the security group allows ingress from the internet">
-    <svg viewBox="0 0 520 190" role="img" aria-labelledby="evidence-map-title">
-      <title id="evidence-map-title">Internet, 0.0.0.0/0, connected by an allows-ingress relationship to a security group</title>
-      <defs><pattern id="evidence-grid" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="var(--map-dot)" /></pattern></defs>
-      <rect width="520" height="190" fill="url(#evidence-grid)" />
-      <path class="evidence-wire" d="M162 91 H355" fill="none" stroke="var(--map-edge)" stroke-width="2" />
-      <path d="M347 86 L355 91 L347 96" fill="none" stroke="var(--map-edge)" stroke-width="2" />
-      <rect x="30" y="58" width="132" height="66" rx="12" fill="var(--map-node)" stroke="var(--map-border)" />
-      <text x="96" y="84" text-anchor="middle" fill="var(--map-text)" font-size="15">Internet</text>
-      <text x="96" y="106" text-anchor="middle" fill="var(--hero-metadata)" font-size="13" font-family="monospace">0.0.0.0/0</text>
-      <rect x="355" y="58" width="137" height="66" rx="12" fill="var(--map-node-selected)" stroke="var(--map-edge)" />
-      <text x="423" y="85" text-anchor="middle" fill="var(--map-text)" font-size="15">Security group</text>
-      <text x="423" y="107" text-anchor="middle" fill="var(--hero-metadata)" font-size="13">Ingress rule</text>
-      <rect x="185" y="115" width="147" height="26" rx="13" fill="var(--map-node)" />
-      <text x="258" y="133" text-anchor="middle" fill="var(--hero-metadata)" font-size="13">allows ingress</text>
-    </svg>
-    <div class="evidence-map-mobile" aria-hidden="true"><span>Internet <code>0.0.0.0/0</code></span><span class="mobile-edge">↓ allows ingress</span><span>Security group · ingress rule</span></div>
-    <p>One relationship from the published example</p>
-  </div>
+  <KnowledgeMap />
   <div class="explorer-tabs" aria-label="Explore the finding">
     {steps.map((step, i) => <a href={`#evidence-${step.key}`} data-evidence-link class={i === 0 ? 'is-selected' : ''}><span aria-hidden="true">0{i + 1}</span>{step.label}</a>)}
   </div>
@@ -70,6 +53,15 @@ const steps = [
       link.addEventListener('keydown', event => {
         const next = event.key === 'ArrowRight' ? (i + 1) % links.length : event.key === 'ArrowLeft' ? (i + links.length - 1) % links.length : event.key === 'Home' ? 0 : event.key === 'End' ? links.length - 1 : -1;
         if (next >= 0) { event.preventDefault(); select(next, true); }
+      });
+    });
+    root.querySelectorAll<HTMLAnchorElement>('[data-evidence-target]').forEach(link => {
+      link.addEventListener('click', event => {
+        const index = panels.findIndex(panel => panel.id === `evidence-${link.dataset.evidenceTarget}`);
+        if (index < 0) return;
+        event.preventDefault();
+        select(index);
+        panels[index].focus();
       });
     });
     const requested = links.findIndex(link => link.hash === location.hash);
