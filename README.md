@@ -498,3 +498,18 @@ optional contact/booking links after submission. Success requires both HTTP succ
 and an explicit API `success: true`. Missing configuration falls back to `/contact`.
 The existing detailed contact form is retained. Tests mock provider responses;
 production inbox delivery is not verified by automated tests.
+
+### Homepage product showcase
+
+The hero keeps a single early-access action, with compact copy and trust context
+in the baseline. The approved knowledge constellation is unchanged. The former
+three outcome cards are replaced by a full-width, three-chapter `ProductShowcase`:
+account structure, observed change, and the evidence trail. It uses the existing
+sanitized example facts and confidence labels, retains coverage qualifications,
+and links to the complete published example. It is a report-data presentation,
+not a screenshot or a live connection. No backend or model is called.
+
+All chapters are visible anchor sections without JavaScript. Progressive
+enhancement adds ARIA tabs, deep-link initialization, arrow/Home/End/Space keyboard
+controls, and a single selected panel. There is no autoplay or extra animation.
+The detailed evidence explorer remains on `/product`.
